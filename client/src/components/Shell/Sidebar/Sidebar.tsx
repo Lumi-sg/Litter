@@ -7,7 +7,7 @@ import {
 	User as UserIcon,
 	Trash,
 } from "tabler-icons-react";
-import { UserButton } from "./Usercard/Usercard";
+import { UserButton } from "./Userbutton/Userbutton";
 
 const Sidebar = () => {
 	return (
