@@ -1,10 +1,11 @@
-import { Button, Stack, Flex, Space } from "@mantine/core";
+import { Button, Stack, Flex, Space, Text, Divider } from "@mantine/core";
 import {
 	Home,
 	Bell,
 	Mail,
 	Bookmarks,
 	User as UserIcon,
+	Trash,
 } from "tabler-icons-react";
 import { UserButton } from "./Usercard/Usercard";
 
@@ -15,6 +16,17 @@ const Sidebar = () => {
 			justify="space-between"
 			style={{ height: "100%" }}
 		>
+			<Stack align="flex-start">
+				<Button variant="subtle" color="violet" size="xl" radius="xl">
+					<Trash />
+					<Space w="md" />
+					<Text td={"underline"} size="xl" fw={"bold"}>
+						Litter
+					</Text>
+				</Button>
+			</Stack>
+			<Divider />
+
 			<Stack align="flex-start">
 				<Button variant="subtle" color="violet" size="xl" radius="xl">
 					<Home />
@@ -42,6 +54,7 @@ const Sidebar = () => {
 					Profile
 				</Button>
 			</Stack>
+			<Divider />
 			<Stack>
 				<Button variant="outline" color="violet" size="lg" radius="xl">
 					Post
