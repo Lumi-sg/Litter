@@ -16,7 +16,7 @@ export function UserButton() {
 
 						<div style={{ flex: 1 }}>
 							<Text size="md" fw={500}>
-								Lumi Dumi
+								Lumi
 							</Text>
 
 							<Text c="dimmed" size="sm">
@@ -35,10 +35,10 @@ export function UserButton() {
 				<Menu.Item
 					color="red"
 					leftSection={
-						<Logout style={{ width: rem(14), height: rem(14) }} />
+						<Logout style={{ width: rem(18), height: rem(18) }} />
 					}
 				>
-					Logout
+					<Text>Logout</Text>
 				</Menu.Item>
 			</Menu.Dropdown>
 		</Menu>
