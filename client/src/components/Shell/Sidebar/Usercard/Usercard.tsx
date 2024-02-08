@@ -12,11 +12,11 @@ export function UserButton() {
 				/>
 
 				<div style={{ flex: 1 }}>
-					<Text size="sm" fw={500}>
+					<Text size="md" fw={500}>
 						Lumi Dumi
 					</Text>
 
-					<Text c="dimmed" size="xs">
+					<Text c="dimmed" size="sm">
 						@Lumi_s
 					</Text>
 				</div>

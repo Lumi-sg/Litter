@@ -42,7 +42,13 @@ const Sidebar = () => {
 					Profile
 				</Button>
 			</Stack>
-			<UserButton />
+			<Stack>
+				<Button variant="outline" color="violet" size="lg" radius="xl">
+					Post
+				</Button>
+				<Space></Space>
+				<UserButton />
+			</Stack>
 		</Flex>
 	);
 };
