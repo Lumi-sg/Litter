@@ -5,7 +5,7 @@ const Footer = () => {
 		<>
 			Built by Lumi&nbsp;&nbsp;&nbsp;
 			<a
-				href="https://github.com/Lumi-sg/MessagingApp"
+				href="https://github.com/Lumi-sg/Litter"
 				style={{ textDecoration: "none" }}
 				target="_blank"
 				rel="noopener noreferrer"
