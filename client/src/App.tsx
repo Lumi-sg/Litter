@@ -1,5 +1,5 @@
-import { Dashboard } from "./components/Dashboard/Dashboard";
-import Login from "./components/Onboard/Login";
+import { Dashboard } from "./Components/Dashboard/Dashboard";
+import Login from "./Components/Onboard/Login";
 import {
 	Navigate,
 	RouterProvider,
