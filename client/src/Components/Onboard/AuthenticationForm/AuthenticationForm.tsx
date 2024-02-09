@@ -1,6 +1,5 @@
 import { Text, Paper, Group, PaperProps, Flex } from "@mantine/core";
 import { GoogleButton } from "./GoogleButton/GoogleButton";
-import { TwitterButton } from "./TwitterButton/TwitterButton";
 import { useUserStore } from "../../../Stores/userStore";
 import { useNavigate } from "react-router-dom";
 
@@ -33,7 +32,6 @@ export function AuthenticationForm(props: PaperProps) {
 					<GoogleButton radius="xl" onClick={handleLoginClick}>
 						Google
 					</GoogleButton>
-					<TwitterButton radius="xl">Twitter</TwitterButton>
 				</Group>
 			</Flex>
 		</Paper>

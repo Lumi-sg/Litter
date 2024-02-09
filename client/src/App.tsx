@@ -20,6 +20,10 @@ const router = createBrowserRouter([
 		path: "/dashboard",
 		element: <Dashboard />,
 	},
+	{
+		path: "/dashboard/profile",
+		element: <Dashboard />,
+	},
 ]);
 
 function App() {
