@@ -1,4 +1,3 @@
-import React from "react";
 import { AuthenticationForm } from "./AuthenticationForm/AuthenticationForm";
 import { Center } from "@mantine/core";
 

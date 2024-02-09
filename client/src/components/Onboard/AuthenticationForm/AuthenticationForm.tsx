@@ -1,7 +1,6 @@
-import { Text, Paper, Group, PaperProps, Center, Flex } from "@mantine/core";
+import { Text, Paper, Group, PaperProps, Flex } from "@mantine/core";
 import { GoogleButton } from "./GoogleButton/GoogleButton";
 import { TwitterButton } from "./TwitterButton/TwitterButton";
-import { Link } from "react-router-dom";
 
 export function AuthenticationForm(props: PaperProps) {
 	return (
@@ -20,12 +19,6 @@ export function AuthenticationForm(props: PaperProps) {
 					<GoogleButton radius="xl">Google</GoogleButton>
 					<TwitterButton radius="xl">Twitter</TwitterButton>
 				</Group>
-				{/* <Group>
-					<Text>
-						Don't have an account?{" "}
-						<Link to="/register">Register</Link>
-					</Text>
-				</Group> */}
 			</Flex>
 		</Paper>
 	);
