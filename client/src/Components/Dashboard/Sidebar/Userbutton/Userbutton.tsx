@@ -7,6 +7,7 @@ import { useUserStore } from "../../../../Stores/userStore";
 import { useNavigate } from "react-router-dom";
 
 export function UserButton() {
+	const { user } = useUserStore();
 	const navigate = useNavigate();
 	const { toggleColorScheme } = useMantineColorScheme();
 
@@ -28,18 +29,15 @@ export function UserButton() {
 			<Menu.Target>
 				<UnstyledButton className={classes.user}>
 					<Group>
-						<Avatar
-							src="https://avatars.githubusercontent.com/u/12517973?v=4"
-							radius="xl"
-						/>
+						<Avatar src={user?.photoURL} radius="xl" />
 
 						<div style={{ flex: 1 }}>
 							<Text size="md" fw={500}>
-								Lumi
+								{user?.displayName}
 							</Text>
 
 							<Text c="dimmed" size="sm">
-								@Lumi_s
+								{user?.email}
 							</Text>
 						</div>
 
