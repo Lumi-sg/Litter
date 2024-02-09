@@ -1,5 +1,5 @@
 // userStore.ts
-import create from "zustand";
+import {create} from "zustand";
 import { devtools, persist } from "zustand/middleware";
 import Cookies from "js-cookie";
 import { signInWithPopup, auth, provider } from "../main";
