@@ -5,6 +5,7 @@ import classes from "./UserButton.module.css";
 import { useMantineColorScheme } from "@mantine/core";
 import { useUserStore } from "../../../../Stores/userStore";
 import { useNavigate } from "react-router-dom";
+import { convertEmailToUsername } from "../../../../Helpers/convertEmailToUsername";
 
 export function UserButton() {
 	const { user } = useUserStore();
@@ -36,8 +37,10 @@ export function UserButton() {
 								{user?.displayName}
 							</Text>
 
-							<Text c="dimmed" size="sm">
-								{user?.email}
+							<Text c="dimmed" size="xs">
+								{convertEmailToUsername(
+									user?.email?.toString() as string
+								)}
 							</Text>
 						</div>
 
