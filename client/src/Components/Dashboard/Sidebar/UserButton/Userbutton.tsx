@@ -1,5 +1,5 @@
 import { UnstyledButton, Group, Avatar, Text, rem, Menu } from "@mantine/core";
-import { IconChevronRight } from "@tabler/icons-react";
+import { IconChevronUp} from "@tabler/icons-react";
 import { Logout, SunMoon } from "tabler-icons-react";
 import classes from "./UserButton.module.css";
 import { useMantineColorScheme } from "@mantine/core";
@@ -26,7 +26,7 @@ export function UserButton() {
 	};
 
 	return (
-		<Menu position="right" withArrow>
+		<Menu position="top-end" withArrow>
 			<Menu.Target>
 				<UnstyledButton className={classes.user}>
 					<Group>
@@ -44,7 +44,7 @@ export function UserButton() {
 							</Text>
 						</div>
 
-						<IconChevronRight
+						<IconChevronUp
 							style={{ width: rem(14), height: rem(14) }}
 							stroke={1.5}
 						/>

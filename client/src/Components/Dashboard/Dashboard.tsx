@@ -1,21 +1,22 @@
-import { AppShell, Burger, Center, Group } from "@mantine/core";
+import { AppShell, Center } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import Footer from "./Footer/Footer";
 import Sidebar from "./Sidebar/Sidebar";
+import Main from "./Main/Main";
 
 export function Dashboard() {
-	const [opened, { toggle }] = useDisclosure();
+	const [opened] = useDisclosure();
 
 	return (
 		<AppShell
 			footer={{ height: 60 }}
 			navbar={{
-				width: 250,
+				width: 600,
 				breakpoint: "sm",
 				collapsed: { mobile: !opened },
 			}}
 			aside={{
-				width: 300,
+				width: 600,
 				breakpoint: "md",
 				collapsed: { desktop: false, mobile: true },
 			}}
@@ -25,8 +26,7 @@ export function Dashboard() {
 				<Sidebar />
 			</AppShell.Navbar>
 			<AppShell.Main>
-				Aside is hidden on on md breakpoint and cannot be opened when it
-				is collapsed
+				<Main />
 			</AppShell.Main>
 			<AppShell.Aside p="md">Aside</AppShell.Aside>
 			<AppShell.Footer p="md">
