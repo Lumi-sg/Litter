@@ -3,8 +3,11 @@ import { IconChevronRight } from "@tabler/icons-react";
 import { Logout, SunMoon } from "tabler-icons-react";
 import classes from "./UserButton.module.css";
 import { useMantineColorScheme } from "@mantine/core";
+import { useUserStore } from "../../../../Stores/userStore";
+import { useNavigate } from "react-router-dom";
 
 export function UserButton() {
+	const navigate = useNavigate();
 	const { toggleColorScheme } = useMantineColorScheme();
 
 	const handleThemeToggle = () => {
@@ -47,6 +50,10 @@ export function UserButton() {
 					<Text>Toggle Theme</Text>
 				</Menu.Item>
 				<Menu.Item
+					onClick={() => {
+						useUserStore.getState().logout();
+						navigate("/");
+					}}
 					color="red"
 					leftSection={
 						<Logout style={{ width: rem(18), height: rem(18) }} />
