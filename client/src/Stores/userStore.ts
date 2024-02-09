@@ -8,7 +8,7 @@ type userStoreType = {
 	setUser: (user: FirebaseUser | null) => void;
 	isLoggedIn: boolean;
 	setIsLoggedIn: (isLoggedIn: boolean) => void;
-	login: (response: Response) => Promise<void>;
+	login: () => void;
 	logout: () => void;
 };
 
