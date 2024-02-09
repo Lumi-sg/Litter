@@ -13,6 +13,16 @@ export function UserButton() {
 	const handleThemeToggle = () => {
 		toggleColorScheme();
 	};
+
+	const handleLogoutClick = async () => {
+		const logoutSuccess = await useUserStore.getState().logout();
+		if (logoutSuccess) {
+			navigate("/");
+			return;
+		}
+		console.log("Logout failed");
+	};
+
 	return (
 		<Menu position="right" withArrow>
 			<Menu.Target>
@@ -50,10 +60,7 @@ export function UserButton() {
 					<Text>Toggle Theme</Text>
 				</Menu.Item>
 				<Menu.Item
-					onClick={() => {
-						useUserStore.getState().logout();
-						navigate("/");
-					}}
+					onClick={handleLogoutClick}
 					color="red"
 					leftSection={
 						<Logout style={{ width: rem(18), height: rem(18) }} />
