@@ -1,9 +1,9 @@
-import { FullLayout } from "./components/Shell/Shell";
+import { Dashboard } from "./components/Dashboard/Dashboard";
 
 function App() {
 	return (
 		<>
-			<FullLayout />
+			<Dashboard />
 		</>
 	);
 }

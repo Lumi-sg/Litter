@@ -1,9 +1,15 @@
 import { UnstyledButton, Group, Avatar, Text, rem, Menu } from "@mantine/core";
 import { IconChevronRight } from "@tabler/icons-react";
-import { Logout } from "tabler-icons-react";
+import { Logout, SunMoon } from "tabler-icons-react";
 import classes from "./UserButton.module.css";
+import { useMantineColorScheme } from "@mantine/core";
 
 export function UserButton() {
+	const { toggleColorScheme } = useMantineColorScheme();
+
+	const handleThemeToggle = () => {
+		toggleColorScheme();
+	};
 	return (
 		<Menu position="right" withArrow>
 			<Menu.Target>
@@ -32,6 +38,14 @@ export function UserButton() {
 				</UnstyledButton>
 			</Menu.Target>
 			<Menu.Dropdown>
+				<Menu.Item
+					onClick={handleThemeToggle}
+					leftSection={
+						<SunMoon style={{ width: rem(18), height: rem(18) }} />
+					}
+				>
+					<Text>Toggle Theme</Text>
+				</Menu.Item>
 				<Menu.Item
 					color="red"
 					leftSection={

@@ -3,7 +3,7 @@ import { useDisclosure } from "@mantine/hooks";
 import Footer from "./Footer/Footer";
 import Sidebar from "./Sidebar/Sidebar";
 
-export function FullLayout() {
+export function Dashboard() {
 	const [opened, { toggle }] = useDisclosure();
 
 	return (
