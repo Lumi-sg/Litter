@@ -1,5 +1,5 @@
 import { Dashboard } from "./components/Dashboard/Dashboard";
-import Login from "./components/Login/Login";
+import Login from "./components/Onboard/Login";
 import {
 	Navigate,
 	RouterProvider,
@@ -15,6 +15,7 @@ const router = createBrowserRouter([
 		path: "/login",
 		element: <Login />,
 	},
+
 	{
 		path: "/dashboard",
 		element: <Dashboard />,

@@ -6,7 +6,7 @@ const Login = () => {
 	return (
 		<div>
 			<Center h={"100vh"}>
-				<AuthenticationForm h={"50vh"} />
+				<AuthenticationForm h={"auto"} w={"20vw"} />
 			</Center>
 		</div>
 	);
