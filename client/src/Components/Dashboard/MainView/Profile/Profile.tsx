@@ -1,5 +1,5 @@
 import { UserCardImage } from "./UserInfo/UserInfo";
-import { Flex, Center, Divider } from "@mantine/core";
+import { Flex, Divider } from "@mantine/core";
 import ContentButtons from "./ContentButtons/ContentButtons";
 
 const Profile = () => {

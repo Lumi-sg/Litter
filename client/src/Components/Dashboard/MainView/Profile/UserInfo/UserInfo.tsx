@@ -1,4 +1,4 @@
-import { Card, Text, Group, Button, Space, Center } from "@mantine/core";
+import { Card, Text, Group, Button, Center } from "@mantine/core";
 import classes from "./UserCardImage.module.css";
 
 import { UserInfoIcons } from "./UserInfoIcon";
@@ -22,7 +22,13 @@ export function UserCardImage() {
 	));
 
 	return (
-		<Card withBorder radius="md" className={classes.card} h={"100%"} w={"100%"} >
+		<Card
+			withBorder
+			radius="md"
+			className={classes.card}
+			h={"100%"}
+			w={"100%"}
+		>
 			<Center>
 				<UserInfoIcons />
 			</Center>

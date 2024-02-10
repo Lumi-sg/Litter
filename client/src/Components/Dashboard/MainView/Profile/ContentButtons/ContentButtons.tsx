@@ -1,4 +1,4 @@
-import { Group, Button, Divider, Container } from "@mantine/core";
+import { Group, Button, Divider } from "@mantine/core";
 
 const ContentButtons = () => {
 	return (
