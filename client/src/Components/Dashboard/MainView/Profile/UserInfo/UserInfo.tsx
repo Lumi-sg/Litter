@@ -28,6 +28,7 @@ export function UserCardImage() {
 			className={classes.card}
 			h={"100%"}
 			w={"100%"}
+			bg={"#242424"}
 		>
 			<Center>
 				<UserInfoIcons />
@@ -42,6 +43,7 @@ export function UserCardImage() {
 					mt="xl"
 					size="md"
 					variant="default"
+					bg={"#242424"}
 				>
 					Follow
 				</Button>
@@ -51,6 +53,7 @@ export function UserCardImage() {
 					mt="xl"
 					size="md"
 					variant="default"
+					bg={"#242424"}
 				>
 					Message
 				</Button>

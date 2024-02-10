@@ -48,10 +48,10 @@ export function UserButton() {
 							style={{ width: rem(14), height: rem(14) }}
 							stroke={1.5}
 						/>
-					</Group>
+					</Group >
 				</UnstyledButton>
 			</Menu.Target>
-			<Menu.Dropdown>
+			<Menu.Dropdown bg={"#242424"}>
 				<Menu.Item
 					onClick={handleThemeToggle}
 					leftSection={
