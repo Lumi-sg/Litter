@@ -11,13 +11,15 @@ import {
 	Home,
 	Bell,
 	Mail,
-	Bookmarks,
+	Bookmarks as BookmarksIcon,
 	User as UserIcon,
 	Trash,
 } from "tabler-icons-react";
 import { UserButton } from "./UserButton/Userbutton";
+import { useComponentStore } from "../../../Stores/componentStore";
 
 const Sidebar = () => {
+	const { setSelectedComponent } = useComponentStore();
 	return (
 		<Flex h={"100%"}>
 			<Container w={"45%"} h={"100%"}></Container>
@@ -31,6 +33,7 @@ const Sidebar = () => {
 				>
 					<Stack align="flex-start">
 						<Button
+							onClick={() => setSelectedComponent("Home")}
 							variant="subtle"
 							color="violet"
 							size="xl"
@@ -47,6 +50,7 @@ const Sidebar = () => {
 
 					<Stack align="flex-start">
 						<Button
+							onClick={() => setSelectedComponent("Home")}
 							variant="subtle"
 							color="violet"
 							size="xl"
@@ -57,6 +61,9 @@ const Sidebar = () => {
 							Home
 						</Button>
 						<Button
+							onClick={() =>
+								setSelectedComponent("Notifications")
+							}
 							variant="subtle"
 							color="violet"
 							size="xl"
@@ -67,6 +74,7 @@ const Sidebar = () => {
 							Notifications
 						</Button>
 						<Button
+							onClick={() => setSelectedComponent("Messages")}
 							variant="subtle"
 							color="violet"
 							size="xl"
@@ -77,16 +85,18 @@ const Sidebar = () => {
 							Messages
 						</Button>
 						<Button
+							onClick={() => setSelectedComponent("Bookmarks")}
 							variant="subtle"
 							color="violet"
 							size="xl"
 							radius="xl"
 						>
-							<Bookmarks />
+							<BookmarksIcon />
 							<Space w="md" />
 							Bookmarks
 						</Button>
 						<Button
+							onClick={() => setSelectedComponent("Profile")}
 							variant="subtle"
 							color="violet"
 							size="xl"
