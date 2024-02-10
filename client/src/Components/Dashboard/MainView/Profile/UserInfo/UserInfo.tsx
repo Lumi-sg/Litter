@@ -22,7 +22,7 @@ export function UserCardImage() {
 	));
 
 	return (
-		<Card withBorder radius="md" className={classes.card} >
+		<Card withBorder radius="md" className={classes.card} h={"100%"} w={"100%"} >
 			<Center>
 				<UserInfoIcons />
 			</Center>
