@@ -1,5 +1,5 @@
 import { UserCardImage } from "./UserInfo/UserInfo";
-import { Flex, Divider } from "@mantine/core";
+import { Flex, Divider, Space } from "@mantine/core";
 import ContentButtons from "./ContentButtons/ContentButtons";
 import { useState } from "react";
 import Posts from "./Posts/Posts";
@@ -27,8 +27,11 @@ const Profile = () => {
 		<div>
 			<Flex h={"100%"} w={"100%"} direction="column">
 				<UserCardImage />
-				<ContentButtons handleProfileViewClick={handleProfileViewClick} />
+				<ContentButtons
+					handleProfileViewClick={handleProfileViewClick}
+				/>
 				<Divider />
+				<Space h="md" />
 				{renderProfileView()}
 			</Flex>
 		</div>

@@ -6,30 +6,55 @@ import {
 	Paper,
 } from "@mantine/core";
 import classes from "./TweetComponent.module.css";
+import { useUserStore } from "../../../../../Stores/userStore";
+import { convertEmailToUsername } from "../../../../../Helpers/convertEmailToUsername";
+import { MessageCircle2, Heart, Bookmark } from "tabler-icons-react";
 
-export function CommentHtml() {
+export function TweetComponent() {
+	const { user } = useUserStore();
 	return (
 		<Paper withBorder radius="md" className={classes.comment}>
 			<Group>
 				<Avatar
-					src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-2.png"
-					alt="Jacob Warnhalter"
+					src={user?.photoURL}
+					alt={user?.displayName as string}
 					radius="xl"
 				/>
 				<div>
-					<Text fz="sm">Jacob Warnhalter</Text>
+					<Group gap={5}>
+						<Text fz="md" fw={700}>
+							{user?.displayName as string}
+						</Text>
+						<Text fz="xs" c="dimmed">
+							{convertEmailToUsername(user?.email as string)}
+						</Text>
+					</Group>
+
 					<Text fz="xs" c="dimmed">
 						10 minutes ago
 					</Text>
 				</div>
 			</Group>
 			<TypographyStylesProvider className={classes.body}>
-				<div
-					className={classes.content}
-					dangerouslySetInnerHTML={{
-						__html: '<p>I use <a href="https://heroku.com/" rel="noopener noreferrer" target="_blank">Heroku</a> to host my Node.js application, but MongoDB add-on appears to be too <strong>expensive</strong>. I consider switching to <a href="https://www.digitalocean.com/" rel="noopener noreferrer" target="_blank">Digital Ocean</a> VPS to save some cash.</p>',
-					}}
-				/>
+				<Text>
+					Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+					Dolore, saepe. Porro, laborum sequi dolores, sit
+					consequuntur laboriosam, voluptas quia odit rerum pariatur
+					voluptatem similique dolorem amet sint dicta ut veritatis.
+				</Text>
+				<Group  justify="flex-start" gap={"30%"} mt={10}>
+					<Group gap={2}>
+						<MessageCircle2 />
+						<Text c="dimmed">53</Text>
+					</Group>
+					<Group gap={2}>
+						<Heart />
+						<Text c="dimmed">100</Text>
+					</Group>
+					<Group gap={2}>
+						<Bookmark />
+					</Group>
+				</Group>
 			</TypographyStylesProvider>
 		</Paper>
 	);
