@@ -33,7 +33,7 @@ export function UserButton() {
 						<Avatar src={user?.photoURL} radius="xl" />
 
 						<div style={{ flex: 1 }}>
-							<Text size="md" fw={500}>
+							<Text size="md" fw={700} c={"white"}>
 								{user?.displayName}
 							</Text>
 

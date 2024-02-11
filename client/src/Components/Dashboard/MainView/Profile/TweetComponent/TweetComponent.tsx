@@ -26,12 +26,12 @@ export function TweetComponent() {
 						<Text fz="md" fw={700} c={"white"}>
 							{user?.displayName as string}
 						</Text>
-						<Text fz="xs" c="violet">
+						<Text fz="xs" c="dimmed">
 							{convertEmailToUsername(user?.email as string)}
 						</Text>
 					</Group>
 
-					<Text fz="xs" c="dimmed">
+					<Text fz="xs" c="dimmed" >
 						10 minutes ago
 					</Text>
 				</div>

@@ -10,7 +10,7 @@ export function UserInfoIcons() {
 			<Group wrap="nowrap">
 				<Avatar src={user?.photoURL} size={60} radius="xl" />
 				<div>
-					<Text fz="lg" fw={500} className={classes.name}>
+					<Text fz="lg" fw={700} className={classes.name} c={"white"}>
 						{user?.displayName}
 					</Text>
 
