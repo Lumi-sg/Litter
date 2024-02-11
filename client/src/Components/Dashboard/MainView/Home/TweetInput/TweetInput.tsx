@@ -80,7 +80,9 @@ const TweetInput = () => {
 					<Button
 						color="violet"
 						variant="outline"
-						disabled={!tweetCharacterLength}
+						disabled={
+							!tweetCharacterLength || tweetCharacterLength > 280
+						}
 					>
 						Post
 					</Button>
