@@ -23,10 +23,10 @@ export function TweetComponent() {
 				/>
 				<div>
 					<Group gap={5}>
-						<Text fz="md" fw={700}>
+						<Text fz="md" fw={700} c={"white"}>
 							{user?.displayName as string}
 						</Text>
-						<Text fz="xs" c="dimmed">
+						<Text fz="xs" c="violet">
 							{convertEmailToUsername(user?.email as string)}
 						</Text>
 					</Group>
@@ -37,7 +37,7 @@ export function TweetComponent() {
 				</div>
 			</Group>
 			<TypographyStylesProvider className={classes.body}>
-				<Text>
+				<Text c="white">
 					Lorem ipsum dolor sit amet, consectetur adipisicing elit.
 					Dolore, saepe. Porro, laborum sequi dolores, sit
 					consequuntur laboriosam, voluptas quia odit rerum pariatur
@@ -49,44 +49,30 @@ export function TweetComponent() {
 							style={{
 								cursor: "pointer",
 								transition: "color 0.3s",
-							}}
-							onMouseOver={(e) => {
-								e.currentTarget.style.color = "#9775fa";
-							}}
-							onMouseOut={(e) => {
-								e.currentTarget.style.color = "";
+								color: "#9775fa",
 							}}
 						/>
-						<Text c="dimmed">53</Text>
+						<Text>53</Text>
 					</Group>
 					<Group gap={2}>
 						<Heart
 							style={{
 								cursor: "pointer",
 								transition: "color 0.2s",
-							}}
-							onMouseOver={(e) => {
-								e.currentTarget.style.color = "#d279cb";
-							}}
-							onMouseOut={(e) => {
-								e.currentTarget.style.color = "";
+								color: "#d279cb",
 							}}
 						/>
-						<Text c="dimmed">100</Text>
+						<Text>100</Text>
 					</Group>
 					<Group gap={2}>
 						<Bookmark
 							style={{
 								cursor: "pointer",
 								transition: "color 0.3s",
-							}}
-							onMouseOver={(e) => {
-								e.currentTarget.style.color = "#4097bf";
-							}}
-							onMouseOut={(e) => {
-								e.currentTarget.style.color = "";
+								color: "#4097bf",
 							}}
 						/>
+						<Text>17</Text>
 					</Group>
 				</Group>
 			</TypographyStylesProvider>
