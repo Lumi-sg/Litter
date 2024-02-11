@@ -6,8 +6,8 @@ import {
 	Paper,
 } from "@mantine/core";
 import classes from "./TweetComponent.module.css";
-import { useUserStore } from "../../../../../Stores/userStore";
-import { convertEmailToUsername } from "../../../../../Helpers/convertEmailToUsername";
+import { useUserStore } from "../../../Stores/userStore";
+import { convertEmailToUsername } from "../../../Helpers/convertEmailToUsername";
 import { MessageCircle2, Heart, Bookmark } from "tabler-icons-react";
 
 export function TweetComponent() {
@@ -31,7 +31,7 @@ export function TweetComponent() {
 						</Text>
 					</Group>
 
-					<Text fz="xs" c="dimmed" >
+					<Text fz="xs" c="dimmed">
 						10 minutes ago
 					</Text>
 				</div>
@@ -43,7 +43,12 @@ export function TweetComponent() {
 					consequuntur laboriosam, voluptas quia odit rerum pariatur
 					voluptatem similique dolorem amet sint dicta ut veritatis.
 				</Text>
-				<Group justify="space-between" gap={"30%"} mt={10} align="center">
+				<Group
+					justify="space-between"
+					gap={"30%"}
+					mt={10}
+					align="center"
+				>
 					<Group gap={2}>
 						<MessageCircle2
 							style={{

@@ -1,4 +1,4 @@
-import { TweetComponent } from "../TweetComponent/TweetComponent";
+import { TweetComponent } from "../../../../../Components/ModularComponents/TweetComponent/TweetComponent";
 
 const Likes = () => {
 	return (
