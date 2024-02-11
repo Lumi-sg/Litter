@@ -1,9 +1,16 @@
-import React from 'react'
+import { TweetComponent } from "../TweetComponent/TweetComponent";
 
 const Likes = () => {
-  return (
-    <div>Likes</div>
-  )
-}
+	return (
+		<>
+			<TweetComponent />
+			<TweetComponent />
+			<TweetComponent />
+			<TweetComponent />
+			<TweetComponent />
+			<TweetComponent />
+		</>
+	);
+};
 
-export default Likes
+export default Likes;

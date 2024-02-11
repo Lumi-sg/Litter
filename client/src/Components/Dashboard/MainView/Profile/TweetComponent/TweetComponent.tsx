@@ -63,7 +63,7 @@ export function TweetComponent() {
 						<Heart
 							style={{
 								cursor: "pointer",
-								transition: "color 0.3s",
+								transition: "color 0.2s",
 							}}
 							onMouseOver={(e) => {
 								e.currentTarget.style.color = "#d279cb";

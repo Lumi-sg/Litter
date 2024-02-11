@@ -1,11 +1,13 @@
 import { Group, Button, Divider } from "@mantine/core";
 import { ProfileViewType } from "../Profile";
+import React, { useState } from "react";
 
 type ContentButtonPros = {
 	handleProfileViewClick: (view: ProfileViewType) => void;
 };
 
 const ContentButtons = ({ handleProfileViewClick }: ContentButtonPros) => {
+	const [isPostsSelected, setIsPostsSelected] = useState(true);
 	return (
 		<Group
 			gap={0}
@@ -19,9 +21,12 @@ const ContentButtons = ({ handleProfileViewClick }: ContentButtonPros) => {
 				w={"49%"}
 				radius="md"
 				size="md"
-				variant="subtle"
+				variant={isPostsSelected === true ? "outline" : "subtle"}
 				color="violet"
-				onClick={() => handleProfileViewClick("posts")}
+				onClick={() => {
+					handleProfileViewClick("posts");
+					setIsPostsSelected(true);
+				}}
 			>
 				Posts
 			</Button>
@@ -30,9 +35,12 @@ const ContentButtons = ({ handleProfileViewClick }: ContentButtonPros) => {
 				w={"49%"}
 				radius="md"
 				size="md"
-				variant="subtle"
+				variant={isPostsSelected === true ? "subtle" : "outline"}
 				color="violet"
-				onClick={() => handleProfileViewClick("likes")}
+				onClick={() => {
+					handleProfileViewClick("likes");
+					setIsPostsSelected(false);
+				}}
 			>
 				Likes
 			</Button>
