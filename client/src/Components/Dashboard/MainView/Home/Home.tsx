@@ -1,9 +1,19 @@
-import React from 'react'
+import React from "react";
+import { TweetComponent } from "../../../ModularComponents/TweetComponent/TweetComponent";
+import TweetInput from "./TweetInput/TweetInput";
 
 const Home = () => {
-  return (
-    <div>Home</div>
-  )
-}
+	return (
+		<>
+			<TweetInput />
+			<TweetComponent />
+			<TweetComponent />
+			<TweetComponent />
+			<TweetComponent />
+			<TweetComponent />
+			<TweetComponent />
+		</>
+	);
+};
 
-export default Home
+export default Home;

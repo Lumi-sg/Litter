@@ -23,7 +23,12 @@ export function TweetComponent() {
 				/>
 				<div>
 					<Group gap={5}>
-						<Text fz="md" fw={700} c={"white"}>
+						<Text
+							fz="md"
+							fw={700}
+							c={"white"}
+							style={{ cursor: "pointer" }}
+						>
 							{user?.displayName as string}
 						</Text>
 						<Text fz="xs" c="dimmed">
