@@ -28,6 +28,7 @@ export function UserCardImage() {
 			className={classes.card}
 			h={"100%"}
 			w={"100%"}
+			bg={"#242424"}
 		>
 			<Center>
 				<UserInfoIcons />

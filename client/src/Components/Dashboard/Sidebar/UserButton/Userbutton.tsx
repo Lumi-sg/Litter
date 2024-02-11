@@ -10,11 +10,11 @@ import { convertEmailToUsername } from "../../../../Helpers/convertEmailToUserna
 export function UserButton() {
 	const { user } = useUserStore();
 	const navigate = useNavigate();
-	const { toggleColorScheme } = useMantineColorScheme();
+	// const { toggleColorScheme } = useMantineColorScheme();
 
-	const handleThemeToggle = () => {
-		toggleColorScheme();
-	};
+	// const handleThemeToggle = () => {
+	// 	toggleColorScheme();
+	// };
 
 	const handleLogoutClick = async () => {
 		const logoutSuccess = await useUserStore.getState().logout();

@@ -1,6 +1,6 @@
 import { Group, Button, Divider } from "@mantine/core";
 import { ProfileViewType } from "../Profile";
-import React, { useState } from "react";
+import { useState } from "react";
 
 type ContentButtonPros = {
 	handleProfileViewClick: (view: ProfileViewType) => void;
