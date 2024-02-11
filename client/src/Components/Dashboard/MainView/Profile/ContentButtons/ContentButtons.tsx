@@ -30,9 +30,9 @@ const ContentButtons = ({ handleProfileViewClick }: ContentButtonPros) => {
 			>
 				Posts
 			</Button>
-			<Divider orientation="vertical" />
+			<Divider orientation="vertical" ml={10} mr={10} />
 			<Button
-				w={"49%"}
+				w={"47%"}
 				radius="md"
 				size="md"
 				variant={isPostsSelected === true ? "subtle" : "outline"}

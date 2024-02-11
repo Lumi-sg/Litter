@@ -43,7 +43,7 @@ export function TweetComponent() {
 					consequuntur laboriosam, voluptas quia odit rerum pariatur
 					voluptatem similique dolorem amet sint dicta ut veritatis.
 				</Text>
-				<Group justify="flex-start" gap={"30%"} mt={10}>
+				<Group justify="space-between" gap={"30%"} mt={10} align="center">
 					<Group gap={2}>
 						<MessageCircle2
 							style={{
