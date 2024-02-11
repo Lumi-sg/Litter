@@ -72,7 +72,7 @@ export function TweetComponent() {
 								e.currentTarget.style.color = "";
 							}}
 						/>
-						<Text c="dimmed">100</Text>
+						<Text c="red">100</Text>
 					</Group>
 					<Group gap={2}>
 						<Bookmark

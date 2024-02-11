@@ -52,14 +52,14 @@ export function UserButton() {
 				</UnstyledButton>
 			</Menu.Target>
 			<Menu.Dropdown bg={"#242424"}>
-				<Menu.Item
+				{/* <Menu.Item
 					onClick={handleThemeToggle}
 					leftSection={
 						<SunMoon style={{ width: rem(18), height: rem(18) }} />
 					}
 				>
 					<Text>Toggle Theme</Text>
-				</Menu.Item>
+				</Menu.Item> */}
 				<Menu.Item
 					onClick={handleLogoutClick}
 					color="red"
