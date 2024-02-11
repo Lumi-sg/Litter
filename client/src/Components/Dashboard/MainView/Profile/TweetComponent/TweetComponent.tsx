@@ -48,7 +48,6 @@ export function TweetComponent() {
 						<MessageCircle2
 							style={{
 								cursor: "pointer",
-								transition: "color 0.3s",
 								color: "#9775fa",
 							}}
 						/>
@@ -58,7 +57,6 @@ export function TweetComponent() {
 						<Heart
 							style={{
 								cursor: "pointer",
-								transition: "color 0.2s",
 								color: "#d279cb",
 							}}
 						/>
@@ -68,7 +66,6 @@ export function TweetComponent() {
 						<Bookmark
 							style={{
 								cursor: "pointer",
-								transition: "color 0.3s",
 								color: "#4097bf",
 							}}
 						/>
