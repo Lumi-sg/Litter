@@ -12,6 +12,7 @@ import { MessageCircle2, Heart, Bookmark } from "tabler-icons-react";
 
 export function TweetComponent() {
 	const { user } = useUserStore();
+
 	return (
 		<Paper withBorder radius="md" className={classes.comment}>
 			<Group>
@@ -42,17 +43,50 @@ export function TweetComponent() {
 					consequuntur laboriosam, voluptas quia odit rerum pariatur
 					voluptatem similique dolorem amet sint dicta ut veritatis.
 				</Text>
-				<Group  justify="flex-start" gap={"30%"} mt={10}>
+				<Group justify="flex-start" gap={"30%"} mt={10}>
 					<Group gap={2}>
-						<MessageCircle2 />
+						<MessageCircle2
+							style={{
+								cursor: "pointer",
+								transition: "color 0.3s",
+							}}
+							onMouseOver={(e) => {
+								e.currentTarget.style.color = "#9775fa";
+							}}
+							onMouseOut={(e) => {
+								e.currentTarget.style.color = "";
+							}}
+						/>
 						<Text c="dimmed">53</Text>
 					</Group>
 					<Group gap={2}>
-						<Heart />
+						<Heart
+							style={{
+								cursor: "pointer",
+								transition: "color 0.3s",
+							}}
+							onMouseOver={(e) => {
+								e.currentTarget.style.color = "#d279cb";
+							}}
+							onMouseOut={(e) => {
+								e.currentTarget.style.color = "";
+							}}
+						/>
 						<Text c="dimmed">100</Text>
 					</Group>
 					<Group gap={2}>
-						<Bookmark />
+						<Bookmark
+							style={{
+								cursor: "pointer",
+								transition: "color 0.3s",
+							}}
+							onMouseOver={(e) => {
+								e.currentTarget.style.color = "#4097bf";
+							}}
+							onMouseOut={(e) => {
+								e.currentTarget.style.color = "";
+							}}
+						/>
 					</Group>
 				</Group>
 			</TypographyStylesProvider>
