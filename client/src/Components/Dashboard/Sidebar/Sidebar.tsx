@@ -1,12 +1,4 @@
-import {
-	Button,
-	Stack,
-	Flex,
-	Space,
-	Text,
-	Divider,
-	Container,
-} from "@mantine/core";
+import { Button, Stack, Flex, Space, Text, Divider } from "@mantine/core";
 import {
 	Home,
 	Bell,
@@ -21,17 +13,17 @@ import { useComponentStore } from "../../../Stores/componentStore";
 const Sidebar = () => {
 	const { setSelectedComponent } = useComponentStore();
 	return (
-		<Flex h={"100%"} w={"100%"}>
-			<Flex
-				w={"100%"}
-				h={"100%"}
-				direction="column"
-				justify="space-between"
-				align={"flex-end"}
-				style={{ height: "100%" }}
-				mr={10}
-			>
-				<Stack miw={"30%"} align={"flex-start"}>
+		<Flex
+			w={"100%"}
+			h={"100%"}
+			direction="column"
+			justify="space-between"
+			align={"flex-end"}
+			style={{ height: "100%" }}
+			mr={10}
+		>
+			<Stack h={"100%"} justify="space-between">
+				<Flex direction="column" align="flex-start">
 					<Button
 						onClick={() => setSelectedComponent("Home")}
 						variant="subtle"
@@ -45,8 +37,10 @@ const Sidebar = () => {
 							Litter
 						</Text>
 					</Button>
-				</Stack>
-				<Stack miw={"30%"} align={"flex-start"}>
+				</Flex>
+				<Divider style={{ width: "100%" }} />
+
+				<Flex direction="column" align="flex-start" gap="lg">
 					<Button
 						onClick={() => setSelectedComponent("Home")}
 						variant="subtle"
@@ -102,21 +96,24 @@ const Sidebar = () => {
 						<Space w="md" />
 						Profile
 					</Button>
-				</Stack>
-				<Stack miw={"30%"} align={"flex-start"}>
+				</Flex>
+				<Divider style={{ width: "100%" }} />
+
+				<Flex direction="column" align="flex-start">
 					<Button
 						variant="outline"
 						color="violet"
 						size="lg"
 						radius="xl"
-						w={"50%"}
+						fullWidth
+						mb="md"
 					>
 						Post
 					</Button>
 					<Space></Space>
 					<UserButton />
-				</Stack>
-			</Flex>
+				</Flex>
+			</Stack>
 		</Flex>
 	);
 };
