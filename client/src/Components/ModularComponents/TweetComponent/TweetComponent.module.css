@@ -1,5 +1,6 @@
 .comment {
 	padding: var(--mantine-spacing-lg) var(--mantine-spacing-xl);
+	color: #b097fcce;
 }
 
 .comment:hover {
@@ -19,6 +20,13 @@
 	}
 }
 
+.bookmarkicon,
+.messageicon,
+.hearticon {
+	color: #9775fa;
+	transition: 3s ease-in-out;
+}
+
 .bookmarkicon:hover,
 .messageicon:hover,
 .hearticon:hover {
@@ -26,7 +34,7 @@
 }
 
 .messageicon:hover > * {
-	color: #9775fa !important;
+	color: #47a9d6 !important;
 }
 
 .hearticon:hover > * {
@@ -34,5 +42,5 @@
 }
 
 .bookmarkicon:hover > * {
-	color: #4097bf !important;
+	color: #3cc94d !important;
 }

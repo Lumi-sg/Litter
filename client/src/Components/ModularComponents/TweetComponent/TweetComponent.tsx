@@ -36,7 +36,7 @@ export function TweetComponent() {
 						>
 							{user?.displayName as string}
 						</Text>
-						<Text fz="xs" c="dimmed">
+						<Text fz="xs" c="#b097fcce">
 							{convertEmailToUsername(user?.email as string)}
 						</Text>
 					</Group>
@@ -61,19 +61,19 @@ export function TweetComponent() {
 				>
 					<Group gap={2} className={styles.messageicon}>
 						<MessageCircle2 size={22} />
-						<Text c={"dimmed"} size="sm">
+						<Text c={"white"} size="sm">
 							53
 						</Text>
 					</Group>
 					<Group gap={2} className={styles.hearticon}>
 						<Heart size={22} />
-						<Text c={"dimmed"} size="sm">
+						<Text c={"white"} size="sm">
 							100
 						</Text>
 					</Group>
 					<Group gap={0} className={styles.bookmarkicon}>
 						<Bookmark size={22} />
-						<Text c={"dimmed"} size="sm">
+						<Text c={"white"} size="sm">
 							17
 						</Text>
 					</Group>
