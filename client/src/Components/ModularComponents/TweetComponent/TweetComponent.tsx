@@ -6,6 +6,7 @@ import {
 	Paper,
 } from "@mantine/core";
 import classes from "./TweetComponent.module.css";
+import styles from "./TweetComponent.module.css";
 import { useUserStore } from "../../../Stores/userStore";
 import { convertEmailToUsername } from "../../../Helpers/convertEmailToUsername";
 import { MessageCircle2, Heart, Bookmark } from "tabler-icons-react";
@@ -54,32 +55,23 @@ export function TweetComponent() {
 					mt={10}
 					align="center"
 				>
-					<Group gap={2}>
-						<MessageCircle2
-							style={{
-								cursor: "pointer",
-								color: "#9775fa",
-							}}
-						/>
-						<Text>53</Text>
+					<Group gap={2} className={styles.messageicon}>
+						<MessageCircle2 size={22} />
+						<Text c={"dimmed"} size="sm">
+							53
+						</Text>
 					</Group>
-					<Group gap={2}>
-						<Heart
-							style={{
-								cursor: "pointer",
-								color: "#d279cb",
-							}}
-						/>
-						<Text>100</Text>
+					<Group gap={2} className={styles.hearticon}>
+						<Heart size={22} />
+						<Text c={"dimmed"} size="sm">
+							100
+						</Text>
 					</Group>
-					<Group gap={2}>
-						<Bookmark
-							style={{
-								cursor: "pointer",
-								color: "#4097bf",
-							}}
-						/>
-						<Text>17</Text>
+					<Group gap={0} className={styles.bookmarkicon}>
+						<Bookmark size={22} />
+						<Text c={"dimmed"} size="sm">
+							17
+						</Text>
 					</Group>
 				</Group>
 			</TypographyStylesProvider>

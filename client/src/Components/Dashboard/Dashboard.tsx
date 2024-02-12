@@ -1,4 +1,4 @@
-import { AppShell, Center } from "@mantine/core";
+import { AppShell, Flex } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import Footer from "./Footer/Footer";
 import Sidebar from "./Sidebar/Sidebar";
@@ -31,7 +31,7 @@ export function Dashboard() {
 
 	return (
 		<AppShell
-			footer={{ height: 60 }}
+			footer={{ height: 40 }}
 			navbar={{
 				collapsed: { desktop: false, mobile: true },
 				width: { xs: 325, lg: 325, xl: 600, xxl: 900 },
@@ -49,10 +49,10 @@ export function Dashboard() {
 			</AppShell.Navbar>
 			<AppShell.Main>{renderSwitch()}</AppShell.Main>
 			<AppShell.Aside p="md">Aside</AppShell.Aside>
-			<AppShell.Footer p="md">
-				<Center>
+			<AppShell.Footer>
+				<Flex align={"center"} justify={"center"} mt="xs">
 					<Footer />
-				</Center>
+				</Flex>
 			</AppShell.Footer>
 		</AppShell>
 	);

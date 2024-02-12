@@ -13,3 +13,21 @@
 		margin-bottom: 0;
 	}
 }
+
+.bookmarkicon:hover,
+.messageicon:hover,
+.hearticon:hover {
+	cursor: pointer;
+}
+
+.messageicon:hover > * {
+	color: #9775fa !important;
+}
+
+.hearticon:hover > * {
+	color: #d279cb !important;
+}
+
+.bookmarkicon:hover > * {
+	color: #4097bf !important;
+}
