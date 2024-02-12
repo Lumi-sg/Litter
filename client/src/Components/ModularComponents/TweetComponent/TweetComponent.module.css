@@ -2,6 +2,11 @@
 	padding: var(--mantine-spacing-lg) var(--mantine-spacing-xl);
 }
 
+.comment:hover {
+	background-color: #9272f411 !important;
+	cursor: pointer;
+}
+
 .body {
 	padding-left: rem(54px);
 	padding-top: var(--mantine-spacing-sm);

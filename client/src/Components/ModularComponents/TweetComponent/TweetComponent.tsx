@@ -15,7 +15,11 @@ export function TweetComponent() {
 	const { user } = useUserStore();
 
 	return (
-		<Paper withBorder radius="md" className={classes.comment}>
+		<Paper
+			withBorder
+			radius="md"
+			className={classes.comment + " " + styles.comment}
+		>
 			<Group>
 				<Avatar
 					src={user?.photoURL}
