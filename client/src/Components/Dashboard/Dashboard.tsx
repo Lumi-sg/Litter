@@ -33,23 +33,21 @@ export function Dashboard() {
 		<AppShell
 			footer={{ height: 60 }}
 			navbar={{
-				width: 600,
-				breakpoint: "sm",
-				collapsed: { mobile: !opened },
+				collapsed: { desktop: false, mobile: true },
+				width: { xs: 325, lg: 325, xl: 600, xxl: 900 },
+				breakpoint: "xs",
 			}}
 			aside={{
-				width: 600,
-				breakpoint: "md",
 				collapsed: { desktop: false, mobile: true },
+				width: { xs: 325, lg: 325, xl: 600, xxl: 900 },
+				breakpoint: "xs",
 			}}
 			padding="md"
 		>
 			<AppShell.Navbar p="md">
 				<Sidebar />
 			</AppShell.Navbar>
-			<AppShell.Main>
-				{renderSwitch()}
-			</AppShell.Main>
+			<AppShell.Main>{renderSwitch()}</AppShell.Main>
 			<AppShell.Aside p="md">Aside</AppShell.Aside>
 			<AppShell.Footer p="md">
 				<Center>

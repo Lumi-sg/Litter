@@ -1,12 +1,23 @@
 import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
 import "@mantine/core/styles.css";
-import { MantineProvider } from "@mantine/core";
+import { MantineProvider, createTheme } from "@mantine/core";
 import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
+const theme = createTheme({
+	breakpoints: {
+	  xs: '36em',
+	  sm: '48em',
+	  md: '62em',
+	  lg: '75em',
+	  xl: '88em',
+	  xxl: '121em',
+	},
+  });
+
 ReactDOM.createRoot(document.getElementById("root")!).render(
-	<MantineProvider defaultColorScheme="dark">
+	<MantineProvider theme={theme}>
 		<App />
 	</MantineProvider>
 );
