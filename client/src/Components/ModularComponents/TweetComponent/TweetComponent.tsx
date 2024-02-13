@@ -13,7 +13,11 @@ import { convertEmailToUsername } from "../../../Helpers/convertEmailToUsername"
 import { MessageCircle2, Heart, Bookmark, Dots } from "tabler-icons-react";
 import { useComponentStore } from "../../../Stores/componentStore";
 
-export function TweetComponent() {
+type TweetComponentProps = {
+	passedInStyles: React.CSSProperties;
+};
+
+export function TweetComponent({ passedInStyles }: TweetComponentProps) {
 	const { user } = useUserStore();
 	const { setSelectedComponent } = useComponentStore();
 
@@ -33,7 +37,7 @@ export function TweetComponent() {
 			radius="md"
 			className={classes.comment + " " + styles.comment}
 			onClick={() => setSelectedComponent("SinglePost")}
-			style={{ borderLeft: "5px solid #8d7ac8" }}
+			style={{ ...passedInStyles }}
 		>
 			<Group justify="space-between">
 				<Group>
