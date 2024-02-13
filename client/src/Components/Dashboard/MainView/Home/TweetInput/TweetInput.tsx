@@ -11,7 +11,12 @@ import {
 } from "@mantine/core";
 import "./test.css";
 import { useEffect, useState } from "react";
-const TweetInput = () => {
+
+type TweetInputProps = {
+	placeholderMessage: string;
+};
+
+const TweetInput = ({ placeholderMessage }: TweetInputProps) => {
 	const { user } = useUserStore();
 	const [tweetInput, setTweetInput] = useState("");
 	const [tweetCharacterLength, setTweetCharacterLength] = useState(0);
@@ -37,7 +42,7 @@ const TweetInput = () => {
 						h={"100%"}
 						w={"80%"}
 						maxRows={6}
-						placeholder="What's happening"
+						placeholder={placeholderMessage}
 						size="lg"
 						style={{
 							backgroundColor: "#242424",

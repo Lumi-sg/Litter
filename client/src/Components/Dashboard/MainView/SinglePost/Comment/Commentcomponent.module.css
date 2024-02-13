@@ -1,0 +1,58 @@
+.comment {
+	padding: var(--mantine-spacing-lg) var(--mantine-spacing-xl);
+	color: #b097fcce;
+}
+
+.comment:hover {
+	background-color: #9272f411 !important;
+	cursor: pointer;
+}
+
+.body {
+	padding-left: rem(54px);
+	padding-top: var(--mantine-spacing-sm);
+	font-size: var(--mantine-font-size-sm);
+}
+
+.content {
+	& > p:last-child {
+		margin-bottom: 0;
+	}
+}
+
+.bookmarkicon,
+.messageicon,
+.hearticon {
+	transition: box-shadow 0.3s ease;
+}
+
+.bookmarkicon:hover,
+.messageicon:hover,
+.hearticon:hover {
+	cursor: pointer;
+}
+
+.messageicon:hover > * {
+	color: #4db5e5 !important;
+}
+
+.hearticon:hover > * {
+	color: #d279cb !important;
+}
+
+.bookmarkicon:hover > * {
+	color: #3cc94d !important;
+}
+
+.messageicon:hover > .messageActualIcon {
+	border-radius: 50%;
+	box-shadow: 0 0px 20px #4db5e5, inset 0 0 30px rgba(100, 180, 197, 0.4) !important;
+}
+.hearticon:hover > .heartActualIcon {
+	border-radius: 50%;
+	box-shadow: 0 0px 20px #d279cb, inset 0 0 30px rgba(182, 92, 180, 0.4) !important;
+}
+.bookmarkicon:hover > .bookmarkActualIcon {
+	border-radius: 50%;
+	box-shadow: 0 0px 20px #3cc94d, inset 0 0 30px rgba(92, 180, 95, 0.4) !important;
+}

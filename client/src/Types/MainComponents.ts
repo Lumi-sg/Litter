@@ -3,4 +3,5 @@ export type MainViewComponentsType =
 	| "Profile"
 	| "Messages"
 	| "Notifications"
-	| "Bookmarks";
+	| "Bookmarks"
+	| "SinglePost";

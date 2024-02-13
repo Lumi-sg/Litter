@@ -5,7 +5,7 @@ import TweetInput from "./TweetInput/TweetInput";
 const Home = () => {
 	return (
 		<>
-			<TweetInput />
+			<TweetInput placeholderMessage="What's happening"/>
 			<TweetComponent />
 			<TweetComponent />
 			<TweetComponent />

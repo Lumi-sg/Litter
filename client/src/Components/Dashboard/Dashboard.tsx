@@ -8,6 +8,7 @@ import Notifications from "./MainView/Notifications/Notifications";
 import Messages from "./MainView/Messages/Messages";
 import Bookmarks from "./MainView/Bookmarks/Bookmarks";
 import Profile from "./MainView/Profile/Profile";
+import SinglePost from "./MainView/SinglePost/SinglePost";
 export function Dashboard() {
 	const { selectedComponent } = useComponentStore();
 	const [opened] = useDisclosure();
@@ -24,6 +25,8 @@ export function Dashboard() {
 				return <Bookmarks />;
 			case "Profile":
 				return <Profile />;
+			case "SinglePost":
+				return <SinglePost />;
 			default:
 				return <Home />;
 		}

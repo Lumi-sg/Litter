@@ -5,21 +5,19 @@ import {
 	TypographyStylesProvider,
 	Paper,
 } from "@mantine/core";
-import classes from "./TweetComponent.module.css";
-import styles from "./TweetComponent.module.css";
-import { useUserStore } from "../../../Stores/userStore";
-import { convertEmailToUsername } from "../../../Helpers/convertEmailToUsername";
+import classes from "./Commentcomponent.module.css";
+import styles from "./Commentcomponent.module.css";
+import { useUserStore } from "../../../../../Stores/userStore";
+import { convertEmailToUsername } from "../../../../../Helpers/convertEmailToUsername";
 import { MessageCircle2, Heart, Bookmark } from "tabler-icons-react";
-import { useComponentStore } from "../../../Stores/componentStore";
-import { MainViewComponentsType } from "../../../Types/MainComponents";
+import { useComponentStore } from "../../../../../Stores/componentStore";
 
-export function TweetComponent() {
+const Comment = () => {
 	const { user } = useUserStore();
 	const { setSelectedComponent } = useComponentStore();
-
 	return (
 		<Paper
-			withBorder
+			
 			radius="md"
 			className={classes.comment + " " + styles.comment}
 			onClick={() => setSelectedComponent("SinglePost")}
@@ -91,4 +89,6 @@ export function TweetComponent() {
 			</TypographyStylesProvider>
 		</Paper>
 	);
-}
+};
+
+export default Comment;
