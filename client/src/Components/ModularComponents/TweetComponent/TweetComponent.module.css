@@ -33,7 +33,7 @@
 }
 
 .messageicon:hover > * {
-	color: #47a9d6 !important;
+	color: #4db5e5 !important;
 }
 
 .hearticon:hover > * {
@@ -46,13 +46,13 @@
 
 .messageicon:hover > .messageActualIcon {
 	border-radius: 50%;
-	box-shadow: 0 0px 20px #47a9d6, inset 0 0 30px rgba(92, 160, 182, 0.4) !important;
+	box-shadow: 0 0px 20px #4db5e5, inset 0 0 30px rgba(100, 180, 197, 0.4) !important;
 }
 .hearticon:hover > .heartActualIcon {
 	border-radius: 50%;
-	box-shadow: 0 0px 20px #d279cb, inset 0 0 30px rgba(145, 92, 182, 0.4) !important;
+	box-shadow: 0 0px 20px #d279cb, inset 0 0 30px rgba(182, 92, 180, 0.4) !important;
 }
 .bookmarkicon:hover > .bookmarkActualIcon {
 	border-radius: 50%;
-	box-shadow: 0 0px 20px #3cc94d, inset 0 0 30px rgba(92, 182, 95, 0.4) !important;
+	box-shadow: 0 0px 20px #3cc94d, inset 0 0 30px rgba(92, 180, 95, 0.4) !important;
 }
