@@ -27,7 +27,7 @@ const TweetInput = ({ placeholderMessage }: TweetInputProps) => {
 
 	return (
 		<div>
-			<Paper withBorder radius="md" p={10} w={"100%"} h={"100%"}>
+			<Paper withBorder radius="md" p={10} w={"100%"} h={"100%"} mb={10}>
 				<Group h={"100%"} align="center">
 					<Avatar
 						src={user?.photoURL}

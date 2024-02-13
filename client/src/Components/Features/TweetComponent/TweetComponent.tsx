@@ -5,6 +5,8 @@ import {
 	TypographyStylesProvider,
 	Paper,
 	Button,
+	Menu,
+	rem,
 } from "@mantine/core";
 import classes from "./TweetComponent.module.css";
 import styles from "./TweetComponent.module.css";
@@ -66,15 +68,18 @@ export function TweetComponent({ passedInStyles }: TweetComponentProps) {
 						</Text>
 					</div>
 				</Group>
-
-				<Button
-					color="violet"
-					variant="subtle"
-					size="xs"
-					onClick={(e) => handleDotsClick(e)}
-				>
-					<Dots />
-				</Button>
+				<Menu>
+					<Menu.Target>
+						<Button
+							color="violet"
+							variant="subtle"
+							size="xs"
+							onClick={(e) => handleDotsClick(e)}
+						>
+							<Dots />
+						</Button>
+					</Menu.Target>
+				</Menu>
 			</Group>
 			<TypographyStylesProvider className={classes.body}>
 				<Text c="white">
