@@ -2,6 +2,7 @@ import { Text, Paper, Group, PaperProps, Flex } from "@mantine/core";
 import { GoogleButton } from "./GoogleButton/GoogleButton";
 import { useUserStore } from "../../../Stores/userStore";
 import { useNavigate } from "react-router-dom";
+import styles from "./Authform.module.css";
 
 export function AuthenticationForm(props: PaperProps) {
 	const navigate = useNavigate();
@@ -9,15 +10,13 @@ export function AuthenticationForm(props: PaperProps) {
 	const handleLoginClick = async () => {
 		const loginSuccess = await useUserStore.getState().login();
 		if (loginSuccess) {
-			console.log("Login successful");
 			navigate("/dashboard");
-			console.table(useUserStore.getState().user);
 			return;
 		}
 		console.log("Login failed");
 	};
 	return (
-		<Paper radius="md" p="xl" withBorder {...props}>
+		<Paper radius="md" p="xl" withBorder {...props} className={styles.authform}>
 			<Flex
 				direction={"column"}
 				align={"center"}

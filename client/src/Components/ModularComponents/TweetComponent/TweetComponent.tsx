@@ -60,20 +60,20 @@ export function TweetComponent() {
 					align="center"
 				>
 					<Group gap={2} className={styles.messageicon}>
-						<MessageCircle2 size={22} />
-						<Text c={"white"} size="sm">
+						<MessageCircle2 color={"#47a9d6"} size={22} className={styles.messageActualIcon}/>
+						<Text c={"white"} size="sm"fw={600}>
 							53
 						</Text>
 					</Group>
 					<Group gap={2} className={styles.hearticon}>
-						<Heart size={22} />
-						<Text c={"white"} size="sm">
+						<Heart size={22} color="#d279cb" className={styles.heartActualIcon}/>
+						<Text c={"white"} size="sm"fw={600}>
 							100
 						</Text>
 					</Group>
 					<Group gap={0} className={styles.bookmarkicon}>
-						<Bookmark size={22} />
-						<Text c={"white"} size="sm">
+						<Bookmark size={22} color="#3cc94d" className={styles.bookmarkActualIcon}/>
+						<Text c={"white"} size="sm" fw={600}>
 							17
 						</Text>
 					</Group>

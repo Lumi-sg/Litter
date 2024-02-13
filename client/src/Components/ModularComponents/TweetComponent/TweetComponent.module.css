@@ -23,8 +23,7 @@
 .bookmarkicon,
 .messageicon,
 .hearticon {
-	color: #9775fa;
-	transition: 3s ease-in-out;
+	transition: box-shadow 0.3s ease;
 }
 
 .bookmarkicon:hover,
@@ -43,4 +42,17 @@
 
 .bookmarkicon:hover > * {
 	color: #3cc94d !important;
+}
+
+.messageicon:hover > .messageActualIcon {
+	border-radius: 50%;
+	box-shadow: 0 0px 20px #47a9d6, inset 0 0 30px rgba(92, 160, 182, 0.4) !important;
+}
+.hearticon:hover > .heartActualIcon {
+	border-radius: 50%;
+	box-shadow: 0 0px 20px #d279cb, inset 0 0 30px rgba(145, 92, 182, 0.4) !important;
+}
+.bookmarkicon:hover > .bookmarkActualIcon {
+	border-radius: 50%;
+	box-shadow: 0 0px 20px #3cc94d, inset 0 0 30px rgba(92, 182, 95, 0.4) !important;
 }
