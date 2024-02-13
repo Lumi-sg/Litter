@@ -7,6 +7,8 @@ const SinglePost = () => {
 			<TweetComponent />
 			<TweetInput placeholderMessage="Post your reply"/>
 			<Comment />
+			<Comment />
+			<Comment />
 		</>
 	);
 };

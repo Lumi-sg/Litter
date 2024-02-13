@@ -11,7 +11,6 @@ import { useUserStore } from "../../../Stores/userStore";
 import { convertEmailToUsername } from "../../../Helpers/convertEmailToUsername";
 import { MessageCircle2, Heart, Bookmark } from "tabler-icons-react";
 import { useComponentStore } from "../../../Stores/componentStore";
-import { MainViewComponentsType } from "../../../Types/MainComponents";
 
 export function TweetComponent() {
 	const { user } = useUserStore();
@@ -23,6 +22,7 @@ export function TweetComponent() {
 			radius="md"
 			className={classes.comment + " " + styles.comment}
 			onClick={() => setSelectedComponent("SinglePost")}
+			style={{ borderLeft: "5px solid #8d7ac8" }}
 		>
 			<Group>
 				<Avatar

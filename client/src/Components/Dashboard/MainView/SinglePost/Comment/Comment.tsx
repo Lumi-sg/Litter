@@ -17,10 +17,10 @@ const Comment = () => {
 	const { setSelectedComponent } = useComponentStore();
 	return (
 		<Paper
-			
 			radius="md"
 			className={classes.comment + " " + styles.comment}
 			onClick={() => setSelectedComponent("SinglePost")}
+			style={{ borderBottom: "3px solid #8d7ac8" }}
 		>
 			<Group>
 				<Avatar
