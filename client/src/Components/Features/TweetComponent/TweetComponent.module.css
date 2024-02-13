@@ -56,3 +56,6 @@
 	border-radius: 50%;
 	box-shadow: 0 0px 20px #3cc94d, inset 0 0 30px rgba(92, 180, 95, 0.4) !important;
 }
+.menu {
+	border: 2px solid purple;
+}

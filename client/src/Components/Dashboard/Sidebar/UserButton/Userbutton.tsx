@@ -1,8 +1,8 @@
 import { UnstyledButton, Group, Avatar, Text, rem, Menu } from "@mantine/core";
-import { IconChevronUp} from "@tabler/icons-react";
+import { IconChevronUp } from "@tabler/icons-react";
 import { Logout, SunMoon } from "tabler-icons-react";
 import classes from "./UserButton.module.css";
-import { useMantineColorScheme } from "@mantine/core";
+// import { useMantineColorScheme } from "@mantine/core";
 import { useUserStore } from "../../../../Stores/userStore";
 import { useNavigate } from "react-router-dom";
 import { convertEmailToUsername } from "../../../../Helpers/convertEmailToUsername";
@@ -48,7 +48,7 @@ export function UserButton() {
 							style={{ width: rem(14), height: rem(14) }}
 							stroke={1.5}
 						/>
-					</Group >
+					</Group>
 				</UnstyledButton>
 			</Menu.Target>
 			<Menu.Dropdown bg={"#242424"}>

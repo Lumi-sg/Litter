@@ -6,13 +6,21 @@ import {
 	Paper,
 	Button,
 	Menu,
-	rem,
 } from "@mantine/core";
 import classes from "./TweetComponent.module.css";
 import styles from "./TweetComponent.module.css";
 import { useUserStore } from "../../../Stores/userStore";
 import { convertEmailToUsername } from "../../../Helpers/convertEmailToUsername";
-import { MessageCircle2, Heart, Bookmark, Dots } from "tabler-icons-react";
+import {
+	MessageCircle2,
+	Heart,
+	Bookmark,
+	Dots,
+	UserPlus,
+	UserMinus,
+	Ban,
+	Checkbox,
+} from "tabler-icons-react";
 import { useComponentStore } from "../../../Stores/componentStore";
 
 type TweetComponentProps = {
@@ -31,6 +39,13 @@ export function TweetComponent({ passedInStyles }: TweetComponentProps) {
 	const handleActionClick = (e: React.MouseEvent<HTMLDivElement>) => {
 		e.stopPropagation();
 		console.log("action clicked");
+	};
+
+	const handleMenuClick = (
+		e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+	) => {
+		e.stopPropagation();
+		console.log("menu item clicked");
 	};
 
 	return (
@@ -68,17 +83,43 @@ export function TweetComponent({ passedInStyles }: TweetComponentProps) {
 						</Text>
 					</div>
 				</Group>
-				<Menu>
+				<Menu position="right-start">
 					<Menu.Target>
 						<Button
 							color="violet"
 							variant="subtle"
 							size="xs"
-							onClick={(e) => handleDotsClick(e)}
+							onClick={handleDotsClick}
 						>
 							<Dots />
 						</Button>
 					</Menu.Target>
+					<Menu.Dropdown bg={"#242424"}>
+						<Menu.Item
+							onClick={(event) => handleMenuClick(event)}
+							leftSection={<UserPlus color="white" size={20} />}
+						>
+							<Text c={"white"}>Follow</Text>
+						</Menu.Item>
+						<Menu.Item
+							onClick={(event) => handleMenuClick(event)}
+							leftSection={<UserMinus color="white" size={20} />}
+						>
+							<Text c={"white"}>Unfollow</Text>
+						</Menu.Item>
+						<Menu.Item
+							onClick={(event) => handleMenuClick(event)}
+							leftSection={<Ban color="white" size={20} />}
+						>
+							<Text c={"white"}>Block @user</Text>
+						</Menu.Item>
+						<Menu.Item
+							onClick={(event) => handleMenuClick(event)}
+							leftSection={<Checkbox color="white" size={20} />}
+						>
+							<Text c={"white"}>Unblock @user</Text>
+						</Menu.Item>
+					</Menu.Dropdown>
 				</Menu>
 			</Group>
 			<TypographyStylesProvider className={classes.body}>
