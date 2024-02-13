@@ -1,14 +1,14 @@
-import { TweetComponent } from "../../../../../Components/ModularComponents/TweetComponent/TweetComponent";
+import { TweetComponent } from "../../../../Features/TweetComponent/TweetComponent";
+import { TweetVariant } from "../../../../../constants/TweetVariant";
 
 const Likes = () => {
 	return (
 		<>
-			<TweetComponent />
-			<TweetComponent />
-			<TweetComponent />
-			<TweetComponent />
-			<TweetComponent />
-			<TweetComponent />
+			<TweetComponent passedInStyles={TweetVariant.like} />
+			<TweetComponent passedInStyles={TweetVariant.like} />
+			<TweetComponent passedInStyles={TweetVariant.like} />
+			<TweetComponent passedInStyles={TweetVariant.like} />
+			<TweetComponent passedInStyles={TweetVariant.like} />
 		</>
 	);
 };

@@ -14,7 +14,6 @@ const theme = createTheme({
 		xl: "88em",
 		xxl: "121em",
 	},
-	
 });
 
 ReactDOM.createRoot(document.getElementById("root")!).render(

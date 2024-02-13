@@ -1,13 +1,24 @@
-import { TweetComponent } from "../../../ModularComponents/TweetComponent/TweetComponent";
+import { TweetComponent } from "../../../Features/TweetComponent/TweetComponent";
 import { TweetVariant } from "../../../../constants/TweetVariant";
-import TweetInput from "../Home/TweetInput/TweetInput";
+import TweetInput from "../../../Features/TweetInput/TweetInput";
 import { useEffect } from "react";
 const SinglePost = () => {
 	useEffect(() => {
-		window.scrollTo({
-			top: 0,
-			behavior: "smooth",
-		});
+		const scrollFunction = () => {
+			window.scrollTo({
+				top: 0,
+				behavior: "smooth",
+			});
+		};
+
+		// Using requestAnimationFrame to ensure the layout is fully updated
+		requestAnimationFrame(scrollFunction);
+
+		// Cleanup function
+		return () => {
+			// Cancel any pending animations to avoid issues during component unmount
+			cancelAnimationFrame(scrollFunction as any);
+		};
 	}, []);
 	return (
 		<>

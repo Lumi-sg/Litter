@@ -1,5 +1,5 @@
-import { TweetComponent } from "../../../ModularComponents/TweetComponent/TweetComponent";
-import TweetInput from "./TweetInput/TweetInput";
+import { TweetComponent } from "../../../Features/TweetComponent/TweetComponent";
+import TweetInput from "../../../Features/TweetInput/TweetInput";
 import { TweetVariant } from "../../../../constants/TweetVariant";
 
 const Home = () => {

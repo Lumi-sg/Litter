@@ -1,4 +1,4 @@
-import { useUserStore } from "../../../../../Stores/userStore";
+import { useUserStore } from "../../../Stores/userStore";
 import {
 	Avatar,
 	Group,
