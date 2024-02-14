@@ -48,8 +48,11 @@ export function TweetComponent({ passedInStyles }: TweetComponentProps) {
 		setParentTweetAuthor(user);
 		modals.open({
 			children: <TweetModal />,
-			size: "35%",
+			size: 700,
 			withCloseButton: false,
+			onClose: () => {
+				setParentTweetAuthor(null);
+			},
 		});
 	};
 
