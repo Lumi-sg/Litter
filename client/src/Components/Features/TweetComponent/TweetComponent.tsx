@@ -50,14 +50,6 @@ export function TweetComponent({ passedInStyles }: TweetComponentProps) {
 			children: <TweetModal />,
 			size: "35%",
 			withCloseButton: false,
-			onClose: () =>
-				displayNotification(
-					"Reply",
-					"replied to",
-					"#4db5e5",
-					`${user?.displayName}`,
-					"tweet"
-				),
 		});
 	};
 

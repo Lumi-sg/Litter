@@ -14,17 +14,30 @@ import { useEffect, useState } from "react";
 import { useParentTweetStoreAuthor } from "../../../Stores/parentTweetStoreAuthor";
 import { convertEmailToUsername } from "../../../Helpers/convertEmailToUsername";
 import { modals } from "@mantine/modals";
-
+import { displayNotification } from "../../../Helpers/displayNotification";
 type TweetInputProps = {
 	placeholderMessage: string;
 };
 
 const TweetInput = ({ placeholderMessage }: TweetInputProps) => {
 	const { user } = useUserStore();
-	const { parentTweetAuthor } = useParentTweetStoreAuthor();
+	const { parentTweetAuthor, setParentTweetAuthor } =
+		useParentTweetStoreAuthor();
 	const [tweetInput, setTweetInput] = useState("");
 	const [tweetCharacterLength, setTweetCharacterLength] = useState(0);
 	const closeModal = () => modals.closeAll();
+
+	const handleReplyClick = () => {
+		displayNotification(
+			"Reply",
+			"replied to",
+			"#4db5e5",
+			`${user?.displayName}`,
+			"tweet"
+		);
+		setParentTweetAuthor(null);
+		modals.closeAll();
+	};
 
 	useEffect(() => {
 		setTweetCharacterLength(tweetInput.length);
@@ -100,7 +113,7 @@ const TweetInput = ({ placeholderMessage }: TweetInputProps) => {
 					/>
 					<Divider orientation="vertical" ml={5} mr={5} size="xs" />
 					<Button
-						onClick={closeModal}
+						onClick={handleReplyClick}
 						color="violet"
 						variant="outline"
 						disabled={
