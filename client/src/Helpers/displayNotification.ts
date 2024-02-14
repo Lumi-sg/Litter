@@ -4,13 +4,13 @@ export const displayNotification = (
 	title: string,
 	messageType: string,
 	color: string,
-	username: string
+	username: string,
+    target: string
 ) => {
-    let message = `You ${messageType} ${username}'s tweet`; ;
+	let message = `You ${messageType} ${username}'s ${target}.`;
 	notifications.show({
 		title: title,
 		message: message,
 		color: color,
-		
 	});
 };

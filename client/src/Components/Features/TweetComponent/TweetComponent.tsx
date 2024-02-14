@@ -50,17 +50,19 @@ export function TweetComponent({ passedInStyles }: TweetComponentProps) {
 			case "Like":
 				displayNotification(
 					action,
-					"Liked",
+					"liked",
 					"#d279cb",
-					user?.displayName as string
+					user?.displayName as string,
+					"tweet"
 				);
 				return;
 			case "Bookmark":
 				displayNotification(
 					action,
-					"Bookmarked",
+					"bookmarked",
 					"#3cc94d",
-					user?.displayName as string
+					user?.displayName as string,
+					"tweet"
 				);
 				return;
 			default:
@@ -73,6 +75,46 @@ export function TweetComponent({ passedInStyles }: TweetComponentProps) {
 		action: string
 	) => {
 		e.stopPropagation();
+		switch (action) {
+			case "Follow":
+				displayNotification(
+					action,
+					"followed",
+					"violet",
+					user?.displayName as string,
+					"account"
+				);
+				return;
+			case "Unfollow":
+				displayNotification(
+					action,
+					"unfollowed",
+					"red",
+					user?.displayName as string,
+					"account"
+				);
+				return;
+			case "Block":
+				displayNotification(
+					action,
+					"blocked",
+					"red",
+					user?.displayName as string,
+					"account"
+				);
+				return;
+			case "Unblock":
+				displayNotification(
+					action,
+					"unblocked",
+					"green",
+					user?.displayName as string,
+					"account"
+				);
+				return;
+			default:
+				return;
+		}
 	};
 
 	return (
