@@ -50,6 +50,8 @@ export function TweetComponent({ passedInStyles }: TweetComponentProps) {
 			children: <TweetModal />,
 			size: 700,
 			withCloseButton: false,
+			radius: "md",
+
 			onClose: () => {
 				setParentTweetAuthor(null);
 			},

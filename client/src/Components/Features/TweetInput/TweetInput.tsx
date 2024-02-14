@@ -29,6 +29,7 @@ const TweetInput = ({ placeholderMessage, isReply }: TweetInputProps) => {
 	const closeModal = () => modals.closeAll();
 
 	const handleReplyClick = () => {
+		setTweetInput("");
 		if (isReply) {
 			displayNotification(
 				"Reply",
@@ -133,7 +134,7 @@ const TweetInput = ({ placeholderMessage, isReply }: TweetInputProps) => {
 							!tweetCharacterLength || tweetCharacterLength > 280
 						}
 					>
-						Post
+						{isReply ? "Reply" : "Post"}
 					</Button>
 				</Group>
 			</Paper>
