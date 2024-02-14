@@ -68,7 +68,7 @@ export function TweetComponent({ passedInStyles }: TweetComponentProps) {
 					action,
 					"liked",
 					"#d279cb",
-					user?.displayName as string,
+					`${user?.displayName as string}'s`,
 					"tweet"
 				);
 				return;
@@ -77,7 +77,7 @@ export function TweetComponent({ passedInStyles }: TweetComponentProps) {
 					action,
 					"bookmarked",
 					"#3cc94d",
-					user?.displayName as string,
+					`${user?.displayName as string}'s`,
 					"tweet"
 				);
 				return;
