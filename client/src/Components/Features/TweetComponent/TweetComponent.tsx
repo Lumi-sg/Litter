@@ -24,7 +24,7 @@ import {
 import { useComponentStore } from "../../../Stores/componentStore";
 import { displayNotification } from "../../../Helpers/displayNotification";
 import { useParentTweetStoreAuthor } from "../../../Stores/parentTweetStoreAuthor";
-import TweetModal from "../TweetModal/TweetModal";
+import TweetReplyModal from "../TweetReplyModal/TweetReplyModal";
 import { modals } from "@mantine/modals";
 type TweetComponentProps = {
 	passedInStyles: React.CSSProperties;
@@ -47,7 +47,7 @@ export function TweetComponent({ passedInStyles }: TweetComponentProps) {
 		e.stopPropagation();
 		setParentTweetAuthor(user);
 		modals.open({
-			children: <TweetModal />,
+			children: <TweetReplyModal />,
 			size: 700,
 			withCloseButton: false,
 			radius: "md",

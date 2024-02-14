@@ -8,6 +8,7 @@ import Messages from "./MainView/Messages/Messages";
 import Bookmarks from "./MainView/Bookmarks/Bookmarks";
 import Profile from "./MainView/Profile/Profile";
 import SinglePost from "./MainView/SinglePost/SinglePost";
+import Infopanel from "./Infopanel/Infopanel";
 export function Dashboard() {
 	const { selectedComponent } = useComponentStore();
 
@@ -49,7 +50,9 @@ export function Dashboard() {
 				<Sidebar />
 			</AppShell.Navbar>
 			<AppShell.Main>{renderSwitch()}</AppShell.Main>
-			<AppShell.Aside p="md">Aside</AppShell.Aside>
+			<AppShell.Aside p="md">
+				<Infopanel />
+			</AppShell.Aside>
 			<AppShell.Footer>
 				<Flex align={"center"} justify={"center"} mt="xs">
 					<Footer />

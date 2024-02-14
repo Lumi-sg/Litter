@@ -4,7 +4,7 @@ import { TweetVariant } from "../../../constants/TweetVariant";
 
 
 
-const TweetModal = () => {
+const TweetReplyModal = () => {
 	return (
 		<>
 			<TweetComponent passedInStyles={TweetVariant.parent} />
@@ -13,4 +13,4 @@ const TweetModal = () => {
 	);
 };
 
-export default TweetModal;
+export default TweetReplyModal;
