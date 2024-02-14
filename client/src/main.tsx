@@ -6,6 +6,7 @@ import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { Notifications } from "@mantine/notifications";
 import "@mantine/notifications/styles.css";
+import { ModalsProvider } from '@mantine/modals';
 
 const theme = createTheme({
 	breakpoints: {
@@ -20,6 +21,7 @@ const theme = createTheme({
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
 	<MantineProvider theme={theme} forceColorScheme="dark">
+		<ModalsProvider>
 		<Notifications
 			position="bottom-right"
 			zIndex={99999}
@@ -29,6 +31,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
 		/>
 
 		<App />
+		</ModalsProvider>
 	</MantineProvider>
 );
 const firebaseConfig = {

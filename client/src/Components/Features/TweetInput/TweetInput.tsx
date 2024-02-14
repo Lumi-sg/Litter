@@ -13,6 +13,7 @@ import "./test.css";
 import { useEffect, useState } from "react";
 import { useParentTweetStoreAuthor } from "../../../Stores/parentTweetStoreAuthor";
 import { convertEmailToUsername } from "../../../Helpers/convertEmailToUsername";
+import { modals } from "@mantine/modals";
 
 type TweetInputProps = {
 	placeholderMessage: string;
@@ -23,6 +24,7 @@ const TweetInput = ({ placeholderMessage }: TweetInputProps) => {
 	const { parentTweetAuthor } = useParentTweetStoreAuthor();
 	const [tweetInput, setTweetInput] = useState("");
 	const [tweetCharacterLength, setTweetCharacterLength] = useState(0);
+	const closeModal = () => modals.closeAll();
 
 	useEffect(() => {
 		setTweetCharacterLength(tweetInput.length);
@@ -32,9 +34,9 @@ const TweetInput = ({ placeholderMessage }: TweetInputProps) => {
 		<div>
 			<Paper withBorder radius="md" p={10} w={"100%"} h={"100%"} mb={10}>
 				{parentTweetAuthor && (
-					<Group ml={88} w={"100%"} gap={0}>
-						Replying to{" "}
-						<Text ml={3} c={"#8d7ac8"}>
+					<Group ml={88} w={"50%"} gap={0}>
+						<Text size="xs">Replying to</Text>
+						<Text ml={3} c={"#8d7ac8"} size="xs">
 							{convertEmailToUsername(
 								parentTweetAuthor.email as string
 							)}
@@ -51,6 +53,7 @@ const TweetInput = ({ placeholderMessage }: TweetInputProps) => {
 						ml={21}
 					/>
 					<Textarea
+						data-autofocus
 						variant="unstyled"
 						autosize
 						h={"100%"}
@@ -97,6 +100,7 @@ const TweetInput = ({ placeholderMessage }: TweetInputProps) => {
 					/>
 					<Divider orientation="vertical" ml={5} mr={5} size="xs" />
 					<Button
+						onClick={closeModal}
 						color="violet"
 						variant="outline"
 						disabled={
