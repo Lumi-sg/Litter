@@ -22,6 +22,8 @@ import {
 	Checkbox,
 } from "tabler-icons-react";
 import { useComponentStore } from "../../../Stores/componentStore";
+import { notifications } from "@mantine/notifications";
+import { displayNotification } from "../../../Helpers/displayNotification";
 
 type TweetComponentProps = {
 	passedInStyles: React.CSSProperties;
@@ -36,16 +38,41 @@ export function TweetComponent({ passedInStyles }: TweetComponentProps) {
 		console.log("dots clicked");
 	};
 
-	const handleActionClick = (e: React.MouseEvent<HTMLDivElement>) => {
+	const handleActionClick = (
+		e: React.MouseEvent<HTMLDivElement>,
+		action: string
+	) => {
 		e.stopPropagation();
-		console.log("action clicked");
+
+		switch (action) {
+			case "Message":
+				return;
+			case "Like":
+				displayNotification(
+					action,
+					"Liked",
+					"#d279cb",
+					user?.displayName as string
+				);
+				return;
+			case "Bookmark":
+				displayNotification(
+					action,
+					"Bookmarked",
+					"#3cc94d",
+					user?.displayName as string
+				);
+				return;
+			default:
+				return;
+		}
 	};
 
 	const handleMenuClick = (
-		e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+		e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+		action: string
 	) => {
 		e.stopPropagation();
-		console.log("menu item clicked");
 	};
 
 	return (
@@ -94,27 +121,36 @@ export function TweetComponent({ passedInStyles }: TweetComponentProps) {
 							<Dots />
 						</Button>
 					</Menu.Target>
-					<Menu.Dropdown bg={"#242424"}>
+					<Menu.Dropdown
+						bg={"#242424"}
+						style={{ border: "1px solid #8d7ac8" }}
+					>
 						<Menu.Item
-							onClick={(event) => handleMenuClick(event)}
+							onClick={(event) =>
+								handleMenuClick(event, "Follow")
+							}
 							leftSection={<UserPlus color="white" size={20} />}
 						>
 							<Text c={"white"}>Follow</Text>
 						</Menu.Item>
 						<Menu.Item
-							onClick={(event) => handleMenuClick(event)}
+							onClick={(event) =>
+								handleMenuClick(event, "Unfollow")
+							}
 							leftSection={<UserMinus color="white" size={20} />}
 						>
 							<Text c={"white"}>Unfollow</Text>
 						</Menu.Item>
 						<Menu.Item
-							onClick={(event) => handleMenuClick(event)}
+							onClick={(event) => handleMenuClick(event, "Block")}
 							leftSection={<Ban color="white" size={20} />}
 						>
 							<Text c={"white"}>Block @user</Text>
 						</Menu.Item>
 						<Menu.Item
-							onClick={(event) => handleMenuClick(event)}
+							onClick={(event) =>
+								handleMenuClick(event, "Unblock")
+							}
 							leftSection={<Checkbox color="white" size={20} />}
 						>
 							<Text c={"white"}>Unblock @user</Text>
@@ -138,7 +174,7 @@ export function TweetComponent({ passedInStyles }: TweetComponentProps) {
 					<Group
 						gap={2}
 						className={styles.messageicon}
-						onClick={(e) => handleActionClick(e)}
+						onClick={(e) => handleActionClick(e, "Comment")}
 					>
 						<MessageCircle2
 							size={22}
@@ -151,7 +187,7 @@ export function TweetComponent({ passedInStyles }: TweetComponentProps) {
 					<Group
 						gap={2}
 						className={styles.hearticon}
-						onClick={(e) => handleActionClick(e)}
+						onClick={(e) => handleActionClick(e, "Like")}
 					>
 						<Heart size={22} className={styles.heartActualIcon} />
 						<Text c={"white"} size="sm" fw={600}>
@@ -161,7 +197,7 @@ export function TweetComponent({ passedInStyles }: TweetComponentProps) {
 					<Group
 						gap={0}
 						className={styles.bookmarkicon}
-						onClick={(e) => handleActionClick(e)}
+						onClick={(e) => handleActionClick(e, "Bookmark")}
 					>
 						<Bookmark
 							size={22}

@@ -29,6 +29,7 @@ export function UserCardImage() {
 			h={"100%"}
 			w={"100%"}
 			bg={"#242424"}
+			style={{border: "1px solid #8d7ac8"}}
 		>
 			<Center>
 				<UserInfoIcons />
