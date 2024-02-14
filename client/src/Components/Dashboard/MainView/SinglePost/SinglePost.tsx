@@ -23,7 +23,7 @@ const SinglePost = () => {
 	return (
 		<>
 			<TweetComponent passedInStyles={TweetVariant.parent} />
-			<TweetInput placeholderMessage="Post your reply" />
+			<TweetInput placeholderMessage="Post your reply" parentAuthor="@johndoe"/>
 			<TweetComponent passedInStyles={TweetVariant.reply} />
 			<TweetComponent passedInStyles={TweetVariant.reply} />
 			<TweetComponent passedInStyles={TweetVariant.reply} />

@@ -14,9 +14,10 @@ import { useEffect, useState } from "react";
 
 type TweetInputProps = {
 	placeholderMessage: string;
+	parentAuthor?: string;
 };
 
-const TweetInput = ({ placeholderMessage }: TweetInputProps) => {
+const TweetInput = ({ placeholderMessage, parentAuthor }: TweetInputProps) => {
 	const { user } = useUserStore();
 	const [tweetInput, setTweetInput] = useState("");
 	const [tweetCharacterLength, setTweetCharacterLength] = useState(0);
@@ -28,6 +29,15 @@ const TweetInput = ({ placeholderMessage }: TweetInputProps) => {
 	return (
 		<div>
 			<Paper withBorder radius="md" p={10} w={"100%"} h={"100%"} mb={10}>
+				{parentAuthor && (
+					<Group ml={88} w={"100%"}>
+						Replying to
+						<Text c={"#8d7ac8"} ml={0}>
+							{parentAuthor}
+						</Text>
+					</Group>
+				)}
+
 				<Group h={"100%"} align="center">
 					<Avatar
 						src={user?.photoURL}
