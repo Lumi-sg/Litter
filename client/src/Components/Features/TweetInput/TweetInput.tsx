@@ -17,9 +17,10 @@ import { modals } from "@mantine/modals";
 import { displayNotification } from "../../../Helpers/displayNotification";
 type TweetInputProps = {
 	placeholderMessage: string;
+	isReply: boolean;
 };
 
-const TweetInput = ({ placeholderMessage }: TweetInputProps) => {
+const TweetInput = ({ placeholderMessage, isReply }: TweetInputProps) => {
 	const { user } = useUserStore();
 	const { parentTweetAuthor, setParentTweetAuthor } =
 		useParentTweetStoreAuthor();
@@ -28,12 +29,24 @@ const TweetInput = ({ placeholderMessage }: TweetInputProps) => {
 	const closeModal = () => modals.closeAll();
 
 	const handleReplyClick = () => {
+		if (isReply) {
+			displayNotification(
+				"Reply",
+				"replied to",
+				"#4db5e5",
+				`${user?.displayName}'s`,
+				"tweet"
+			);
+			setParentTweetAuthor(null);
+			modals.closeAll();
+			return;
+		}
 		displayNotification(
-			"Reply",
-			"replied to",
+			"Tweet",
+			"have sucessfully tweeted",
 			"#4db5e5",
-			`${user?.displayName}`,
-			"tweet"
+			``,
+			""
 		);
 		setParentTweetAuthor(null);
 		modals.closeAll();

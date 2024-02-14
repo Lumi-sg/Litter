@@ -8,7 +8,7 @@ const TweetModal = () => {
 	return (
 		<>
 			<TweetComponent passedInStyles={TweetVariant.parent} />
-			<TweetInput placeholderMessage="Post your reply" />
+			<TweetInput placeholderMessage="Post your reply" isReply={true} />
 		</>
 	);
 };

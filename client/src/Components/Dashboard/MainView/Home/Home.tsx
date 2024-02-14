@@ -5,7 +5,7 @@ import { TweetVariant } from "../../../../constants/TweetVariant";
 const Home = () => {
 	return (
 		<>
-			<TweetInput placeholderMessage="What's happening" />
+			<TweetInput placeholderMessage="What's happening" isReply={false} />
 			<TweetComponent passedInStyles={TweetVariant.parent} />
 			<TweetComponent passedInStyles={TweetVariant.parent} />
 			<TweetComponent passedInStyles={TweetVariant.parent} />

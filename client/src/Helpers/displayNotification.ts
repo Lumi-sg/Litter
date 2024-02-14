@@ -7,7 +7,7 @@ export const displayNotification = (
 	username: string,
     target: string
 ) => {
-	let message = `You ${messageType} ${username}'s ${target}.`;
+	let message = `You ${messageType} ${username} ${target}`;
 	notifications.show({
 		title: title,
 		message: message,
