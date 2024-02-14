@@ -24,8 +24,6 @@ import {
 import { useComponentStore } from "../../../Stores/componentStore";
 import { displayNotification } from "../../../Helpers/displayNotification";
 import { useParentTweetStoreAuthor } from "../../../Stores/parentTweetStoreAuthor";
-import { useDisclosure } from "@mantine/hooks";
-import { Modal } from "@mantine/core";
 import TweetModal from "../TweetModal/TweetModal";
 import { modals } from "@mantine/modals";
 type TweetComponentProps = {

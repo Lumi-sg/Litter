@@ -1,5 +1,4 @@
 import { AppShell, Flex } from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
 import Footer from "./Footer/Footer";
 import Sidebar from "./Sidebar/Sidebar";
 import { useComponentStore } from "../../Stores/componentStore";
@@ -11,7 +10,6 @@ import Profile from "./MainView/Profile/Profile";
 import SinglePost from "./MainView/SinglePost/SinglePost";
 export function Dashboard() {
 	const { selectedComponent } = useComponentStore();
-	const [opened] = useDisclosure();
 
 	const renderSwitch = () => {
 		switch (selectedComponent) {
