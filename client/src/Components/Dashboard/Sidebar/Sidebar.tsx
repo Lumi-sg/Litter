@@ -9,19 +9,22 @@ import {
 } from "tabler-icons-react";
 import { UserButton } from "./UserButton/Userbutton";
 import { useComponentStore } from "../../../Stores/componentStore";
+import { useParentTweetStoreAuthor } from "../../../Stores/parentTweetStoreAuthor";
 import { modals } from "@mantine/modals";
 import TweetComposeModal from "../../Features/TweetComposeModal/TweetComposeModal";
 
 const Sidebar = () => {
 	const { setSelectedComponent } = useComponentStore();
 
+	const { setParentTweetAuthor } = useParentTweetStoreAuthor();
+
 	const handlePostClick = () => {
+		setParentTweetAuthor(null);
 		modals.open({
 			children: <TweetComposeModal />,
 			size: 700,
 			withCloseButton: false,
 			radius: "md",
-			
 		});
 	};
 
