@@ -22,8 +22,8 @@ import {
 	Checkbox,
 } from "tabler-icons-react";
 import { useComponentStore } from "../../../Stores/componentStore";
-import { notifications } from "@mantine/notifications";
 import { displayNotification } from "../../../Helpers/displayNotification";
+import { useParentTweetStoreAuthor } from "../../../Stores/parentTweetStoreAuthor";
 
 type TweetComponentProps = {
 	passedInStyles: React.CSSProperties;
@@ -32,6 +32,7 @@ type TweetComponentProps = {
 export function TweetComponent({ passedInStyles }: TweetComponentProps) {
 	const { user } = useUserStore();
 	const { setSelectedComponent } = useComponentStore();
+	const { setParentTweetAuthor } = useParentTweetStoreAuthor();
 
 	const handleDotsClick = (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.stopPropagation();
@@ -122,7 +123,10 @@ export function TweetComponent({ passedInStyles }: TweetComponentProps) {
 			withBorder
 			radius="md"
 			className={classes.comment + " " + styles.comment}
-			onClick={() => setSelectedComponent("SinglePost")}
+			onClick={() => {
+				setSelectedComponent("SinglePost");
+				setParentTweetAuthor(user);
+			}}
 			style={{ ...passedInStyles }}
 		>
 			<Group justify="space-between">

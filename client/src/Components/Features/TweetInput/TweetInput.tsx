@@ -11,14 +11,16 @@ import {
 } from "@mantine/core";
 import "./test.css";
 import { useEffect, useState } from "react";
+import { useParentTweetStoreAuthor } from "../../../Stores/parentTweetStoreAuthor";
+import { convertEmailToUsername } from "../../../Helpers/convertEmailToUsername";
 
 type TweetInputProps = {
 	placeholderMessage: string;
-	parentAuthor?: string;
 };
 
-const TweetInput = ({ placeholderMessage, parentAuthor }: TweetInputProps) => {
+const TweetInput = ({ placeholderMessage }: TweetInputProps) => {
 	const { user } = useUserStore();
+	const { parentTweetAuthor } = useParentTweetStoreAuthor();
 	const [tweetInput, setTweetInput] = useState("");
 	const [tweetCharacterLength, setTweetCharacterLength] = useState(0);
 
@@ -29,11 +31,13 @@ const TweetInput = ({ placeholderMessage, parentAuthor }: TweetInputProps) => {
 	return (
 		<div>
 			<Paper withBorder radius="md" p={10} w={"100%"} h={"100%"} mb={10}>
-				{parentAuthor && (
-					<Group ml={88} w={"100%"}>
-						Replying to
-						<Text c={"#8d7ac8"} ml={0}>
-							{parentAuthor}
+				{parentTweetAuthor && (
+					<Group ml={88} w={"100%"} gap={0}>
+						Replying to{" "}
+						<Text ml={3} c={"#8d7ac8"}>
+							{convertEmailToUsername(
+								parentTweetAuthor.email as string
+							)}
 						</Text>
 					</Group>
 				)}
