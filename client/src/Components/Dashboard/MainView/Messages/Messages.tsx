@@ -1,9 +1,17 @@
-import React from 'react'
+import LeftMessageContainer from "./LeftMessageContainer/LeftMessageContainer";
+import RightMessageContainer from "./RightMessageContainer/RightMessageContainer";
+
+import { Divider, Flex } from "@mantine/core";
 
 const Messages = () => {
-  return (
-    <div>Messages</div>
-  )
-}
+	return (
+		<Flex h={865}>
+			<LeftMessageContainer />
 
-export default Messages
+			<Divider orientation="vertical" />
+			<RightMessageContainer />
+		</Flex>
+	);
+};
+
+export default Messages;

@@ -1,8 +1,8 @@
 import { ActionIcon, rem, Autocomplete } from "@mantine/core";
 import { IconSearch, IconArrowRight } from "@tabler/icons-react";
-import styles from "./Searchbox.module.css";
+import styles from "./MessageSearchbox.module.css";
 
-export function Searchbox() {
+export function MessageSearchBox() {
 	return (
 		<Autocomplete
 			radius="xl"
@@ -15,7 +15,7 @@ export function Searchbox() {
 					color: "white",
 				},
 			}}
-			data={["React", "Angular", "Vue", "Svelte"]}
+			data={["Henry", "George", "Gina", "Kelly"]}
 			classNames={{
 				input: styles.input,
 				options: styles.options,

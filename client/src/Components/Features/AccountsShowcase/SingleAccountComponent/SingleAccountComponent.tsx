@@ -7,7 +7,6 @@ import { displayNotification } from "../../../../Helpers/displayNotification";
 export function SingleAccountComponent() {
 	const { user } = useUserStore();
 
-
 	const handleFollowClick = () => {
 		displayNotification(
 			"Follow",
@@ -38,7 +37,7 @@ export function SingleAccountComponent() {
 				</div>
 				<div>
 					<Button
-					onClick={handleFollowClick}
+						onClick={handleFollowClick}
 						variant="outline"
 						color={"violet"}
 						size="xs"
