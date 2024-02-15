@@ -12,7 +12,7 @@ export function Searchbox() {
 			radius="xl"
 			w={"100%"}
 			size="md"
-			placeholder="Search questions"
+			placeholder="Search users"
 			rightSectionWidth={42}
             style={{
                 backgroundColor: "#242424",
