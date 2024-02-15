@@ -8,12 +8,9 @@ const ConversationPreview = () => {
 	const { user } = useUserStore();
 
 	return (
-		<UnstyledButton className={classes.user} h={"5%"} w={"95%"}>
+		<UnstyledButton className={classes.user} h={80} w={"95%"}>
 			<Group>
-				<Avatar
-					src={user?.photoURL}
-					radius="xl"
-				/>
+				<Avatar src={user?.photoURL} radius="xl" />
 
 				<div style={{ flex: 1 }}>
 					<Text size="sm" fw={500}>
@@ -21,7 +18,7 @@ const ConversationPreview = () => {
 					</Text>
 
 					<Text c="dimmed" size="xs">
-                        {convertEmailToUsername(user?.email as string)}
+						{convertEmailToUsername(user?.email as string)}
 					</Text>
 				</div>
 

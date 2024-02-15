@@ -17,6 +17,8 @@ const Home = () => {
 			<TweetComponent passedInStyles={TweetVariant.parent} />
 			<TweetComponent passedInStyles={TweetVariant.parent} />
 			<TweetComponent passedInStyles={TweetVariant.parent} />
+			<TweetComponent passedInStyles={TweetVariant.parent} />
+			<TweetComponent passedInStyles={TweetVariant.parent} />
 		</>
 	);
 };
