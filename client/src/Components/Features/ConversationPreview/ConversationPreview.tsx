@@ -8,7 +8,7 @@ const ConversationPreview = () => {
 	const { user } = useUserStore();
 
 	return (
-		<UnstyledButton className={classes.user} h={"10%"} w={"95%"}>
+		<UnstyledButton className={classes.user} h={"5%"} w={"95%"}>
 			<Group>
 				<Avatar
 					src={user?.photoURL}
