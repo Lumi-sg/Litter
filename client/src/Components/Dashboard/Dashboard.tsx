@@ -50,9 +50,12 @@ export function Dashboard() {
 				<Sidebar />
 			</AppShell.Navbar>
 			<AppShell.Main>{renderSwitch()}</AppShell.Main>
-			<AppShell.Aside p="md">
-				<Infopanel />
-			</AppShell.Aside>
+			{selectedComponent === "Messages" ? null : (
+				<AppShell.Aside p="md">
+					<Infopanel />
+				</AppShell.Aside>
+			)}
+
 			<AppShell.Footer>
 				<Flex align={"center"} justify={"center"} mt="xs">
 					<Footer />

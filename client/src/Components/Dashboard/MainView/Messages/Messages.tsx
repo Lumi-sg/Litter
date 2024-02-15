@@ -5,9 +5,8 @@ import { Divider, Flex } from "@mantine/core";
 
 const Messages = () => {
 	return (
-		<Flex h={865}>
+		<Flex h={"100%"} w={"63vw"} direction={"row"}>
 			<LeftMessageContainer />
-
 			<Divider orientation="vertical" />
 			<RightMessageContainer />
 		</Flex>
