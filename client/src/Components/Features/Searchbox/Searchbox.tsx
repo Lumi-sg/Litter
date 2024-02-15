@@ -1,12 +1,10 @@
-import { TextInput, ActionIcon, rem } from "@mantine/core";
+import { ActionIcon, rem, Autocomplete } from "@mantine/core";
 import { IconSearch, IconArrowRight } from "@tabler/icons-react";
-import { useState } from "react";
 import styles from "./Searchbox.module.css";
 
 export function Searchbox() {
-	const [searchTerm, setSearchTerm] = useState("");
 	return (
-		<TextInput
+		<Autocomplete
 			radius="xl"
 			w={"100%"}
 			size="md"
@@ -17,9 +15,13 @@ export function Searchbox() {
 					color: "white",
 				},
 			}}
-			classNames={{ input: styles.input }}
-			value={searchTerm}
-			onChange={(e) => setSearchTerm(e.target.value)}
+			data={["React", "Angular", "Vue", "Svelte"]}
+			classNames={{
+				input: styles.input,
+				options: styles.options,
+				dropdown: styles.dropdown,
+				option: styles.option,
+			}}
 			leftSection={
 				<IconSearch
 					style={{ width: rem(18), height: rem(18) }}
