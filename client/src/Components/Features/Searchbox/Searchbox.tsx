@@ -1,12 +1,10 @@
-import {
-	TextInput,
-	ActionIcon,
-	rem,
-} from "@mantine/core";
+import { TextInput, ActionIcon, rem } from "@mantine/core";
 import { IconSearch, IconArrowRight } from "@tabler/icons-react";
+import { useState } from "react";
+import styles from "./Searchbox.module.css";
 
 export function Searchbox() {
-
+	const [searchTerm, setSearchTerm] = useState("");
 	return (
 		<TextInput
 			radius="xl"
@@ -14,13 +12,19 @@ export function Searchbox() {
 			size="md"
 			placeholder="Search users"
 			rightSectionWidth={42}
-            style={{
-                backgroundColor: "#242424",
-            }}
+			styles={{
+				input: {
+					color: "white",
+				},
+			}}
+			classNames={{ input: styles.input }}
+			value={searchTerm}
+			onChange={(e) => setSearchTerm(e.target.value)}
 			leftSection={
 				<IconSearch
 					style={{ width: rem(18), height: rem(18) }}
 					stroke={1.5}
+					color="#b197fc"
 				/>
 			}
 			rightSection={
@@ -32,7 +36,8 @@ export function Searchbox() {
 				>
 					<IconArrowRight
 						style={{ width: rem(18), height: rem(18) }}
-						stroke={1.5}
+						stroke={2}
+						color="white"
 					/>
 				</ActionIcon>
 			}

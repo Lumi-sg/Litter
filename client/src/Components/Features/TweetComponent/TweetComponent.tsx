@@ -98,7 +98,7 @@ export function TweetComponent({ passedInStyles }: TweetComponentProps) {
 				displayNotification(
 					action,
 					"followed",
-					"violet",
+					"#3cc94d",
 					user?.displayName as string,
 					"account"
 				);
