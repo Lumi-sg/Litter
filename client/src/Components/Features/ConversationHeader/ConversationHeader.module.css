@@ -1,0 +1,13 @@
+.menuIcon {
+	cursor: pointer;
+	color: #8d7ac8;
+	height: 2.5rem;
+	width: 2.5rem;
+	padding: 0.35em;
+	border-radius: 50%;
+	transition: background-color 0.25s;
+}
+
+.menuIcon:hover {
+	background-color: rgba(255, 255, 255, 0.097);
+}

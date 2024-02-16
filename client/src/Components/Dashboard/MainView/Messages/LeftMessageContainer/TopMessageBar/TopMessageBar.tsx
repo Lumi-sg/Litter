@@ -1,4 +1,4 @@
-import { Flex, Group, Text } from "@mantine/core";
+import { Group, Text } from "@mantine/core";
 import { Settings, MessagePlus } from "tabler-icons-react";
 import styles from "./TopMessageBar.module.css";
 

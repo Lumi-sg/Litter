@@ -4,12 +4,10 @@ import {
 	Text,
 	Divider,
 	Menu,
-	Button,
 	UnstyledButton,
 } from "@mantine/core";
 import {
 	Menu as MenuIcon,
-	Dots,
 	UserPlus,
 	UserMinus,
 	Ban,
@@ -17,16 +15,10 @@ import {
 } from "tabler-icons-react";
 import { useUserStore } from "../../../Stores/userStore";
 import { displayNotification } from "../../../Helpers/displayNotification";
+import styles from "./ConversationHeader.module.css";
 
 const ConversationHeader = () => {
 	const { user } = useUserStore();
-
-	const handleDotsClick = (
-		e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-	) => {
-		e.stopPropagation();
-		console.log("dots clicked");
-	};
 
 	const handleOptionsClick = (
 		e: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -95,7 +87,7 @@ const ConversationHeader = () => {
 				<Menu position="bottom">
 					<Menu.Target>
 						<UnstyledButton onClick={(e) => handleOptionsClick(e)}>
-							<MenuIcon size={28} color="#8d7ac8" />
+							<MenuIcon size={28} color="#8d7ac8" className={styles.menuIcon}/>
 						</UnstyledButton>
 					</Menu.Target>
 					<Menu.Dropdown
