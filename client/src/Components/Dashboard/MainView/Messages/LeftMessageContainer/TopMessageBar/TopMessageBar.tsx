@@ -9,7 +9,7 @@ const TopMessageBar = () => {
 				Messages
 			</Text>
 			<Group>
-				<Settings className={styles.settingsIcon} />
+				{/* <Settings className={styles.settingsIcon} /> */}
 				<MessagePlus className={styles.messageIcon} />
 			</Group>
 		</Group>

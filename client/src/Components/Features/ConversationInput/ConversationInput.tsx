@@ -5,6 +5,10 @@ import { useState } from "react";
 
 const ConversationInput = () => {
 	const [message, setMessage] = useState("");
+
+	const handleSubmit = () => {
+		setMessage("");
+	};
 	return (
 		<>
 			<Textarea
@@ -15,6 +19,11 @@ const ConversationInput = () => {
 				autosize
 				value={message}
 				onChange={(event) => setMessage(event.currentTarget.value)}
+				onKeyDown={(e) => {
+					if (e.key === "Enter") {
+						handleSubmit();
+					}
+				}}
 				rightSection={
 					<ActionIcon
 						size={28}
@@ -22,6 +31,7 @@ const ConversationInput = () => {
 						color={"#8d7ac8"}
 						variant="filled"
 						disabled={message === ""}
+						onClick={handleSubmit}
 					>
 						<IconArrowRight
 							style={{ width: rem(18), height: rem(18) }}
