@@ -12,6 +12,7 @@ import {
 	UserMinus,
 	Ban,
 	Checkbox,
+	Trash,
 } from "tabler-icons-react";
 import { useUserStore } from "../../../Stores/userStore";
 import { displayNotification } from "../../../Helpers/displayNotification";
@@ -70,6 +71,15 @@ const ConversationHeader = () => {
 					"account"
 				);
 				return;
+			case "Leave":
+				displayNotification(
+					action,
+					"left the conversation with",
+					"red",
+					user?.displayName as string,
+					""
+				);
+				return;
 			default:
 				return;
 		}
@@ -87,7 +97,11 @@ const ConversationHeader = () => {
 				<Menu position="bottom">
 					<Menu.Target>
 						<UnstyledButton onClick={(e) => handleOptionsClick(e)}>
-							<MenuIcon size={28} color="#8d7ac8" className={styles.menuIcon}/>
+							<MenuIcon
+								size={28}
+								color="#8d7ac8"
+								className={styles.menuIcon}
+							/>
 						</UnstyledButton>
 					</Menu.Target>
 					<Menu.Dropdown
@@ -123,6 +137,12 @@ const ConversationHeader = () => {
 							leftSection={<Checkbox color="white" size={20} />}
 						>
 							<Text c={"white"}>Unblock @user</Text>
+						</Menu.Item>
+						<Menu.Item
+							onClick={(event) => handleMenuClick(event, "Leave")}
+							leftSection={<Trash color="red" size={20} />}
+						>
+							<Text c={"#eb0303"}>Delete Conversation</Text>
 						</Menu.Item>
 					</Menu.Dropdown>
 				</Menu>
