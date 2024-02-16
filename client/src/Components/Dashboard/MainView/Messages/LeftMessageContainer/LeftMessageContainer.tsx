@@ -5,10 +5,10 @@ import { Divider, Flex, ScrollArea, Space, Stack } from "@mantine/core";
 
 const LeftMessageContainer = () => {
 	return (
-		<Stack  mt={10} h={"100%"} w={"20vw"} ml={10}>
+		<Stack mt={10} h={"100%"} w={"20vw"} ml={10}>
 			<TopMessageBar />
 			<MessageSearchBox />
-			<Space h={"md"}/>
+			<Space h={"md"} />
 			<Flex flex={1}>
 				<ScrollArea
 					offsetScrollbars

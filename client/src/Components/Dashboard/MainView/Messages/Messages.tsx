@@ -4,13 +4,12 @@ import { Divider, Group } from "@mantine/core";
 
 const Messages = () => {
 	return (
-		<>
-			<Group mih={"calc (100vh - 18.85rem)"} miw={"60vw"}>
-				<LeftMessageContainer />
-				<Divider orientation="vertical" />
+		<Group h={"calc (100vh - 18.85rem)"} miw={"60vw"} >
+			<LeftMessageContainer />
+			<Divider orientation="vertical" />
 			<RightMessageContainer />
-			</Group>
-		</>
+			<Divider orientation="vertical" />
+		</Group>
 	);
 };
 

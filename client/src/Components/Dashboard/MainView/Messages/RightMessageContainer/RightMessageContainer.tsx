@@ -1,11 +1,20 @@
-import React from "react";
-import { Flex } from "@mantine/core";
+import ConversationHeader from "../../../../Features/ConversationHeader/ConversationHeader";
+import MainConversation from "../../../../Features/MainConversation/MainConersation";
+import ConversationInput from "../../../../Features/ConversationInput/ConversationInput";
+import { Stack } from "@mantine/core";
 
 const RightMessageContainer = () => {
 	return (
-		<Flex w={"60%"} h={"91vh"}  mt={10}>
-			RightMessageContainer
-		</Flex>
+		<Stack
+			h={"calc(100vh - 5.7rem)"}
+			flex={1}
+			mr={10}
+			justify="space-between"
+		>
+			<ConversationHeader />
+			<MainConversation />
+			<ConversationInput />
+		</Stack>
 	);
 };
 
