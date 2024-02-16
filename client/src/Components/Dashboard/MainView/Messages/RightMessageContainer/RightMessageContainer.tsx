@@ -1,5 +1,5 @@
 import ConversationHeader from "../../../../Features/ConversationHeader/ConversationHeader";
-import MainConversation from "../../../../Features/MainConversation/MainConersation";
+import MainConversation from "../../../../Features/MainConversation/MainConversation";
 import ConversationInput from "../../../../Features/ConversationInput/ConversationInput";
 import { Stack } from "@mantine/core";
 

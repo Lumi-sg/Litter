@@ -1,4 +1,4 @@
-import { Stack, Group, Avatar, Text, Divider } from "@mantine/core";
+import { Group, Avatar, Text, Divider } from "@mantine/core";
 import { Menu } from "tabler-icons-react";
 import { useUserStore } from "../../../Stores/userStore";
 
