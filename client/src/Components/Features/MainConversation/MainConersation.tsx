@@ -1,4 +1,3 @@
-import React from "react";
 import { ScrollArea } from "@mantine/core";
 
 const MainConversation = () => {

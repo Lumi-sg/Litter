@@ -1,0 +1,20 @@
+.input {
+	background-color: #242424 !important;
+}
+
+.input:focus {
+	outline: 2px solid #7f6eb4 !important;
+	outline-offset: -2px;
+}
+
+.options {
+	color: white;
+	background-color: #242424;
+}
+.option:hover {
+	background-color: #2e2e2e !important;
+}
+
+.dropdown {
+	background-color: #242424 !important;
+}
