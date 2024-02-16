@@ -1,7 +1,7 @@
 import ConversationHeader from "../../../../Features/ConversationHeader/ConversationHeader";
 import MainConversation from "../../../../Features/MainConversation/MainConversation";
 import ConversationInput from "../../../../Features/ConversationInput/ConversationInput";
-import { Stack } from "@mantine/core";
+import { Stack} from "@mantine/core";
 
 const RightMessageContainer = () => {
 	return (
