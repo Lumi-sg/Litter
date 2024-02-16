@@ -8,8 +8,6 @@ const RightMessageContainer = () => {
 		<Stack
 			h={"calc(100vh - 5.7rem)"}
 			flex={1}
-			mr={10}
-			justify="space-between"
 		>
 			<ConversationHeader />
 			<MainConversation />

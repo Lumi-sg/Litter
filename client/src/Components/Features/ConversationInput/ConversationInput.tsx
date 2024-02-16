@@ -15,7 +15,7 @@ const ConversationInput = () => {
 				placeholder="Start a new meessage"
 				mb={-10}
 				minRows={1}
-				maxRows={4}
+				maxRows={1}
 				autosize
 				value={message}
 				onChange={(event) => setMessage(event.currentTarget.value)}
