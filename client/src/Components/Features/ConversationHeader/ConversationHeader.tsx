@@ -124,20 +124,7 @@ const ConversationHeader = () => {
 						>
 							<Text c={"white"}>Unfollow</Text>
 						</Menu.Item>
-						<Menu.Item
-							onClick={(event) => handleMenuClick(event, "Block")}
-							leftSection={<Ban color="white" size={20} />}
-						>
-							<Text c={"white"}>Block @user</Text>
-						</Menu.Item>
-						<Menu.Item
-							onClick={(event) =>
-								handleMenuClick(event, "Unblock")
-							}
-							leftSection={<Checkbox color="white" size={20} />}
-						>
-							<Text c={"white"}>Unblock @user</Text>
-						</Menu.Item>
+
 						<Menu.Item
 							onClick={(event) => handleMenuClick(event, "Leave")}
 							leftSection={<Trash color="red" size={20} />}
