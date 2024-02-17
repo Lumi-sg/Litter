@@ -11,11 +11,14 @@ const LeftMessageContainer = () => {
 			<Space h={"md"} />
 			<Flex flex={1}>
 				<ScrollArea
-					scrollbarSize={8}
+					scrollbars="y"
+					scrollbarSize={6}
 					style={{
 						overflowY: "auto",
 						height: "auto",
 						maxHeight: "calc(100vh - 14.25rem)",
+						borderTopLeftRadius: 5,
+						borderBottomLeftRadius: 5,
 					}}
 					w={"100%"}
 				>
