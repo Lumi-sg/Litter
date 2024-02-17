@@ -12,6 +12,7 @@ const LeftMessageContainer = () => {
 			<Flex flex={1}>
 				<ScrollArea
 					offsetScrollbars
+					scrollbarSize={4}
 					style={{
 						overflowY: "auto",
 						height: "auto",
@@ -20,38 +21,23 @@ const LeftMessageContainer = () => {
 					w={"100%"}
 				>
 					<Divider />
+
 					<ConversationPreview />
-					<Divider />
 					<ConversationPreview />
-					<Divider />
 					<ConversationPreview />
-					<Divider />
 					<ConversationPreview />
-					<Divider />
 					<ConversationPreview />
-					<Divider />
 					<ConversationPreview />
-					<Divider />
 					<ConversationPreview />
-					<Divider />
 					<ConversationPreview />
-					<Divider />
 					<ConversationPreview />
-					<Divider />
 					<ConversationPreview />
-					<Divider />
 					<ConversationPreview />
-					<Divider />
 					<ConversationPreview />
-					<Divider />
 					<ConversationPreview />
-					<Divider />
 					<ConversationPreview />
-					<Divider />
 					<ConversationPreview />
-					<Divider />
 					<ConversationPreview />
-					<Divider />
 				</ScrollArea>
 			</Flex>
 		</Stack>
