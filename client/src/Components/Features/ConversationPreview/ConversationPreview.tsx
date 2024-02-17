@@ -3,9 +3,10 @@ import {
 	Group,
 	Avatar,
 	Text,
-	rem,
 	Divider,
 	Menu,
+	Stack,
+	Flex,
 } from "@mantine/core";
 import { IconDots } from "@tabler/icons-react";
 import { Trash } from "tabler-icons-react";
@@ -36,19 +37,34 @@ const ConversationPreview = () => {
 
 	return (
 		<>
-			<UnstyledButton className={classes.user} h={80} w={"100%"}>
-				<Group ml={10}>
-					<Avatar src={user?.photoURL} radius="xl" />
+			<UnstyledButton className={classes.user} h={80} w={"97.5%"}>
+				<Flex ml={10} w={"100%"} gap={0} align={"center"}>
+					<Avatar
+						src={user?.photoURL}
+						radius="xl"
+						size={45}
+						mr={10}
+					/>
 
-					<div style={{ flex: 1 }}>
-						<Text size="md" fw={700} c={"white"}>
-							{user?.displayName}
-						</Text>
+					<Stack gap={-"50%"}>
+						<Group justify="space-around">
+							<Text size="md" fw={700} c={"white"}>
+								{user?.displayName}
+							</Text>
 
-						<Text c="dimmed" size="xs">
-							{convertEmailToUsername(user?.email as string)}
+							<Text c="dimmed" size="sm" ta={"left"}>
+								{convertEmailToUsername(user?.email as string)}
+							</Text>
+							<Divider orientation="vertical" />
+
+							<Text c="dimmed" size="sm" ta={"left"}>
+								Jan 01, 2022
+							</Text>
+						</Group>
+						<Text c={"dimmed"} size="md">
+							This is a preview
 						</Text>
-					</div>
+					</Stack>
 					<Menu position="left">
 						<Menu.Target>
 							<IconDots
@@ -70,7 +86,7 @@ const ConversationPreview = () => {
 							</Menu.Item>
 						</Menu.Dropdown>
 					</Menu>
-				</Group>
+				</Flex>
 			</UnstyledButton>
 			<Divider />
 		</>

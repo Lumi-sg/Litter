@@ -11,8 +11,7 @@ const LeftMessageContainer = () => {
 			<Space h={"md"} />
 			<Flex flex={1}>
 				<ScrollArea
-					offsetScrollbars
-					scrollbarSize={4}
+					scrollbarSize={8}
 					style={{
 						overflowY: "auto",
 						height: "auto",
