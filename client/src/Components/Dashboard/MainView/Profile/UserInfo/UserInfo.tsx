@@ -29,7 +29,7 @@ export function UserCardImage() {
 			h={"100%"}
 			w={"100%"}
 			bg={"#242424"}
-			style={{border: "1px solid #8d7ac8"}}
+			style={{ border: "1px solid #8d7ac8" }}
 		>
 			<Center>
 				<UserInfoIcons />
@@ -43,8 +43,8 @@ export function UserCardImage() {
 					radius="md"
 					mt="xl"
 					size="md"
-					variant="default"
-					bg={"#242424"}
+					variant="outline"
+					color="violet"
 				>
 					Follow
 				</Button>
@@ -53,8 +53,8 @@ export function UserCardImage() {
 					radius="md"
 					mt="xl"
 					size="md"
-					variant="default"
-					bg={"#242424"}
+					variant="outline"
+					color="violet"
 				>
 					Message
 				</Button>
