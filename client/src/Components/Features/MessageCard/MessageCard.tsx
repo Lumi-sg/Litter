@@ -8,14 +8,14 @@ const MessageCard = ({ userMessage }: MessageCardProps) => {
 		<>
 			<Box
 				bg={userMessage ? "#2e2e2e" : "#2C2A32"}
-				p={10}
+				p={20}
 				style={{
 					borderRadius: 10,
 					border: userMessage
 						? "1px solid #424242"
 						: "1px solid #8d7ac8",
 				}}
-				w={"35%"}
+				w={"40%"}
 			>
 				<Text size="sm" c={"white"}>
 					my fiancee and I went to a live show and saw this guy's
