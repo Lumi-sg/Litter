@@ -3,8 +3,21 @@ import { GoogleButton } from "./GoogleButton/GoogleButton";
 import { useUserStore } from "../../../Stores/userStore";
 import { useNavigate } from "react-router-dom";
 import styles from "./Authform.module.css";
+import Cookies from "js-cookie";
+import { useEffect } from "react";
 
 export function AuthenticationForm(props: PaperProps) {
+	useEffect(() => {
+		if (Cookies.get("user")) {
+			useUserStore
+				.getState()
+				.setUser(JSON.parse(Cookies.get("user") as string));
+		}
+		console.log("User already logged in on machine.");
+		navigate("/dashboard");
+		return () => {};
+	}, []);
+
 	const navigate = useNavigate();
 
 	const handleLoginClick = async () => {
@@ -16,7 +29,13 @@ export function AuthenticationForm(props: PaperProps) {
 		console.log("Login failed");
 	};
 	return (
-		<Paper radius="md" p="xl" withBorder {...props} className={styles.authform}>
+		<Paper
+			radius="md"
+			p="xl"
+			withBorder
+			{...props}
+			className={styles.authform}
+		>
 			<Flex
 				direction={"column"}
 				align={"center"}
