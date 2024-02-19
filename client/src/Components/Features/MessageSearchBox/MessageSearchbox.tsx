@@ -8,7 +8,7 @@ export function MessageSearchBox() {
 			radius="xl"
 			w={"100%"}
 			size="md"
-			placeholder="Search users"
+			placeholder="Search Direct Messages"
 			rightSectionWidth={42}
 			styles={{
 				input: {

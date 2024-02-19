@@ -22,7 +22,7 @@ const Sidebar = () => {
 		setParentTweetAuthor(null);
 		modals.open({
 			children: <TweetComposeModal />,
-			size: 700,
+			size: 500,
 			withCloseButton: false,
 			radius: "md",
 		});
