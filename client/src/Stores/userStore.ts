@@ -42,6 +42,8 @@ export const useUserStore = create<userStoreType>()(
 						{ expires: 7 }
 					);
 
+					
+
 					// Example: Navigate to the dashboard after successful login
 					return true;
 				} catch (error) {
