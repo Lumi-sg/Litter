@@ -1,4 +1,4 @@
-import { ActionIcon, Textarea, rem } from "@mantine/core";
+import { ActionIcon, TextInput, Textarea, rem } from "@mantine/core";
 import { IconArrowRight } from "@tabler/icons-react";
 import styles from "./ConversationInput.module.css";
 import { useState } from "react";
@@ -11,13 +11,11 @@ const ConversationInput = () => {
 	};
 	return (
 		<>
-			<Textarea
+			<TextInput
 				placeholder="Start a new meessage"
 				mb={-10}
-				minRows={1}
-				maxRows={1}
-				autosize
 				value={message}
+				size="md"
 				onChange={(event) => setMessage(event.currentTarget.value)}
 				onKeyDown={(e) => {
 					if (e.key === "Enter") {
