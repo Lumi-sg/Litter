@@ -1,17 +1,13 @@
 import admin from "firebase-admin";
 import { NextFunction, Request, Response } from "express";
 
-interface CustomRequest extends Request {
-    currentUser: any; // Define the type of currentUser as per your requirements
-  }
-
 const serviceAccount = require("../litterFirebaseConfig.json");
 admin.initializeApp({
 	credential: admin.credential.cert(serviceAccount),
 });
 
 export const verifyFirebaseToken = async (
-	req: CustomRequest,
+	req: Request,
 	res: Response,
 	next: NextFunction
 ) => {
@@ -23,7 +19,8 @@ export const verifyFirebaseToken = async (
 
 	try {
 		const decodedToken = await admin.auth().verifyIdToken(firebaseToken);
-		req["currentUser"] = decodedToken; // Attach user information to the request object
+		(req as any).currentUser = decodedToken;
+
 		next();
 	} catch (error) {
 		console.error("Error verifying Firebase token:", error);

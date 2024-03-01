@@ -7,10 +7,10 @@ import express from "express";
 import http from "http";
 import path from "path";
 import mongoose from "mongoose";
+import { verifyFirebaseToken } from "./middleware/firebaseAuth";
 
 //routes
-import userRouter from "./routes/userRouter"
-
+import userRouter from "./routes/userRouter";
 
 const app = express();
 dotenv.config();
@@ -54,6 +54,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 // //Middleware
+app.use(verifyFirebaseToken);
 
 app.use("/user", userRouter);
 

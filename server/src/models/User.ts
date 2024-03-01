@@ -5,6 +5,7 @@ export type UserType = Document & {
 	firebaseID: string;
 	Email: string;
 	username: string;
+	displayName: string;
 	followers: UserType[];
 	followCount: number;
 	following: UserType[];
