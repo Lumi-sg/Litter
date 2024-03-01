@@ -10,7 +10,7 @@ admin.initializeApp({
 	credential: admin.credential.cert(serviceAccount),
 });
 
-const verifyFirebaseToken = async (
+export const verifyFirebaseToken = async (
 	req: CustomRequest,
 	res: Response,
 	next: NextFunction

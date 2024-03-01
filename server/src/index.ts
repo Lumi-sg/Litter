@@ -6,9 +6,11 @@ import dotenv from "dotenv";
 import express from "express";
 import http from "http";
 import path from "path";
-
 import mongoose from "mongoose";
-import router from "./router/router";
+
+//routes
+import userRouter from "./routes/userRouter"
+
 
 const app = express();
 dotenv.config();
@@ -53,8 +55,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 // //Middleware
 
-// Default route
-app.use("/", router);
+app.use("/user", userRouter);
 
 const server = http.createServer(app);
 const port = 3000;
