@@ -20,6 +20,10 @@ const conversationSchema = new Schema<ConversationType>({
 	messages: [{ type: Object, required: true }],
 });
 
+conversationSchema.virtual("url").get(function () {
+    return `/conversation/${this._id}`;
+});
+
 export const ConversationModel = mongoose.model<ConversationType>(
 	"Conversation",
 	conversationSchema
