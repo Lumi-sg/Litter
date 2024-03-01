@@ -1,9 +1,11 @@
 // userStore.ts
-import {create} from "zustand";
+import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 import Cookies from "js-cookie";
 import { signInWithPopup, auth, provider } from "../main";
 import { User as FirebaseUser } from "firebase/auth";
+import { baseURL } from "../constants/baseURL";
+import axios from "axios";
 
 type userStoreType = {
 	user: FirebaseUser | null;
@@ -36,16 +38,28 @@ export const useUserStore = create<userStoreType>()(
 					);
 
 					// Save the Firebase ID token to a cookie
+					const firebaseToken = await credentials.user.getIdToken();
 					Cookies.set(
 						"firebaseToken",
 						await credentials.user.getIdToken(),
 						{ expires: 7 }
 					);
 
-					
-
-					// Example: Navigate to the dashboard after successful login
-					return true;
+					const response = await axios.post(
+						`${baseURL}/user/register`,
+						null,
+						{
+							headers: {
+								Authorization: `Bearer ${firebaseToken}`,
+							},
+						}
+					);
+					if (response.status === 201) {
+						console.log(response.data.message);
+						return true;
+					}
+					console.log(response.data.message);
+					return false;
 				} catch (error) {
 					console.error("Login error:", error);
 					// Handle the error (e.g., display a user-friendly error message)
