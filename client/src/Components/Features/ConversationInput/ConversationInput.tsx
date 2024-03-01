@@ -1,4 +1,4 @@
-import { ActionIcon, TextInput, Textarea, rem } from "@mantine/core";
+import { ActionIcon, TextInput, rem } from "@mantine/core";
 import { IconArrowRight } from "@tabler/icons-react";
 import styles from "./ConversationInput.module.css";
 import { useState } from "react";

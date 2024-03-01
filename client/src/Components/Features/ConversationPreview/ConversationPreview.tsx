@@ -66,11 +66,11 @@ const ConversationPreview = () => {
 
 								<Divider orientation="vertical" />
 
-								<Text c="dimmed" size="sm" ta={"left"}>
-									Jan 01, 2022
+								<Text c="dimmed" size="xs" ta={"left"}>
+									01/01/2022
 								</Text>
 							</Group>
-							<Text c={"dimmed"} size="md">
+							<Text c={"white"} size="md">
 								This is a preview
 							</Text>
 						</Stack>
