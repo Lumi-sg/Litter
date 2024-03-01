@@ -7,7 +7,9 @@ export type UserType = Document & {
 	username: string;
 	displayName: string;
 	followers: UserType[];
+	followCount: number;
 	following: UserType[];
+	followerCount: number;
 	tweetCount: number;
 	bookmarks: Types.ObjectId[];
 };
