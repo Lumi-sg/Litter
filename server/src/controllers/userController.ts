@@ -43,3 +43,19 @@ export const registerUser = asyncHandler(
 		}
 	}
 );
+
+
+export const getUserProfile = asyncHandler(
+	async (req: express.Request, res: express.Response) => {
+		try {
+			const user = await UserModel.findById(req.params.id);
+			if (!user) {
+				res.status(404).json({ message: "User not found" });
+				return;
+			}
+			res.status(200).json({ user: user });
+		} catch (error: any) {
+			res.status(500).json({ message: error.message });
+		}
+	}
+)

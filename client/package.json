@@ -25,6 +25,7 @@
 		"@mantine/tiptap": "^7.5.1",
 		"@mantinex/dev-icons": "^1.0.2",
 		"@tabler/icons-react": "^2.47.0",
+		"@tanstack/react-query": "^5.24.6",
 		"@tiptap/extension-link": "^2.2.2",
 		"@tiptap/react": "^2.2.2",
 		"@tiptap/starter-kit": "^2.2.2",

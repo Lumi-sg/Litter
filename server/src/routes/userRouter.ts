@@ -5,5 +5,6 @@ import * as userController from "../controllers/userController";
 const router: Router = express.Router();
 
 router.post("/register", verifyFirebaseToken, userController.registerUser);
+router.get("/:id", verifyFirebaseToken, userController.getUserProfile);
 
 export default router;

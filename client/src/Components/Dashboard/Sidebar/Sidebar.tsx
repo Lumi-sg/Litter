@@ -12,11 +12,16 @@ import { useComponentStore } from "../../../Stores/componentStore";
 import { useParentTweetStoreAuthor } from "../../../Stores/parentTweetStoreAuthor";
 import { modals } from "@mantine/modals";
 import TweetComposeModal from "../../Features/TweetComposeModal/TweetComposeModal";
+import { useUserStore } from "../../../Stores/userStore";
+import { Link } from "react-router-dom";
+import { convertEmailToUsername } from "../../../Helpers/convertEmailToUsername";
 
 const Sidebar = () => {
 	const { setSelectedComponent } = useComponentStore();
 
 	const { setParentTweetAuthor } = useParentTweetStoreAuthor();
+
+	const { user } = useUserStore();
 
 	const handlePostClick = () => {
 		setParentTweetAuthor(null);
@@ -40,23 +45,26 @@ const Sidebar = () => {
 		>
 			<Stack h={"100%"} justify="space-between">
 				<Flex direction="column" align="flex-start">
-					<Button
-						onClick={() => setSelectedComponent("Home")}
-						variant="subtle"
-						color="violet"
-						size="xl"
-						radius="xl"
-					>
-						<Trash />
-						<Space w="md" />
-						<Text td={"underline"} size="xl" fw={"bold"}>
-							Litter
-						</Text>
-					</Button>
+					<Link to="/dashboard/home">
+						<Button
+							onClick={() => setSelectedComponent("Home")}
+							variant="subtle"
+							color="violet"
+							size="xl"
+							radius="xl"
+						>
+							<Trash />
+							<Space w="md" />
+							<Text td={"underline"} size="xl" fw={"bold"}>
+								Litter
+							</Text>
+						</Button>
+					</Link>
 				</Flex>
 				<Divider style={{ width: "100%" }} />
 
 				<Flex direction="column" align="flex-start" gap="lg">
+					<Link to="/dashboard/home">
 					<Button
 						onClick={() => setSelectedComponent("Home")}
 						variant="subtle"
@@ -68,6 +76,8 @@ const Sidebar = () => {
 						<Space w="md" />
 						Home
 					</Button>
+					</Link>
+					<Link to="/dashboard/notifications">
 					<Button
 						onClick={() => setSelectedComponent("Notifications")}
 						variant="subtle"
@@ -79,6 +89,8 @@ const Sidebar = () => {
 						<Space w="md" />
 						Notifications
 					</Button>
+					</Link>
+					<Link to="/dashboard/messages">
 					<Button
 						onClick={() => setSelectedComponent("Messages")}
 						variant="subtle"
@@ -90,6 +102,8 @@ const Sidebar = () => {
 						<Space w="md" />
 						Messages
 					</Button>
+					</Link>
+					<Link to="/dashboard/bookmarks">
 					<Button
 						onClick={() => setSelectedComponent("Bookmarks")}
 						variant="subtle"
@@ -101,17 +115,24 @@ const Sidebar = () => {
 						<Space w="md" />
 						Bookmarks
 					</Button>
-					<Button
-						onClick={() => setSelectedComponent("Profile")}
-						variant="subtle"
-						color="violet"
-						size="xl"
-						radius="xl"
+					</Link>
+					<Link
+						to={`/dashboard/profile/${convertEmailToUsername(
+							user?.email as string
+						)}`}
 					>
-						<UserIcon />
-						<Space w="md" />
-						Profile
-					</Button>
+						<Button
+							onClick={() => setSelectedComponent("Profile")}
+							variant="subtle"
+							color="violet"
+							size="xl"
+							radius="xl"
+						>
+							<UserIcon />
+							<Space w="md" />
+							Profile
+						</Button>
+					</Link>
 				</Flex>
 				<Divider style={{ width: "100%" }} />
 

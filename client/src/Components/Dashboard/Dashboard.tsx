@@ -9,6 +9,7 @@ import Bookmarks from "./MainView/Bookmarks/Bookmarks";
 import Profile from "./MainView/Profile/Profile";
 import SinglePost from "./MainView/SinglePost/SinglePost";
 import Infopanel from "./Infopanel/Infopanel";
+import { Routes, Route, Link, Outlet } from 'react-router-dom';
 export function Dashboard() {
 	const { selectedComponent } = useComponentStore();
 
