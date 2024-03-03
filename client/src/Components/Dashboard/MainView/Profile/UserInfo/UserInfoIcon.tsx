@@ -1,22 +1,26 @@
 import { Avatar, Text, Group } from "@mantine/core";
 import classes from "./UserInfoIcons.module.css";
-import { useUserStore } from "../../../../../Stores/userStore";
 import { convertEmailToUsername } from "../../../../../Helpers/convertEmailToUsername";
+import UserType from "../../../../../Types/User";
 
-export function UserInfoIcons() {
-	const { user } = useUserStore();
+type UserInfoIconsProps = {
+	userData: UserType | undefined;
+	isLoading: boolean;
+};
+
+export function UserInfoIcons({ userData, isLoading }: UserInfoIconsProps) {
 	return (
 		<div>
 			<Group wrap="nowrap">
-				<Avatar src={user?.photoURL} size={60} radius="xl" />
+				<Avatar src={userData?.pictureURL} size={60} radius="xl" />
 				<div>
 					<Text fz="lg" fw={700} className={classes.name} c={"white"}>
-						{user?.displayName}
+						{userData?.displayName}
 					</Text>
 
 					<Group wrap="nowrap" gap={10} mt={3}>
 						<Text fz="xs" c="dimmed">
-							{convertEmailToUsername(user?.email as string)}
+							{userData?.username}
 						</Text>
 					</Group>
 				</div>

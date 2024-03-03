@@ -9,7 +9,7 @@ export const registerUser = asyncHandler(
 	async (req: express.Request, res: express.Response) => {
 		console.log("Registering user...");
 		try {
-			const { uid, email, name } = (req as any).currentUser;
+			const { uid, email, name, picture } = (req as any).currentUser;
 
 			const existingAccount = await UserModel.findOne({ email });
 			if (existingAccount) {
@@ -28,6 +28,7 @@ export const registerUser = asyncHandler(
 				email: email,
 				username: convertedUsername,
 				displayName: trimmedDisplayName,
+				pictureURL: picture,
 			});
 			const user = await newUser.save();
 			console.log("Registered user:", user.username);
@@ -44,11 +45,13 @@ export const registerUser = asyncHandler(
 	}
 );
 
-
-export const getUserProfile = asyncHandler(
+export const getUser = asyncHandler(
 	async (req: express.Request, res: express.Response) => {
+		console.log("Fetching user...");
 		try {
-			const user = await UserModel.findById(req.params.id);
+			const user = await UserModel.findOne({
+				username: req.params.username,
+			});
 			if (!user) {
 				res.status(404).json({ message: "User not found" });
 				return;
@@ -58,4 +61,4 @@ export const getUserProfile = asyncHandler(
 			res.status(500).json({ message: error.message });
 		}
 	}
-)
+);

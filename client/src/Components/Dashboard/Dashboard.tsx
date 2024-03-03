@@ -9,28 +9,28 @@ import Bookmarks from "./MainView/Bookmarks/Bookmarks";
 import Profile from "./MainView/Profile/Profile";
 import SinglePost from "./MainView/SinglePost/SinglePost";
 import Infopanel from "./Infopanel/Infopanel";
-import { Routes, Route, Link, Outlet } from 'react-router-dom';
+import { Routes, Route, Link, Outlet } from "react-router-dom";
 export function Dashboard() {
 	const { selectedComponent } = useComponentStore();
 
-	const renderSwitch = () => {
-		switch (selectedComponent) {
-			case "Home":
-				return <Home />;
-			case "Notifications":
-				return <Notifications />;
-			case "Messages":
-				return <Messages />;
-			case "Bookmarks":
-				return <Bookmarks />;
-			case "Profile":
-				return <Profile />;
-			case "SinglePost":
-				return <SinglePost />;
-			default:
-				return <Home />;
-		}
-	};
+	// const renderSwitch = () => {
+	// 	switch (selectedComponent) {
+	// 		case "Home":
+	// 			return <Home />;
+	// 		case "Notifications":
+	// 			return <Notifications />;
+	// 		case "Messages":
+	// 			return <Messages />;
+	// 		case "Bookmarks":
+	// 			return <Bookmarks />;
+	// 		case "Profile":
+	// 			return <Profile />;
+	// 		case "SinglePost":
+	// 			return <SinglePost />;
+	// 		default:
+	// 			return <Home />;
+	// 	}
+	// };
 
 	return (
 		<AppShell
@@ -50,7 +50,17 @@ export function Dashboard() {
 			<AppShell.Navbar p="md">
 				<Sidebar />
 			</AppShell.Navbar>
-			<AppShell.Main>{renderSwitch()}</AppShell.Main>
+			<AppShell.Main>
+				{" "}
+				<Routes>
+					<Route path="home" element={<Home />} />
+					<Route path="notifications" element={<Notifications />} />
+					<Route path="messages" element={<Messages />} />
+					<Route path="bookmarks" element={<Bookmarks />} />
+					<Route path="profile/:username" element={<Profile />} />
+					<Route path="singlepost" element={<SinglePost />} />
+				</Routes>
+			</AppShell.Main>
 			{selectedComponent === "Messages" ? null : (
 				<AppShell.Aside p="md">
 					<Infopanel />

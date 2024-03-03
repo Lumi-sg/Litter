@@ -11,7 +11,7 @@ const InitialRoute: React.FC = () => {
 	const { isLoggedIn } = useUserStore();
 
 	// Redirect to the appropriate route based on the login status
-	return isLoggedIn ? <Navigate to="/dashboard" /> : <Navigate to="/login" />;
+	return isLoggedIn ? <Navigate to="/dashboard/home" /> : <Navigate to="/login" />;
 };
 
 const router = createBrowserRouter([

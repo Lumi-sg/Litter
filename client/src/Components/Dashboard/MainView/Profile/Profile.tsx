@@ -4,11 +4,16 @@ import ContentButtons from "./ContentButtons/ContentButtons";
 import { useState } from "react";
 import Posts from "./Posts/Posts";
 import Likes from "./Likes/Likes";
+import { useParams } from "react-router-dom";
+import { useProfileGet } from "../../../../Hooks/useProfileGet";
 
 export type ProfileViewType = "posts" | "likes";
 
 const Profile = () => {
+	const { username } = useParams();
 	const [profileView, setProfileView] = useState<ProfileViewType>("posts");
+
+	const { data, isLoading } = useProfileGet(username as string);
 
 	const handleProfileViewClick = (view: ProfileViewType) => {
 		setProfileView(view);
@@ -23,10 +28,10 @@ const Profile = () => {
 		}
 	};
 
-	return (
+	return isLoading ? null : (
 		<div>
 			<Flex h={"100%"} w={"100%"} direction="column">
-				<UserCardImage />
+				<UserCardImage userData={data} isLoading={isLoading} />
 				<ContentButtons
 					handleProfileViewClick={handleProfileViewClick}
 				/>

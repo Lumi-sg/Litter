@@ -12,6 +12,7 @@ export type UserType = Document & {
 	followerCount: number;
 	tweetCount: number;
 	bookmarks: Types.ObjectId[];
+	pictureURL: string;
 };
 
 const UserSchema = new Schema({
@@ -25,6 +26,7 @@ const UserSchema = new Schema({
 	followerCount: { type: Number, default: 0 },
 	tweetCount: { type: Number, default: 0 },
 	bookmarks: [{ type: Schema.Types.ObjectId, ref: "Tweet" }],
+	pictureURL: { type: String, required: true },
 });
 
 UserSchema.virtual("url").get(function () {
