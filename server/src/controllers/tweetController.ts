@@ -41,6 +41,7 @@ export const createTweet = [
 
 			const tweet = new TweetModel({
 				author: author,
+				firebaseID: uid,
 				authorUsername: convertedUsername,
 				authorDisplayName: trimmedDisplayName,
 				authorPictureURL: picture,

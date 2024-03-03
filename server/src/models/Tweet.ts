@@ -3,6 +3,7 @@ import { UserType } from "./User";
 
 export type TweetType = Document & {
     _id?: Types.ObjectId;
+    firebaseID?: string;
     author: UserType;
     authorUsername: string;
     authorDisplayName: string;
@@ -19,6 +20,7 @@ export type TweetType = Document & {
 
 const tweetSchema = new Schema<TweetType>({
     author: { type: Schema.Types.ObjectId, ref: "User" },
+    firebaseID: { type: String, required: true },
     authorUsername: { type: String, required: true },
     authorDisplayName: { type: String, required: true },
     authorPictureURL: { type: String, required: true },

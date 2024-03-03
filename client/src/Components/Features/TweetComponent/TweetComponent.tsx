@@ -10,7 +10,6 @@ import {
 import classes from "./TweetComponent.module.css";
 import styles from "./TweetComponent.module.css";
 import { useUserStore } from "../../../Stores/userStore";
-import { convertEmailToUsername } from "../../../Helpers/convertEmailToUsername";
 import {
 	MessageCircle2,
 	Heart,

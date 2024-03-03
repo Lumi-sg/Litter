@@ -3,6 +3,7 @@ import { UserType } from "./User";
 
 export type TweetType = Document & {
 	_id?: Types.ObjectId;
+    firebaseID?: string;
 	author: UserType;
 	authorUsername: string;
 	authorDisplayName: string;
