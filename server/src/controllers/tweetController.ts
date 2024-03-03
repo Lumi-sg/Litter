@@ -95,15 +95,42 @@ export const likeTweet = asyncHandler(
 		console.log("Like tweet...");
 		try {
 			const tweet = await TweetModel.findOne({ _id: req.params.tweetID });
-			const { uid} = (req as any).currentUser;
+			const { uid } = (req as any).currentUser;
 			if (!tweet) {
 				res.status(404).json({ message: "Tweet not found" });
 				return;
 			}
-			tweet.likes.push(uid);
-			tweet.likesCount = tweet.likesCount + 1;
-			await tweet.save();
+
+			console.log("Adding like...");
+			await TweetModel.updateOne(
+				{ _id: req.params.tweetID },
+				{ $addToSet: { likes: uid }, $inc: { likesCount: 1 } }
+			);
 			res.status(200).json({ message: "Tweet liked successfully" });
+			return;
+		} catch (error: any) {
+			res.status(500).json({ message: error.message });
+		}
+	}
+);
+
+export const unlikeTweet = asyncHandler(
+	async (req: express.Request, res: express.Response) => {
+		console.log("Unlike tweet...");
+		try {
+			const tweet = await TweetModel.findOne({ _id: req.params.tweetID });
+			const { uid } = (req as any).currentUser;
+			if (!tweet) {
+				res.status(404).json({ message: "Tweet not found" });
+				return;
+			}
+
+			console.log("Removing like...");
+			await TweetModel.updateOne(
+				{ _id: req.params.tweetID },
+				{ $pull: { likes: uid }, $inc: { likesCount: -1 } }
+			);
+			res.status(200).json({ message: "Tweet unliked successfully" });
 			return;
 		} catch (error: any) {
 			res.status(500).json({ message: error.message });
@@ -116,11 +143,12 @@ export const bookmarkTweet = asyncHandler(
 		console.log("Bookmark tweet...");
 		try {
 			const tweet = await TweetModel.findOne({ _id: req.params.tweetID });
+			const { uid } = (req as any).currentUser;
 			if (!tweet) {
 				res.status(404).json({ message: "Tweet not found" });
 				return;
 			}
-			tweet.bookmarks.push((req as any).currentUser.uid);
+			tweet.bookmarks.push(uid);
 			tweet.bookmarkCount = tweet.bookmarkCount + 1;
 			await tweet.save();
 			res.status(200).json({ message: "Tweet bookmarked successfully" });

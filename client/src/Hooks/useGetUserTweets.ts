@@ -7,7 +7,7 @@ import { TweetType } from "../Types/Tweet";
 export const useGetUserTweets = (username: string) => {
 	const firebaseToken = Cookies.get("firebaseToken");
 	return useQuery({
-		queryKey: ["userTweets", username],
+		queryKey: ["tweets", username],
 		queryFn: async () => {
 			const { data } = await axios.get(
 				`${baseURL}/user/${username}/tweets`,

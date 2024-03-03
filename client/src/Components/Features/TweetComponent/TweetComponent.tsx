@@ -27,6 +27,8 @@ import TweetReplyModal from "../TweetReplyModal/TweetReplyModal";
 import { modals } from "@mantine/modals";
 import { TweetType } from "../../../Types/Tweet";
 import { Link } from "react-router-dom";
+import { useLikeTweet } from "../../../Hooks/useLikeTweet";
+import { useUnlikeTweet } from "../../../Hooks/useUnlikeTweet";
 type TweetComponentProps = {
 	passedInStyles: React.CSSProperties;
 	tweet: TweetType;
@@ -36,7 +38,9 @@ export function TweetComponent({ passedInStyles, tweet }: TweetComponentProps) {
 	const { user } = useUserStore();
 	const { setSelectedComponent } = useComponentStore();
 	const { setParentTweetAuthor } = useParentTweetStoreAuthor();
-	// const [opened, { open, close }] = useDisclosure(false);
+	const { mutate: mutateLike } = useLikeTweet(tweet);
+
+	const { mutate: mutateUnlike } = useUnlikeTweet(tweet);
 
 	const handleDotsClick = (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.stopPropagation();
@@ -68,13 +72,19 @@ export function TweetComponent({ passedInStyles, tweet }: TweetComponentProps) {
 
 		switch (action) {
 			case "Like":
-				displayNotification(
-					action,
-					"liked",
-					"#d279cb",
-					`${tweet.authorDisplayName as string}'s`,
-					"tweet"
-				);
+				const userHasLiked = tweet.likes.includes(user?.uid as string);
+				if (userHasLiked) {
+					mutateUnlike();
+					// tweet.likesCount -= 1;
+					// tweet.likes = tweet.likes.filter(
+					// 	(like) => like !== user?.uid
+					// );
+
+					return;
+				}
+				mutateLike();
+				// tweet.likesCount += 1;
+				// tweet.likes.push(user?.uid as string);
 				return;
 			case "Bookmark":
 				displayNotification(
@@ -275,10 +285,19 @@ export function TweetComponent({ passedInStyles, tweet }: TweetComponentProps) {
 							className={styles.hearticon}
 							onClick={(e) => handleActionClick(e, "Like")}
 						>
-							<Heart
-								size={22}
-								className={styles.heartActualIcon}
-							/>
+							{tweet.likes.includes(user?.uid || "") ? (
+								<Heart
+									size={22}
+									className={styles.heartActualIcon}
+									color="#d279cb"
+								/>
+							) : (
+								<Heart
+									size={22}
+									className={styles.heartActualIcon}
+								/>
+							)}
+
 							<Text c={"white"} size="sm" fw={600}>
 								{tweet.likesCount}
 							</Text>

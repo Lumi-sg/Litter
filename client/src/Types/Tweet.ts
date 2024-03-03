@@ -9,10 +9,10 @@ export type TweetType = Document & {
 	authorDisplayName: string;
 	authorPictureURL: string;
 	text: string;
-	likes: Types.ObjectId[];
+	likes: string[];
 	likesCount: number;
-	parent: Types.ObjectId;
-	children: Types.ObjectId[];
+	parent: string;
+	children: string[];
 	childrenCount: number;
 	timestamp: Date;
 	bookmarkCount: number;

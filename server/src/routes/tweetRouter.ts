@@ -7,6 +7,7 @@ const router: Router = express.Router();
 router.post("/create", verifyFirebaseToken, tweetController.createTweet);
 router.get("/:tweetID", verifyFirebaseToken, tweetController.getTweet);
 router.post("/:tweetID/like", verifyFirebaseToken, tweetController.likeTweet);
+router.post("/:tweetID/unlike", verifyFirebaseToken, tweetController.unlikeTweet);
 router.post("/:tweetID/bookmark", verifyFirebaseToken, tweetController.bookmarkTweet);
 
 // router.get(
