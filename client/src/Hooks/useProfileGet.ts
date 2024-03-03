@@ -4,8 +4,6 @@ import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import { UserType } from "../Types/User";
 
-
-
 export const useProfileGet = (username: string) => {
 	const firebaseToken = Cookies.get("firebaseToken");
 
@@ -19,5 +17,6 @@ export const useProfileGet = (username: string) => {
 			});
 			return data.user as UserType;
 		},
+		staleTime: 30000,
 	});
 };

@@ -1,6 +1,5 @@
 import { Avatar, Text, Group } from "@mantine/core";
 import classes from "./UserInfoIcons.module.css";
-import { convertEmailToUsername } from "../../../../../Helpers/convertEmailToUsername";
 import UserType from "../../../../../Types/User";
 
 type UserInfoIconsProps = {
@@ -8,7 +7,7 @@ type UserInfoIconsProps = {
 	isLoading: boolean;
 };
 
-export function UserInfoIcons({ userData, isLoading }: UserInfoIconsProps) {
+export function UserInfoIcons({ userData }: UserInfoIconsProps) {
 	return (
 		<div>
 			<Group wrap="nowrap">
