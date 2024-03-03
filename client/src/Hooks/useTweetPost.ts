@@ -4,10 +4,10 @@ import axios from "axios";
 import { useMutation } from "@tanstack/react-query";
 import { displayNotification } from "../Helpers/displayNotification";
 import { modals } from "@mantine/modals";
-
-export const useTweetPost = (tweetContent: string) => {
+import { useQueryClient } from "@tanstack/react-query";
+export const useTweetPost = (tweetContent: string, tweetAuthor: string) => {
 	const firebaseToken = Cookies.get("firebaseToken");
-
+	const queryClient = useQueryClient();
 	return useMutation({
 		mutationFn: async () => {
 			console.log("Creating tweet...");
@@ -27,6 +27,10 @@ export const useTweetPost = (tweetContent: string) => {
 		},
 
 		onSuccess: () => {
+			queryClient.invalidateQueries({
+				queryKey: ["tweets", tweetAuthor],
+			});
+			
 			displayNotification(
 				"Tweet",
 				"have successfully tweeted",

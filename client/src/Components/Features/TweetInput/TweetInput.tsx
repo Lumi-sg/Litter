@@ -29,7 +29,10 @@ const TweetInput = ({ placeholderMessage, isReply }: TweetInputProps) => {
 	const [tweetInput, setTweetInput] = useState("");
 	const [tweetCharacterLength, setTweetCharacterLength] = useState(0);
 	const closeModal = () => modals.closeAll();
-	const { mutate, isPending } = useTweetPost(tweetInput);
+	const { mutate, isPending } = useTweetPost(
+		tweetInput,
+		convertEmailToUsername(user?.email as string)
+	);
 
 	const handleSubmitTweet = () => {
 		mutate();
