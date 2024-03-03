@@ -15,7 +15,6 @@ import { useEffect, useState } from "react";
 import { useParentTweetStoreAuthor } from "../../../Stores/parentTweetStoreAuthor";
 import { convertEmailToUsername } from "../../../Helpers/convertEmailToUsername";
 import { modals } from "@mantine/modals";
-import { displayNotification } from "../../../Helpers/displayNotification";
 import { useTweetPost } from "../../../Hooks/useTweetPost";
 type TweetInputProps = {
 	placeholderMessage: string;

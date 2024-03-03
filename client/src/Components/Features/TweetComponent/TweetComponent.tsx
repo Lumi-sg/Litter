@@ -75,16 +75,11 @@ export function TweetComponent({ passedInStyles, tweet }: TweetComponentProps) {
 				const userHasLiked = tweet.likes.includes(user?.uid as string);
 				if (userHasLiked) {
 					mutateUnlike();
-					// tweet.likesCount -= 1;
-					// tweet.likes = tweet.likes.filter(
-					// 	(like) => like !== user?.uid
-					// );
 
 					return;
 				}
 				mutateLike();
-				// tweet.likesCount += 1;
-				// tweet.likes.push(user?.uid as string);
+
 				return;
 			case "Bookmark":
 				displayNotification(
