@@ -1,6 +1,7 @@
 import { Avatar, Text, Group } from "@mantine/core";
 import classes from "./UserInfoIcons.module.css";
 import UserType from "../../../../../Types/User";
+import { Link } from "react-router-dom";
 
 type UserInfoIconsProps = {
 	userData: UserType | undefined;
@@ -18,7 +19,13 @@ export function UserInfoIcons({ userData }: UserInfoIconsProps) {
 					</Text>
 
 					<Group wrap="nowrap" gap={10} mt={3}>
-						<Text fz="xs" c="dimmed">
+						<Text
+							component={Link}
+							to={`/dashboard/profile/${userData?.username}`}
+							fz="xs"
+							c="dimmed"
+							style={{ textDecoration: "none" }}
+						>
 							{userData?.username}
 						</Text>
 					</Group>
