@@ -73,3 +73,60 @@ export const createTweet = [
 		}
 	}),
 ];
+
+export const getTweet = asyncHandler(
+	async (req: express.Request, res: express.Response) => {
+		console.log("Fetching tweet...");
+		try {
+			const tweet = await TweetModel.findOne({ _id: req.params.tweetID });
+			if (!tweet) {
+				res.status(404).json({ message: "Tweet not found" });
+				return;
+			}
+			res.status(200).json({ tweet: tweet });
+		} catch (error: any) {
+			res.status(500).json({ message: error.message });
+		}
+	}
+);
+
+export const likeTweet = asyncHandler(
+	async (req: express.Request, res: express.Response) => {
+		console.log("Like tweet...");
+		try {
+			const tweet = await TweetModel.findOne({ _id: req.params.tweetID });
+			const { uid} = (req as any).currentUser;
+			if (!tweet) {
+				res.status(404).json({ message: "Tweet not found" });
+				return;
+			}
+			tweet.likes.push(uid);
+			tweet.likesCount = tweet.likesCount + 1;
+			await tweet.save();
+			res.status(200).json({ message: "Tweet liked successfully" });
+			return;
+		} catch (error: any) {
+			res.status(500).json({ message: error.message });
+		}
+	}
+);
+
+export const bookmarkTweet = asyncHandler(
+	async (req: express.Request, res: express.Response) => {
+		console.log("Bookmark tweet...");
+		try {
+			const tweet = await TweetModel.findOne({ _id: req.params.tweetID });
+			if (!tweet) {
+				res.status(404).json({ message: "Tweet not found" });
+				return;
+			}
+			tweet.bookmarks.push((req as any).currentUser.uid);
+			tweet.bookmarkCount = tweet.bookmarkCount + 1;
+			await tweet.save();
+			res.status(200).json({ message: "Tweet bookmarked successfully" });
+			return;
+		} catch (error: any) {
+			res.status(500).json({ message: error.message });
+		}
+	}
+);
