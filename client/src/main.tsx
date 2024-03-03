@@ -7,7 +7,7 @@ import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { Notifications } from "@mantine/notifications";
 import "@mantine/notifications/styles.css";
 import { ModalsProvider } from "@mantine/modals";
-import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const theme = createTheme({
 	breakpoints: {
@@ -21,21 +21,21 @@ const theme = createTheme({
 });
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-	<QueryClientProvider client={new QueryClient()}>
 	<MantineProvider theme={theme} forceColorScheme="dark">
-		<ModalsProvider>
-			<Notifications
-				position="bottom-right"
-				zIndex={99999}
-				color="violet"
-				limit={5}
-				autoClose={3000}
-			/>
+		<QueryClientProvider client={new QueryClient()}>
+			<ModalsProvider>
+				<Notifications
+					position="bottom-right"
+					zIndex={99999}
+					color="violet"
+					limit={5}
+					autoClose={3000}
+				/>
 
-			<App />
-		</ModalsProvider>
+				<App />
+			</ModalsProvider>
+		</QueryClientProvider>
 	</MantineProvider>
-	</QueryClientProvider>
 );
 const firebaseConfig = {
 	apiKey: "AIzaSyBt0MlhKtNInXeiV4Ltr1c0NRqqXUjKKvs",

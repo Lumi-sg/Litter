@@ -17,15 +17,18 @@ export const createTweet = [
 		.withMessage("Tweet cannot be less than 1 character."),
 
 	asyncHandler(async (req: express.Request, res: express.Response) => {
-		console.log("Creating tweet...");
+		const session = await UserModel.startSession();
+		session.startTransaction();
 		try {
 			const errors = validationResult(req);
 			if (!errors.isEmpty()) {
 				console.log("Validation errors", errors.array());
 				res.status(400).send(errors);
+				session.abortTransaction();
 				return;
 			}
-			const { email } = (req as any).currentUser;
+			console.log("Creating tweet...");
+			const { uid, email, name, picture } = (req as any).currentUser;
 			const { tweetContent } = req.body;
 
 			const author = await UserModel.findOne({ email });
@@ -33,8 +36,14 @@ export const createTweet = [
 				res.status(404).json({ message: "User not found" });
 			}
 
+			const convertedUsername = convertEmailToUsername(email);
+			const trimmedDisplayName = trimDisplayName(name);
+
 			const tweet = new TweetModel({
 				author: author,
+				authorUsername: convertedUsername,
+				authorDisplayName: trimmedDisplayName,
+				authorPictureURL: picture,
 				text: tweetContent,
 				likes: [],
 				likesCount: 0,
@@ -45,18 +54,21 @@ export const createTweet = [
 				bookmarkCount: 0,
 			});
 			const createdTweet = await tweet.save();
+			author!.tweetCount = author!.tweetCount + 1;
+			await author!.save();
+			await session.commitTransaction();
+			session.endSession();
 			console.log("Created tweet:", createdTweet._id);
 			res.status(201).json({
 				message: "Tweet created successfully",
 				tweet: createdTweet,
 			});
 			return;
-		} catch (error: any) {
-			res.status(400).json({
-				message: error.message,
-			});
-			console.log(error);
-			return;
+		} catch (error) {
+			await session.abortTransaction();
+			session.endSession();
+			console.error("Transaction failed:", error);
+			res.status(500).json({ message: "Internal Server Error" });
 		}
 	}),
 ];

@@ -42,7 +42,7 @@ export const useUserStore = create<userStoreType>()(
 					Cookies.set(
 						"firebaseToken",
 						await credentials.user.getIdToken(),
-						{ expires: 7 }
+						{ expires: 30 }
 					);
 
 					const response = await axios.post(

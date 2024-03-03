@@ -4,6 +4,9 @@ import { UserType } from "./User";
 export type TweetType = Document & {
     _id?: Types.ObjectId;
     author: UserType;
+    authorUsername: string;
+    authorDisplayName: string;
+    authorPictureURL: string;
     text: string;
     likes: Types.ObjectId[];
     likesCount: number;
@@ -16,6 +19,9 @@ export type TweetType = Document & {
 
 const tweetSchema = new Schema<TweetType>({
     author: { type: Schema.Types.ObjectId, ref: "User" },
+    authorUsername: { type: String, required: true },
+    authorDisplayName: { type: String, required: true },
+    authorPictureURL: { type: String, required: true },
     text: { type: String, minlength: 1, maxlength: 280, required: true },
     likes: [{ type: Schema.Types.ObjectId, ref: "User" }],
     likesCount: { type: Number, default: 0 },

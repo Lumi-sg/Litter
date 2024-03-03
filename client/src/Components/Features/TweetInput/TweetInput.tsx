@@ -8,6 +8,7 @@ import {
 	Text,
 	Divider,
 	Button,
+	Loader,
 } from "@mantine/core";
 import "./test.css";
 import { useEffect, useState } from "react";
@@ -15,6 +16,7 @@ import { useParentTweetStoreAuthor } from "../../../Stores/parentTweetStoreAutho
 import { convertEmailToUsername } from "../../../Helpers/convertEmailToUsername";
 import { modals } from "@mantine/modals";
 import { displayNotification } from "../../../Helpers/displayNotification";
+import { useTweetPost } from "../../../Hooks/useTweetPost";
 type TweetInputProps = {
 	placeholderMessage: string;
 	isReply: boolean;
@@ -27,30 +29,10 @@ const TweetInput = ({ placeholderMessage, isReply }: TweetInputProps) => {
 	const [tweetInput, setTweetInput] = useState("");
 	const [tweetCharacterLength, setTweetCharacterLength] = useState(0);
 	const closeModal = () => modals.closeAll();
+	const { mutate, isPending } = useTweetPost(tweetInput);
 
-	const handleReplyClick = () => {
-		setTweetInput("");
-		if (isReply) {
-			displayNotification(
-				"Reply",
-				"replied to",
-				"#4db5e5",
-				`${user?.displayName}'s`,
-				"tweet"
-			);
-			setParentTweetAuthor(null);
-			modals.closeAll();
-			return;
-		}
-		displayNotification(
-			"Tweet",
-			"have sucessfully tweeted",
-			"#4db5e5",
-			``,
-			""
-		);
-		setParentTweetAuthor(null);
-		modals.closeAll();
+	const handleSubmitTweet = () => {
+		mutate();
 	};
 
 	useEffect(() => {
@@ -127,14 +109,26 @@ const TweetInput = ({ placeholderMessage, isReply }: TweetInputProps) => {
 					/>
 					<Divider orientation="vertical" ml={5} mr={5} size="xs" />
 					<Button
-						onClick={handleReplyClick}
+						onClick={handleSubmitTweet}
 						color="violet"
 						variant="outline"
 						disabled={
-							!tweetCharacterLength || tweetCharacterLength > 280
+							!tweetCharacterLength ||
+							tweetCharacterLength > 280 ||
+							isPending
 						}
 					>
-						{isReply ? "Reply" : "Post"}
+						{isReply ? (
+							isPending ? (
+								<Loader color="violet" size={20} />
+							) : (
+								"Reply"
+							)
+						) : isPending ? (
+							<Loader color="violet" size={20} />
+						) : (
+							"Post"
+						)}
 					</Button>
 				</Group>
 			</Paper>

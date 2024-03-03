@@ -12,8 +12,8 @@ type UserCardImageProps = {
 export function UserCardImage({ userData, isLoading }: UserCardImageProps) {
 	const stats = [
 		{ value: userData?.followerCount, label: "Followers" },
-		{ value: userData?.followCount, label: "Follows" },
-		{ value: userData?.tweetCount, label: "Posts" },
+		{ value: userData?.followCount, label: "Following" },
+		{ value: userData?.tweetCount, label: "Tweets" },
 	];
 	const items = stats.map((stat) => (
 		<div key={stat.label}>
