@@ -30,7 +30,10 @@ export const useTweetPost = (tweetContent: string, tweetAuthor: string) => {
 			queryClient.invalidateQueries({
 				queryKey: ["tweets", tweetAuthor],
 			});
-			
+			queryClient.invalidateQueries({
+				queryKey: ["profile", tweetAuthor],
+			})
+
 			displayNotification(
 				"Tweet",
 				"have successfully tweeted",
