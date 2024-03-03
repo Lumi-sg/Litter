@@ -34,7 +34,7 @@ export const useTweetPost = (tweetContent: string) => {
 				``,
 				""
 			);
-            modals.closeAll();
+			modals.closeAll();
 		},
 
 		onError: () => {

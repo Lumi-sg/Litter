@@ -26,11 +26,14 @@ import { displayNotification } from "../../../Helpers/displayNotification";
 import { useParentTweetStoreAuthor } from "../../../Stores/parentTweetStoreAuthor";
 import TweetReplyModal from "../TweetReplyModal/TweetReplyModal";
 import { modals } from "@mantine/modals";
+import { TweetType } from "../../../Types/Tweet";
+import { Link } from "react-router-dom";
 type TweetComponentProps = {
 	passedInStyles: React.CSSProperties;
+	tweet: TweetType;
 };
 
-export function TweetComponent({ passedInStyles }: TweetComponentProps) {
+export function TweetComponent({ passedInStyles, tweet }: TweetComponentProps) {
 	const { user } = useUserStore();
 	const { setSelectedComponent } = useComponentStore();
 	const { setParentTweetAuthor } = useParentTweetStoreAuthor();
@@ -70,7 +73,7 @@ export function TweetComponent({ passedInStyles }: TweetComponentProps) {
 					action,
 					"liked",
 					"#d279cb",
-					`${user?.displayName as string}'s`,
+					`${tweet.authorDisplayName as string}'s`,
 					"tweet"
 				);
 				return;
@@ -79,7 +82,7 @@ export function TweetComponent({ passedInStyles }: TweetComponentProps) {
 					action,
 					"bookmarked",
 					"#3cc94d",
-					`${user?.displayName as string}'s`,
+					`${tweet.authorDisplayName as string}'s`,
 					"tweet"
 				);
 				return;
@@ -150,8 +153,8 @@ export function TweetComponent({ passedInStyles }: TweetComponentProps) {
 				<Group justify="space-between">
 					<Group>
 						<Avatar
-							src={user?.photoURL}
-							alt={user?.displayName as string}
+							src={tweet.authorPictureURL}
+							alt={tweet.authorDisplayName as string}
 							radius="xl"
 						/>
 						<div>
@@ -162,17 +165,22 @@ export function TweetComponent({ passedInStyles }: TweetComponentProps) {
 									c={"white"}
 									style={{ cursor: "pointer" }}
 								>
-									{user?.displayName as string}
+									{tweet.authorDisplayName as string}
 								</Text>
-								<Text fz="xs" c="#b097fcce">
-									{convertEmailToUsername(
-										user?.email as string
-									)}
+								<Text
+									fz="xs"
+									c="#b097fcce"
+									component={Link}
+									to={`/dashboard/profile/${
+										tweet.authorUsername as string
+									}`}
+								>
+									{tweet.authorUsername as string}
 								</Text>
 							</Group>
 
 							<Text fz="xs" c="dimmed">
-								10 minutes ago
+								{tweet.timestamp.toString()}
 							</Text>
 						</div>
 					</Group>
@@ -199,7 +207,9 @@ export function TweetComponent({ passedInStyles }: TweetComponentProps) {
 									<UserPlus color="white" size={20} />
 								}
 							>
-								<Text c={"white"}>Follow</Text>
+								<Text c={"white"}>
+									Follow {tweet.authorUsername}
+								</Text>
 							</Menu.Item>
 							<Menu.Item
 								onClick={(event) =>
@@ -209,7 +219,9 @@ export function TweetComponent({ passedInStyles }: TweetComponentProps) {
 									<UserMinus color="white" size={20} />
 								}
 							>
-								<Text c={"white"}>Unfollow</Text>
+								<Text c={"white"}>
+									Unfollow {tweet.authorUsername}
+								</Text>
 							</Menu.Item>
 							<Menu.Item
 								onClick={(event) =>
@@ -217,7 +229,9 @@ export function TweetComponent({ passedInStyles }: TweetComponentProps) {
 								}
 								leftSection={<Ban color="white" size={20} />}
 							>
-								<Text c={"white"}>Block @user</Text>
+								<Text c={"white"}>
+									Block {tweet.authorUsername}
+								</Text>
 							</Menu.Item>
 							<Menu.Item
 								onClick={(event) =>
@@ -227,18 +241,16 @@ export function TweetComponent({ passedInStyles }: TweetComponentProps) {
 									<Checkbox color="white" size={20} />
 								}
 							>
-								<Text c={"white"}>Unblock @user</Text>
+								<Text c={"white"}>
+									Unblock {tweet.authorUsername}
+								</Text>
 							</Menu.Item>
 						</Menu.Dropdown>
 					</Menu>
 				</Group>
 				<TypographyStylesProvider className={classes.body}>
-					<Text c="white">
-						Lorem ipsum dolor sit amet, consectetur adipisicing
-						elit. Dolore, saepe. Porro, laborum sequi dolores, sit
-						consequuntur laboriosam, voluptas quia odit rerum
-						pariatur voluptatem similique dolorem amet sint dicta ut
-						veritatis.
+					<Text c="white" style={{ wordWrap: "break-word" }}>
+						{tweet.text}
 					</Text>
 					<Group
 						justify="space-between"
@@ -256,7 +268,7 @@ export function TweetComponent({ passedInStyles }: TweetComponentProps) {
 								className={styles.messageActualIcon}
 							/>
 							<Text c={"white"} size="sm" fw={600}>
-								53
+								{tweet.childrenCount}
 							</Text>
 						</Group>
 						<Group
@@ -269,7 +281,7 @@ export function TweetComponent({ passedInStyles }: TweetComponentProps) {
 								className={styles.heartActualIcon}
 							/>
 							<Text c={"white"} size="sm" fw={600}>
-								100
+								{tweet.likesCount}
 							</Text>
 						</Group>
 						<Group
@@ -282,7 +294,7 @@ export function TweetComponent({ passedInStyles }: TweetComponentProps) {
 								className={styles.bookmarkActualIcon}
 							/>
 							<Text c={"white"} size="sm" fw={600}>
-								17
+								{tweet.bookmarkCount}
 							</Text>
 						</Group>
 					</Group>

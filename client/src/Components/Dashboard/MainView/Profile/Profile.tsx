@@ -6,6 +6,7 @@ import Posts from "./Posts/Posts";
 import Likes from "./Likes/Likes";
 import { useParams } from "react-router-dom";
 import { useProfileGet } from "../../../../Hooks/useProfileGet";
+import { useGetUserTweets } from "../../../../Hooks/useGetUserTweets";
 
 export type ProfileViewType = "posts" | "likes";
 

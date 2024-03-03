@@ -4,6 +4,7 @@ import { body, validationResult } from "express-validator";
 import { UserModel } from "../models/User";
 import { convertEmailToUsername } from "../helpers/convertEmailToUsername";
 import { trimDisplayName } from "../helpers/trimDisplayName";
+import { TweetModel } from "../models/Tweet";
 
 export const registerUser = asyncHandler(
 	async (req: express.Request, res: express.Response) => {
@@ -57,6 +58,30 @@ export const getUser = asyncHandler(
 				return;
 			}
 			res.status(200).json({ user: user });
+		} catch (error: any) {
+			res.status(500).json({ message: error.message });
+		}
+	}
+);
+
+export const getUserTweets = asyncHandler(
+	async (req: express.Request, res: express.Response) => {
+		console.log("Fetching user tweets...");
+		try {
+			const user = await UserModel.findOne({
+				username: req.params.username,
+			});
+			if (!user) {
+				res.status(404).json({ message: "User not found" });
+				return;
+			}
+			const allUserTweets = await TweetModel.find({
+				authorUsername: user.username,
+			})
+				.sort({ timestamp: -1 })
+				.populate("author");
+
+			res.status(200).json({ tweets: allUserTweets });
 		} catch (error: any) {
 			res.status(500).json({ message: error.message });
 		}
