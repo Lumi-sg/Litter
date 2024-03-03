@@ -16,7 +16,7 @@ export type TweetType = Document & {
 
 const tweetSchema = new Schema<TweetType>({
     author: { type: Schema.Types.ObjectId, ref: "User" },
-    text: { type: String, required: true },
+    text: { type: String, minlength: 1, maxlength: 280, required: true },
     likes: [{ type: Schema.Types.ObjectId, ref: "User" }],
     likesCount: { type: Number, default: 0 },
     parent: { type: Schema.Types.ObjectId, ref: "Tweet" },

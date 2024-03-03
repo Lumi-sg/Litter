@@ -11,6 +11,7 @@ import { verifyFirebaseToken } from "./middleware/firebaseAuth";
 
 //routes
 import userRouter from "./routes/userRouter";
+import tweetRouter from "./routes/tweetRouter";
 
 const app = express();
 dotenv.config();
