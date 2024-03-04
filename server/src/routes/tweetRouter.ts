@@ -11,6 +11,7 @@ router.post("/:tweetID/like", verifyFirebaseToken, tweetController.likeTweet);
 router.post("/:tweetID/unlike", verifyFirebaseToken, tweetController.unlikeTweet);
 router.post("/:tweetID/bookmark", verifyFirebaseToken, tweetController.bookmarkTweet);
 router.post("/:tweetID/removebookmark", verifyFirebaseToken, tweetController.removeBookmark);
+router.post("/:tweetID/reply", verifyFirebaseToken, tweetController.replyTweet);
 
 
 

@@ -16,6 +16,7 @@ import { useParentTweetStoreAuthor } from "../../../Stores/parentTweetStoreAutho
 import { convertEmailToUsername } from "../../../Helpers/convertEmailToUsername";
 import { modals } from "@mantine/modals";
 import { useTweetPost } from "../../../Hooks/useTweetPost";
+import { useTweetReply } from "../../../Hooks/useTweetReply";
 import { TweetType } from "../../../Types/Tweet";
 type TweetInputProps = {
 	placeholderMessage: string;
@@ -23,10 +24,12 @@ type TweetInputProps = {
 	parentTweet: TweetType;
 };
 
-const TweetInput = ({ placeholderMessage, isReply, parentTweet }: TweetInputProps) => {
+const TweetInput = ({
+	placeholderMessage,
+	isReply,
+	parentTweet,
+}: TweetInputProps) => {
 	const { user } = useUserStore();
-	// const { parentTweetAuthor, setParentTweetAuthor } =
-	// 	useParentTweetStoreAuthor();
 	const [tweetInput, setTweetInput] = useState("");
 	const [tweetCharacterLength, setTweetCharacterLength] = useState(0);
 	const closeModal = () => modals.closeAll();
@@ -35,8 +38,19 @@ const TweetInput = ({ placeholderMessage, isReply, parentTweet }: TweetInputProp
 		convertEmailToUsername(user?.email as string)
 	);
 
+	const { mutate: mutateReply, isPending: isPendingReply } = useTweetReply(
+		tweetInput,
+		convertEmailToUsername(user?.email as string),
+		parentTweet._id
+	);
+
 	const handleSubmitTweet = () => {
 		mutate();
+	};
+
+	const handleSubmitReply = async () => {
+		await mutateReply();
+		setTweetInput("");
 	};
 
 	useEffect(() => {
@@ -50,7 +64,7 @@ const TweetInput = ({ placeholderMessage, isReply, parentTweet }: TweetInputProp
 					<Group ml={88} w={"50%"} gap={0}>
 						<Text size="xs">Replying to</Text>
 						<Text ml={3} c={"#8d7ac8"} size="xs">
-						{parentTweet.authorUsername}
+							{parentTweet.authorUsername}
 						</Text>
 					</Group>
 				)}
@@ -111,7 +125,9 @@ const TweetInput = ({ placeholderMessage, isReply, parentTweet }: TweetInputProp
 					/>
 					<Divider orientation="vertical" ml={5} mr={5} size="xs" />
 					<Button
-						onClick={handleSubmitTweet}
+						onClick={
+							isReply ? handleSubmitReply : handleSubmitTweet
+						}
 						color="violet"
 						variant="outline"
 						disabled={
@@ -121,7 +137,7 @@ const TweetInput = ({ placeholderMessage, isReply, parentTweet }: TweetInputProp
 						}
 					>
 						{isReply ? (
-							isPending ? (
+							isPendingReply ? (
 								<Loader color="violet" size={20} />
 							) : (
 								"Reply"

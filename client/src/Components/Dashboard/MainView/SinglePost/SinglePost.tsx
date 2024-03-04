@@ -32,6 +32,7 @@ const SinglePost = () => {
 			) : (
 				<>
 					<TweetComponent
+						key={tweet?._id}
 						passedInStyles={TweetVariant.parent}
 						tweet={tweet as TweetType}
 					/>
@@ -40,6 +41,14 @@ const SinglePost = () => {
 						isReply={true}
 						parentTweet={tweet as TweetType}
 					/>
+					{tweet?.childrenCount! > 0 &&
+						tweet?.children?.map((childTweet) => (
+							<TweetComponent
+								key={childTweet?._id}
+								passedInStyles={TweetVariant.reply}
+								tweet={childTweet as TweetType}
+							/>
+						))}
 				</>
 			)}
 		</>

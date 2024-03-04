@@ -48,7 +48,6 @@ export function TweetComponent({ passedInStyles, tweet }: TweetComponentProps) {
 	const handleDotsClick = (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.stopPropagation();
 		e.preventDefault();
-		console.log("dots clicked");
 	};
 
 	const handleReplyClick = (

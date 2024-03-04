@@ -17,7 +17,7 @@ export const createTweet = [
 		.withMessage("Tweet cannot be less than 1 character."),
 
 	asyncHandler(async (req: express.Request, res: express.Response) => {
-		const session = await UserModel.startSession();
+		const session = await TweetModel.startSession();
 		session.startTransaction();
 		try {
 			const errors = validationResult(req);
@@ -79,14 +79,24 @@ export const getTweet = asyncHandler(
 		console.log("Fetching tweet...");
 		try {
 			const tweet = await TweetModel.findOne({ _id: req.params.tweetID });
+
 			if (!tweet) {
 				console.log("Tweet not found");
 				res.status(404).json({ message: "Tweet not found" });
 				return;
 			}
 
+			const childrenTweets = await TweetModel.find({
+				parent: tweet._id,
+			});
+
+			const tweetWithChildren = {
+				...tweet.toObject(),
+				children: childrenTweets.map((child) => child.toObject()),
+			};
+
 			console.log("Found tweet:", tweet._id);
-			res.status(200).json({ tweet: tweet });
+			res.status(200).json( tweetWithChildren );
 		} catch (error: any) {
 			res.status(500).json({ message: error.message });
 		}
@@ -225,3 +235,84 @@ export const removeBookmark = asyncHandler(
 		}
 	}
 );
+
+export const replyTweet = [
+	body("tweetContent")
+		.trim()
+		.notEmpty()
+		.withMessage("Tweet content cannot be empty.")
+		.isLength({ max: 280 })
+		.withMessage("Tweet cannot exceed 280 characters.")
+		.isLength({ min: 1 })
+		.withMessage("Tweet cannot be less than 1 character."),
+
+	asyncHandler(async (req: express.Request, res: express.Response) => {
+		console.log("Replying tweet...");
+		const tweetSession = await TweetModel.startSession();
+		const userSession = await UserModel.startSession();
+		tweetSession.startTransaction();
+		userSession.startTransaction();
+		try {
+			const errors = validationResult(req);
+			if (!errors.isEmpty()) {
+				res.status(400).json({ errors: errors.array() });
+				return;
+			}
+
+			const { uid, email, name, picture } = (req as any).currentUser;
+			const { tweetContent } = req.body;
+			const parentTweet = await TweetModel.findOne({
+				_id: req.params.tweetID,
+			});
+			if (!parentTweet) {
+				res.status(404).json({ message: "Tweet not found" });
+				return;
+			}
+			const newTweetAuthor = await UserModel.findOne({ email });
+			if (!newTweetAuthor) {
+				res.status(404).json({ message: "User not found" });
+				return;
+			}
+
+			const convertedUsername = convertEmailToUsername(email);
+			const trimmedDisplayName = trimDisplayName(name);
+			const newTweet = new TweetModel({
+				author: newTweetAuthor,
+				firebaseID: uid,
+				authorUsername: convertedUsername,
+				authorDisplayName: trimmedDisplayName,
+				authorPictureURL: picture,
+				text: tweetContent,
+				likes: [],
+				likesCount: 0,
+				parent: parentTweet._id,
+				children: [],
+				childrenCount: 0,
+				timestamp: new Date(),
+				bookmarkCount: 0,
+			});
+			const tweet = await newTweet.save();
+			await TweetModel.updateOne(
+				{ _id: parentTweet._id },
+				{
+					$addToSet: { children: tweet._id },
+					$inc: { childrenCount: 1 },
+				}
+			);
+			await tweetSession.commitTransaction();
+			tweetSession.endSession();
+			await userSession.commitTransaction();
+			userSession.endSession();
+			res.status(201).json({
+				message: "Tweet replied successfully",
+				tweet: tweet,
+			});
+			return;
+		} catch (error: any) {
+			await tweetSession.abortTransaction();
+			await userSession.abortTransaction();
+			console.error("Transaction failed:", error);
+			res.status(500).json({ message: error.message });
+		}
+	}),
+];

@@ -12,7 +12,7 @@ export type TweetType = Document & {
 	likes: string[];
 	likesCount: number;
 	parent: string;
-	children: string[];
+	children: TweetType[];
 	childrenCount: number;
 	timestamp: Date;
 	bookmarks: string[];

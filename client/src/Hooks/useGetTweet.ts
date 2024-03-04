@@ -9,15 +9,12 @@ export const getTweet = (tweetID: string) => {
 	return useQuery({
 		queryKey: ["tweets", tweetID],
 		queryFn: async () => {
-			const { data } = await axios.get(
-				`${baseURL}/tweet/${tweetID}`,
-				{
-					headers: {
-						Authorization: `Bearer ${firebaseToken}`,
-					},
-				}
-			);
-			return data.tweet as TweetType;
+			const { data } = await axios.get(`${baseURL}/tweet/${tweetID}`, {
+				headers: {
+					Authorization: `Bearer ${firebaseToken}`,
+				},
+			});
+			return data as TweetType;
 		},
 		staleTime: 30000,
 	});
