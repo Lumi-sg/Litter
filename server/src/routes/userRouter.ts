@@ -8,5 +8,6 @@ router.post("/register", verifyFirebaseToken, userController.registerUser);
 router.get("/:username", verifyFirebaseToken, userController.getUser);
 router.get("/:username/tweets", verifyFirebaseToken, userController.getUserTweets);
 router.get("/:username/bookmarks", verifyFirebaseToken, userController.getUserBookmarks);
+router.get("/:username/likes", verifyFirebaseToken, userController.getUserLikes);
 
 export default router;

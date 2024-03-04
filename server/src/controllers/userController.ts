@@ -112,3 +112,28 @@ export const getUserBookmarks = asyncHandler(
 		}
 	}
 );
+
+export const getUserLikes = asyncHandler(
+	async (req: express.Request, res: express.Response) => {
+		console.log("Fetching user likes...");
+		try {
+			const user = await UserModel.findOne({
+				username: req.params.username,
+			})
+
+			if (!user) {
+				res.status(404).json({ message: "User not found" });
+				return;
+			}
+			const allUserLikes = await TweetModel.find({
+				likes: user.firebaseID,
+			})
+				.sort({ timestamp: -1 })
+				.populate("author");
+			res.status(200).json({ tweets: allUserLikes });
+		}
+		catch (error: any) {
+			res.status(500).json({ message: error.message });
+		}
+	}
+);

@@ -11,7 +11,7 @@ const Posts = () => {
 	return (
 		<>
 			{isLoading
-				? null
+				? "Loading..."
 				: data?.map((tweet) => (
 						<TweetComponent
 							passedInStyles={TweetVariant.post}
