@@ -50,23 +50,6 @@ export function TweetComponent({ passedInStyles, tweet }: TweetComponentProps) {
 		e.preventDefault();
 	};
 
-	const handleReplyClick = (
-		e: React.MouseEvent<HTMLDivElement, MouseEvent>
-	) => {
-		e.stopPropagation();
-		setParentTweetAuthor(user);
-		modals.open({
-			children: <TweetReplyModal />,
-			size: 700,
-			withCloseButton: false,
-			radius: "md",
-
-			onClose: () => {
-				setParentTweetAuthor(null);
-			},
-		});
-	};
-
 	const handleActionClick = (
 		e: React.MouseEvent<HTMLDivElement>,
 		action: string
@@ -75,6 +58,15 @@ export function TweetComponent({ passedInStyles, tweet }: TweetComponentProps) {
 		e.preventDefault();
 
 		switch (action) {
+			case "Reply":
+				console.log("Replying...");
+				modals.open({
+					children: <TweetReplyModal tweet={tweet} />,
+					size: 700,
+					withCloseButton: false,
+					radius: "md",
+				});
+				return;
 			case "Like":
 				const userHasLiked = tweet.likes.includes(user?.uid as string);
 				if (userHasLiked) {
@@ -157,7 +149,6 @@ export function TweetComponent({ passedInStyles, tweet }: TweetComponentProps) {
 				onClick={() => {
 					setSelectedComponent("SinglePost");
 					setParentTweetAuthor(user);
-
 				}}
 				style={{ ...passedInStyles }}
 				component={Link}
@@ -274,7 +265,7 @@ export function TweetComponent({ passedInStyles, tweet }: TweetComponentProps) {
 						<Group
 							gap={2}
 							className={styles.messageicon}
-							onClick={(e) => handleReplyClick(e)}
+							onClick={(e) => handleActionClick(e, "Reply")}
 						>
 							<MessageCircle2
 								size={22}
@@ -331,14 +322,6 @@ export function TweetComponent({ passedInStyles, tweet }: TweetComponentProps) {
 					</Group>
 				</TypographyStylesProvider>
 			</Paper>
-			{/* <Modal
-				opened={opened}
-				onClose={close}
-				size={"35%"}
-				withCloseButton={false}
-			>
-				<TweetModal />
-			</Modal> */}
 		</>
 	);
 }

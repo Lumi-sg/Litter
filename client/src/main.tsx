@@ -14,7 +14,7 @@ import "@mantine/notifications/styles.css";
 import { ModalsProvider } from "@mantine/modals";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useUserStore } from "./Stores/userStore.ts";
-import {onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged } from "firebase/auth";
 
 const theme = createTheme({
 	breakpoints: {

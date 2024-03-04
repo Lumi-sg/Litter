@@ -21,7 +21,7 @@ import { TweetType } from "../../../Types/Tweet";
 type TweetInputProps = {
 	placeholderMessage: string;
 	isReply: boolean;
-	parentTweet: TweetType;
+	parentTweet?: TweetType;
 };
 
 const TweetInput = ({
@@ -41,7 +41,7 @@ const TweetInput = ({
 	const { mutate: mutateReply, isPending: isPendingReply } = useTweetReply(
 		tweetInput,
 		convertEmailToUsername(user?.email as string),
-		parentTweet._id
+		parentTweet?._id
 	);
 
 	const handleSubmitTweet = () => {
