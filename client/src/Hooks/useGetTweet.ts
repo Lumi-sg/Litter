@@ -6,7 +6,6 @@ import { TweetType } from "../Types/Tweet";
 
 export const getTweet = (tweetID: string) => {
 	const firebaseToken = Cookies.get("firebaseToken");
-    console.log(tweetID)
 	return useQuery({
 		queryKey: ["tweets", tweetID],
 		queryFn: async () => {

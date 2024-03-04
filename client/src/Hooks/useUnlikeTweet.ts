@@ -28,6 +28,9 @@ export const useUnlikeTweet = (tweet: TweetType) => {
 			queryClient.invalidateQueries({
                 queryKey: ["tweets", tweet.authorUsername],
             });
+			queryClient.invalidateQueries({
+				queryKey: ["tweets", tweet._id],
+			})
 			displayNotification(
 				"Unlike",
 				"unliked",

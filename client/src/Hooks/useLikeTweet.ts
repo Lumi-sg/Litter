@@ -29,6 +29,9 @@ export const useLikeTweet = (tweet: TweetType) => {
 			queryClient.invalidateQueries({
 				queryKey: ["tweets", tweet.authorUsername],
 			});
+			queryClient.invalidateQueries({
+				queryKey: ["tweets", tweet._id],
+			})
 			displayNotification(
 				"Like",
 				"liked",

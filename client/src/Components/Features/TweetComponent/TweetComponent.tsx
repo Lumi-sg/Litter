@@ -47,6 +47,7 @@ export function TweetComponent({ passedInStyles, tweet }: TweetComponentProps) {
 
 	const handleDotsClick = (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.stopPropagation();
+		e.preventDefault();
 		console.log("dots clicked");
 	};
 
@@ -72,6 +73,7 @@ export function TweetComponent({ passedInStyles, tweet }: TweetComponentProps) {
 		action: string
 	) => {
 		e.stopPropagation();
+		e.preventDefault();
 
 		switch (action) {
 			case "Like":
@@ -104,6 +106,7 @@ export function TweetComponent({ passedInStyles, tweet }: TweetComponentProps) {
 		action: string
 	) => {
 		e.stopPropagation();
+		e.preventDefault();
 		switch (action) {
 			case "Follow":
 				displayNotification(
@@ -155,6 +158,7 @@ export function TweetComponent({ passedInStyles, tweet }: TweetComponentProps) {
 				onClick={() => {
 					setSelectedComponent("SinglePost");
 					setParentTweetAuthor(user);
+
 				}}
 				style={{ ...passedInStyles }}
 				component={Link}
