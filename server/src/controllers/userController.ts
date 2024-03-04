@@ -87,3 +87,28 @@ export const getUserTweets = asyncHandler(
 		}
 	}
 );
+
+export const getUserBookmarks = asyncHandler(
+	async (req: express.Request, res: express.Response) => {
+		console.log("Fetching user bookmarks...");
+		try {
+			const user = await UserModel.findOne({
+				username: req.params.username,
+			})
+
+			if (!user) {
+				res.status(404).json({ message: "User not found" });
+				return;
+			}
+			const allUserBookmarks = await TweetModel.find({
+				bookmarks: user.firebaseID,
+			})
+				.sort({ timestamp: -1 })
+				.populate("author");
+			res.status(200).json({ tweets: allUserBookmarks });
+		}
+		catch (error: any) {
+			res.status(500).json({ message: error.message });
+		}
+	}
+);

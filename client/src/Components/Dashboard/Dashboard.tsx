@@ -58,7 +58,7 @@ export function Dashboard() {
 					<Route path="messages" element={<Messages />} />
 					<Route path="bookmarks" element={<Bookmarks />} />
 					<Route path="profile/:username" element={<Profile />} />
-					<Route path="singlepost" element={<SinglePost />} />
+					<Route path="singlepost/:id" element={<SinglePost />} />
 				</Routes>
 			</AppShell.Main>
 			{selectedComponent === "Messages" ? null : (
