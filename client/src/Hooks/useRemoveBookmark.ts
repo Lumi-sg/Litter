@@ -9,7 +9,7 @@ import { useUserStore } from "../Stores/userStore";
 
 export const useRemoveBookmarkTweet = (tweet: TweetType) => {
 	const firebaseToken = Cookies.get("firebaseToken");
-    const { user } = useUserStore();
+	const { user } = useUserStore();
 
 	const queryClient = useQueryClient();
 	return useMutation({
@@ -33,17 +33,20 @@ export const useRemoveBookmarkTweet = (tweet: TweetType) => {
 			});
 			queryClient.invalidateQueries({
 				queryKey: ["likes", user!.uid],
-			})
-            queryClient.invalidateQueries({
-                queryKey: ["tweets", tweet.authorUsername],
-            })
+			});
+			queryClient.invalidateQueries({
+				queryKey: ["tweets", tweet.authorUsername],
+			});
 			queryClient.invalidateQueries({
 				queryKey: ["tweets", tweet._id],
-			})
+			});
+			queryClient.invalidateQueries({
+				queryKey: ["tweets", tweet.parent],
+			});
 			displayNotification(
 				"Bookmark",
 				"unbookmarked",
-				"#4db5e5",
+				"#e03131",
 				`${tweet.authorDisplayName}'s`,
 				"tweet"
 			);

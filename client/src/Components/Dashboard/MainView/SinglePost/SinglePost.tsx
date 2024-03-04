@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { getTweet } from "../../../../Hooks/useGetTweet";
 import { useParams } from "react-router-dom";
 import { TweetType } from "../../../../Types/Tweet";
+import TopOfSinglePost from "../../../Features/TopOfSinglePost/TopOfSinglePost";
 const SinglePost = () => {
 	const { tweetID } = useParams();
 	const { data: tweet, isLoading } = getTweet(tweetID as string);
@@ -31,6 +32,7 @@ const SinglePost = () => {
 				<div>Loading...</div>
 			) : (
 				<>
+					<TopOfSinglePost />
 					<TweetComponent
 						key={tweet?._id}
 						passedInStyles={TweetVariant.parent}

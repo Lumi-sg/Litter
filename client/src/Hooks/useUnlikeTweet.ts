@@ -39,10 +39,13 @@ export const useUnlikeTweet = (tweet: TweetType) => {
 			queryClient.invalidateQueries({
 				queryKey: ["tweets", tweet._id],
 			})
+			queryClient.invalidateQueries({
+				queryKey:["tweets", tweet.parent]
+			})
 			displayNotification(
 				"Unlike",
 				"unliked",
-				"#4db5e5",
+				"#e03131",
 				`${tweet.authorDisplayName}'s`,
 				"tweet"
 			);

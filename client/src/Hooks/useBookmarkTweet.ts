@@ -40,10 +40,13 @@ export const useBookmarkTweet = (tweet: TweetType) => {
 			queryClient.invalidateQueries({
 				queryKey: ["tweets", tweet._id],
 			});
+			queryClient.invalidateQueries({
+				queryKey: ["tweets", tweet.parent],
+			});
 			displayNotification(
 				"Bookmark",
 				"bookmarked",
-				"#4db5e5",
+				"#3cc94d",
 				`${tweet.authorDisplayName}'s`,
 				"tweet"
 			);
