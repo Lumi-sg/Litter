@@ -3,7 +3,7 @@ import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 import Cookies from "js-cookie";
 import { signInWithPopup, auth, provider } from "../main";
-import { User as FirebaseUser } from "firebase/auth";
+import { User as FirebaseUser, } from "firebase/auth";
 import { baseURL } from "../constants/baseURL";
 import axios from "axios";
 
@@ -42,7 +42,7 @@ export const useUserStore = create<userStoreType>()(
 					Cookies.set(
 						"firebaseToken",
 						await credentials.user.getIdToken(),
-						{ expires: 30 }
+						{ expires: 7 }
 					);
 
 					const response = await axios.post(
@@ -85,3 +85,5 @@ export const useUserStore = create<userStoreType>()(
 		{ name: "user-store" }
 	)
 );
+
+
