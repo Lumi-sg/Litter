@@ -7,5 +7,6 @@ const router: Router = express.Router();
 router.post("/register", verifyFirebaseToken, userController.registerUser);
 router.get("/:username", verifyFirebaseToken, userController.getUser);
 router.get("/:username/tweets", verifyFirebaseToken, userController.getUserTweets);
+// router.get("/:username/bookmarks", verifyFirebaseToken, userController.getUserBookmarks);
 
 export default router;

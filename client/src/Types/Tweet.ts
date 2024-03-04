@@ -3,7 +3,7 @@ import { UserType } from "./User";
 
 export type TweetType = Document & {
 	_id?: Types.ObjectId;
-    firebaseID?: string;
+	firebaseID?: string;
 	author: UserType;
 	authorUsername: string;
 	authorDisplayName: string;
@@ -15,6 +15,7 @@ export type TweetType = Document & {
 	children: string[];
 	childrenCount: number;
 	timestamp: Date;
+	bookmarks: string[];
 	bookmarkCount: number;
 };
 

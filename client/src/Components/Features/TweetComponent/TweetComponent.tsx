@@ -29,6 +29,8 @@ import { TweetType } from "../../../Types/Tweet";
 import { Link } from "react-router-dom";
 import { useLikeTweet } from "../../../Hooks/useLikeTweet";
 import { useUnlikeTweet } from "../../../Hooks/useUnlikeTweet";
+import { useBookmarkTweet } from "../../../Hooks/useBookmarkTweet";
+import { useRemoveBookmarkTweet } from "../../../Hooks/useRemoveBookmark";
 type TweetComponentProps = {
 	passedInStyles: React.CSSProperties;
 	tweet: TweetType;
@@ -39,8 +41,9 @@ export function TweetComponent({ passedInStyles, tweet }: TweetComponentProps) {
 	const { setSelectedComponent } = useComponentStore();
 	const { setParentTweetAuthor } = useParentTweetStoreAuthor();
 	const { mutate: mutateLike } = useLikeTweet(tweet);
-
 	const { mutate: mutateUnlike } = useUnlikeTweet(tweet);
+	const { mutate: mutateBookmark } = useBookmarkTweet(tweet);
+	const { mutate: mutateRemoveBookmark } = useRemoveBookmarkTweet(tweet);
 
 	const handleDotsClick = (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.stopPropagation();
@@ -82,13 +85,14 @@ export function TweetComponent({ passedInStyles, tweet }: TweetComponentProps) {
 
 				return;
 			case "Bookmark":
-				displayNotification(
-					action,
-					"bookmarked",
-					"#3cc94d",
-					`${tweet.authorDisplayName as string}'s`,
-					"tweet"
+				const userHasBookmarked = tweet.bookmarks.includes(
+					user?.uid as string
 				);
+				if (userHasBookmarked) {
+					mutateRemoveBookmark();
+					return;
+				}
+				mutateBookmark();
 				return;
 			default:
 				return;
@@ -302,10 +306,19 @@ export function TweetComponent({ passedInStyles, tweet }: TweetComponentProps) {
 							className={styles.bookmarkicon}
 							onClick={(e) => handleActionClick(e, "Bookmark")}
 						>
-							<Bookmark
-								size={22}
-								className={styles.bookmarkActualIcon}
-							/>
+							{tweet.bookmarks.includes(user?.uid || "") ? (
+								<Bookmark
+									size={22}
+									className={styles.bookmarkActualIcon}
+									color="#3cc94d"
+								/>
+							) : (
+								<Bookmark
+									size={22}
+									className={styles.bookmarkActualIcon}
+								/>
+							)}
+
 							<Text c={"white"} size="sm" fw={600}>
 								{tweet.bookmarkCount}
 							</Text>

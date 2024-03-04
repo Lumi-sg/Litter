@@ -9,11 +9,8 @@ router.get("/:tweetID", verifyFirebaseToken, tweetController.getTweet);
 router.post("/:tweetID/like", verifyFirebaseToken, tweetController.likeTweet);
 router.post("/:tweetID/unlike", verifyFirebaseToken, tweetController.unlikeTweet);
 router.post("/:tweetID/bookmark", verifyFirebaseToken, tweetController.bookmarkTweet);
+router.post("/:tweetID/removebookmark", verifyFirebaseToken, tweetController.removeBookmark);
 
-// router.get(
-//     "/:tweetID/children",
-//     verifyFirebaseToken,
-//     tweetController.getTweetChildren
-// );
+
 
 export default router;

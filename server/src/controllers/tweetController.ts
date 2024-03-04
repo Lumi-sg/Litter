@@ -141,19 +141,81 @@ export const unlikeTweet = asyncHandler(
 export const bookmarkTweet = asyncHandler(
 	async (req: express.Request, res: express.Response) => {
 		console.log("Bookmark tweet...");
+		const session = await TweetModel.startSession();
+		session.startTransaction();
 		try {
-			const tweet = await TweetModel.findOne({ _id: req.params.tweetID });
 			const { uid } = (req as any).currentUser;
+			const tweet = await TweetModel.findOne({ _id: req.params.tweetID });
+			const bookmarkee = await UserModel.findOne({ firebaseID: uid });
+
 			if (!tweet) {
 				res.status(404).json({ message: "Tweet not found" });
+				session.abortTransaction();
 				return;
 			}
-			tweet.bookmarks.push(uid);
-			tweet.bookmarkCount = tweet.bookmarkCount + 1;
-			await tweet.save();
+			if (!bookmarkee) {
+				res.status(404).json({ message: "User not found" });
+				session.abortTransaction();
+				return;
+			}
+			await TweetModel.updateOne(
+				{ _id: req.params.tweetID },
+				{ $addToSet: { bookmarks: uid }, $inc: { bookmarkCount: 1 } }
+			);
+
+			await UserModel.updateOne(
+				{ firebaseID: uid },
+				{ $addToSet: { bookmarks: req.params.tweetID } }
+			);
+			await session.commitTransaction();
+			session.endSession();
 			res.status(200).json({ message: "Tweet bookmarked successfully" });
 			return;
 		} catch (error: any) {
+			await session.abortTransaction();
+			session.endSession();
+			console.error("Transaction failed:", error);
+			res.status(500).json({ message: error.message });
+		}
+	}
+);
+
+export const removeBookmark = asyncHandler(
+	async (req: express.Request, res: express.Response) => {
+		console.log("Remove bookmark...");
+		const session = await TweetModel.startSession();
+		session.startTransaction();
+		try {
+			const { uid } = (req as any).currentUser;
+			const tweet = await TweetModel.findOne({ _id: req.params.tweetID });
+			const bookmarkee = await UserModel.findOne({ firebaseID: uid });
+
+			if (!tweet) {
+				res.status(404).json({ message: "Tweet not found" });
+				session.abortTransaction();
+				return;
+			}
+			if (!bookmarkee) {
+				res.status(404).json({ message: "User not found" });
+				session.abortTransaction();
+				return;
+			}
+			await TweetModel.updateOne(
+				{ _id: req.params.tweetID },
+				{ $pull: { bookmarks: uid }, $inc: { bookmarkCount: -1 } }
+			);
+			await UserModel.updateOne(
+				{ firebaseID: uid },
+				{ $pull: { bookmarks: req.params.tweetID } }
+			);
+			await session.commitTransaction();
+			session.endSession();
+			res.status(200).json({ message: "Tweet unbookmarked successfully" });
+			return;
+		} catch (error: any) {
+			await session.abortTransaction();
+			session.endSession();
+			console.error("Transaction failed:", error);
 			res.status(500).json({ message: error.message });
 		}
 	}
