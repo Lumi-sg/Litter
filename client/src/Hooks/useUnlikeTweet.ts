@@ -5,8 +5,10 @@ import { useMutation } from "@tanstack/react-query";
 import { displayNotification } from "../Helpers/displayNotification";
 import { TweetType } from "../Types/Tweet";
 import { useQueryClient } from "@tanstack/react-query";
+import { useUserStore } from "../Stores/userStore";
 
 export const useUnlikeTweet = (tweet: TweetType) => {
+	const { user } = useUserStore();
 	const firebaseToken = Cookies.get("firebaseToken");
 	const queryClient = useQueryClient();
 	return useMutation({
@@ -25,6 +27,12 @@ export const useUnlikeTweet = (tweet: TweetType) => {
 		},
 
 		onSuccess: () => {
+			queryClient.invalidateQueries({
+				queryKey: ["bookmarks", user!.uid],
+			});
+			queryClient.invalidateQueries({
+				queryKey: ["likes", user!.uid],
+			})
 			queryClient.invalidateQueries({
                 queryKey: ["tweets", tweet.authorUsername],
             });

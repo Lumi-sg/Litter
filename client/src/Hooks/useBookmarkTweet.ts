@@ -9,7 +9,7 @@ import { useUserStore } from "../Stores/userStore";
 
 export const useBookmarkTweet = (tweet: TweetType) => {
 	const firebaseToken = Cookies.get("firebaseToken");
-    const { user } = useUserStore();
+	const { user } = useUserStore();
 
 	const queryClient = useQueryClient();
 	return useMutation({
@@ -31,12 +31,15 @@ export const useBookmarkTweet = (tweet: TweetType) => {
 			queryClient.invalidateQueries({
 				queryKey: ["bookmarks", user!.uid],
 			});
-            queryClient.invalidateQueries({
-                queryKey: ["tweets", tweet.authorUsername],
-            })
+			queryClient.invalidateQueries({
+				queryKey: ["likes", user!.uid],
+			});
+			queryClient.invalidateQueries({
+				queryKey: ["tweets", tweet.authorUsername],
+			});
 			queryClient.invalidateQueries({
 				queryKey: ["tweets", tweet._id],
-			})
+			});
 			displayNotification(
 				"Bookmark",
 				"bookmarked",

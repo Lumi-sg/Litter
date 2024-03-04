@@ -31,6 +31,9 @@ export const useRemoveBookmarkTweet = (tweet: TweetType) => {
 			queryClient.invalidateQueries({
 				queryKey: ["bookmarks", user!.uid],
 			});
+			queryClient.invalidateQueries({
+				queryKey: ["likes", user!.uid],
+			})
             queryClient.invalidateQueries({
                 queryKey: ["tweets", tweet.authorUsername],
             })
