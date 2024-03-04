@@ -38,6 +38,7 @@ const SinglePost = () => {
 					<TweetInput
 						placeholderMessage="Post your reply"
 						isReply={true}
+						parentTweet={tweet as TweetType}
 					/>
 				</>
 			)}

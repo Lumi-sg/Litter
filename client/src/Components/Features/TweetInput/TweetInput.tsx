@@ -16,15 +16,17 @@ import { useParentTweetStoreAuthor } from "../../../Stores/parentTweetStoreAutho
 import { convertEmailToUsername } from "../../../Helpers/convertEmailToUsername";
 import { modals } from "@mantine/modals";
 import { useTweetPost } from "../../../Hooks/useTweetPost";
+import { TweetType } from "../../../Types/Tweet";
 type TweetInputProps = {
 	placeholderMessage: string;
 	isReply: boolean;
+	parentTweet: TweetType;
 };
 
-const TweetInput = ({ placeholderMessage, isReply }: TweetInputProps) => {
+const TweetInput = ({ placeholderMessage, isReply, parentTweet }: TweetInputProps) => {
 	const { user } = useUserStore();
-	const { parentTweetAuthor, setParentTweetAuthor } =
-		useParentTweetStoreAuthor();
+	// const { parentTweetAuthor, setParentTweetAuthor } =
+	// 	useParentTweetStoreAuthor();
 	const [tweetInput, setTweetInput] = useState("");
 	const [tweetCharacterLength, setTweetCharacterLength] = useState(0);
 	const closeModal = () => modals.closeAll();
@@ -44,13 +46,11 @@ const TweetInput = ({ placeholderMessage, isReply }: TweetInputProps) => {
 	return (
 		<div>
 			<Paper withBorder radius="md" p={10} w={"100%"} h={"100%"} mb={10}>
-				{parentTweetAuthor && (
+				{parentTweet && (
 					<Group ml={88} w={"50%"} gap={0}>
 						<Text size="xs">Replying to</Text>
 						<Text ml={3} c={"#8d7ac8"} size="xs">
-							{convertEmailToUsername(
-								parentTweetAuthor.email as string
-							)}
+						{parentTweet.authorUsername}
 						</Text>
 					</Group>
 				)}
