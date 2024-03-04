@@ -157,6 +157,8 @@ export function TweetComponent({ passedInStyles, tweet }: TweetComponentProps) {
 					setParentTweetAuthor(user);
 				}}
 				style={{ ...passedInStyles }}
+				component={Link}
+				to={`/dashboard/tweet/${tweet._id}`}
 			>
 				<Group justify="space-between">
 					<Group>

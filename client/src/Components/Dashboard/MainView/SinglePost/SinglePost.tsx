@@ -2,7 +2,12 @@ import { TweetComponent } from "../../../Features/TweetComponent/TweetComponent"
 import { TweetVariant } from "../../../../constants/TweetVariant";
 import TweetInput from "../../../Features/TweetInput/TweetInput";
 import { useEffect } from "react";
+import { getTweet } from "../../../../Hooks/useGetTweet";
+import { useParams } from "react-router-dom";
+import { TweetType } from "../../../../Types/Tweet";
 const SinglePost = () => {
+	const { tweetID } = useParams();
+	const { data:tweet, isLoading } = getTweet(tweetID as string);
 	useEffect(() => {
 		const scrollFunction = () => {
 			window.scrollTo({
@@ -22,11 +27,17 @@ const SinglePost = () => {
 	}, []);
 	return (
 		<>
-			<TweetComponent passedInStyles={TweetVariant.parent} />
+			{isLoading ? (
+				<div>Loading...</div>
+			) : (
+				<TweetComponent passedInStyles={TweetVariant.parent} tweet={tweet as TweetType} />
+			)}
+
+			{/* <TweetComponent passedInStyles={TweetVariant.parent} />
 			<TweetInput placeholderMessage="Post your reply" isReply={true} />
 			<TweetComponent passedInStyles={TweetVariant.reply} />
 			<TweetComponent passedInStyles={TweetVariant.reply} />
-			<TweetComponent passedInStyles={TweetVariant.reply} />
+			<TweetComponent passedInStyles={TweetVariant.reply} /> */}
 		</>
 	);
 };

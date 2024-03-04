@@ -2,6 +2,7 @@ import express, { Router, Request, Response } from "express";
 import { verifyFirebaseToken } from "../middleware/firebaseAuth";
 
 import * as tweetController from "../controllers/tweetController";
+// app.use("/tweet", tweetRouter);
 const router: Router = express.Router();
 
 router.post("/create", verifyFirebaseToken, tweetController.createTweet);
