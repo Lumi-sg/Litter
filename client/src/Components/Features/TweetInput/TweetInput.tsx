@@ -12,13 +12,11 @@ import {
 } from "@mantine/core";
 import "./test.css";
 import { useEffect, useState } from "react";
-import { useParentTweetStoreAuthor } from "../../../Stores/parentTweetStoreAuthor";
 import { convertEmailToUsername } from "../../../Helpers/convertEmailToUsername";
 import { modals } from "@mantine/modals";
 import { useTweetPost } from "../../../Hooks/useTweetPost";
 import { useTweetReply } from "../../../Hooks/useTweetReply";
 import { TweetType } from "../../../Types/Tweet";
-import { useNavigate } from "react-router-dom";
 type TweetInputProps = {
 	placeholderMessage: string;
 	isReply: boolean;
@@ -33,7 +31,6 @@ const TweetInput = ({
 	const { user } = useUserStore();
 	const [tweetInput, setTweetInput] = useState("");
 	const [tweetCharacterLength, setTweetCharacterLength] = useState(0);
-	const navigate = useNavigate();
 	const closeModal = () => modals.closeAll();
 	const { mutate, isPending } = useTweetPost(
 		tweetInput,
@@ -53,9 +50,6 @@ const TweetInput = ({
 	const handleSubmitReply = async () => {
 		await mutateReply();
 		setTweetInput("");
-
-		//for some reason react router doesn't work for this? something with context maybe
-		window.location.href = `/dashboard/tweet/${parentTweet?._id}`;
 	};
 
 	useEffect(() => {

@@ -5,7 +5,6 @@ import { useMutation } from "@tanstack/react-query";
 import { displayNotification } from "../Helpers/displayNotification";
 import { modals } from "@mantine/modals";
 import { useQueryClient } from "@tanstack/react-query";
-import { useNavigate } from "react-router-dom";
 
 export const useTweetReply = (
 	tweetContent: string,
@@ -14,7 +13,6 @@ export const useTweetReply = (
 ) => {
 	const firebaseToken = Cookies.get("firebaseToken");
 	const queryClient = useQueryClient();
-	const navigate = useNavigate();
 	return useMutation({
 		mutationFn: async () => {
 			console.log("Creating reply...");
