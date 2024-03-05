@@ -15,6 +15,7 @@ import { ModalsProvider } from "@mantine/modals";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useUserStore } from "./Stores/userStore.ts";
 import { onAuthStateChanged } from "firebase/auth";
+import React from "react";
 
 const theme = createTheme({
 	breakpoints: {
@@ -28,21 +29,23 @@ const theme = createTheme({
 });
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-	<MantineProvider theme={theme} forceColorScheme="dark">
-		<QueryClientProvider client={new QueryClient()}>
-			<ModalsProvider>
-				<Notifications
-					position="bottom-right"
-					zIndex={99999}
-					color="violet"
-					limit={5}
-					autoClose={3000}
-				/>
+	<React.StrictMode>
+		<MantineProvider theme={theme} forceColorScheme="dark">
+			<QueryClientProvider client={new QueryClient()}>
+				<ModalsProvider>
+					<Notifications
+						position="bottom-right"
+						zIndex={99999}
+						color="violet"
+						limit={5}
+						autoClose={3000}
+					/>
 
-				<App />
-			</ModalsProvider>
-		</QueryClientProvider>
-	</MantineProvider>
+					<App />
+				</ModalsProvider>
+			</QueryClientProvider>
+		</MantineProvider>
+	</React.StrictMode>
 );
 const firebaseConfig = {
 	apiKey: "AIzaSyBt0MlhKtNInXeiV4Ltr1c0NRqqXUjKKvs",
