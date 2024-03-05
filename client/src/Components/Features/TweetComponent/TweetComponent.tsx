@@ -34,9 +34,14 @@ import { useRemoveBookmarkTweet } from "../../../Hooks/useRemoveBookmark";
 type TweetComponentProps = {
 	passedInStyles: React.CSSProperties;
 	tweet: TweetType;
+	isModal?: boolean;
 };
 
-export function TweetComponent({ passedInStyles, tweet }: TweetComponentProps) {
+export function TweetComponent({
+	passedInStyles,
+	tweet,
+	isModal = false,
+}: TweetComponentProps) {
 	const { user } = useUserStore();
 	const { setSelectedComponent } = useComponentStore();
 	const { setParentTweetAuthor } = useParentTweetStoreAuthor();
@@ -188,137 +193,158 @@ export function TweetComponent({ passedInStyles, tweet }: TweetComponentProps) {
 							</Text>
 						</div>
 					</Group>
-					<Menu position="right-start">
-						<Menu.Target>
-							<Button
-								color="violet"
-								variant="subtle"
-								size="xs"
-								onClick={handleDotsClick}
+					{!isModal && (
+						<Menu position="right-start">
+							<Menu.Target>
+								<Button
+									color="violet"
+									variant="subtle"
+									size="xs"
+									onClick={handleDotsClick}
+								>
+									<Dots />
+								</Button>
+							</Menu.Target>
+							<Menu.Dropdown
+								bg={"#242424"}
+								style={{ border: "1px solid #8d7ac8" }}
 							>
-								<Dots />
-							</Button>
-						</Menu.Target>
-						<Menu.Dropdown
-							bg={"#242424"}
-							style={{ border: "1px solid #8d7ac8" }}
-						>
-							<Menu.Item
-								onClick={(event) =>
-									handleMenuClick(event, "Follow")
-								}
-								leftSection={
-									<UserPlus color="white" size={20} />
-								}
-							>
-								<Text c={"white"}>
-									Follow {tweet.authorUsername}
-								</Text>
-							</Menu.Item>
-							<Menu.Item
-								onClick={(event) =>
-									handleMenuClick(event, "Unfollow")
-								}
-								leftSection={
-									<UserMinus color="white" size={20} />
-								}
-							>
-								<Text c={"white"}>
-									Unfollow {tweet.authorUsername}
-								</Text>
-							</Menu.Item>
-							<Menu.Item
-								onClick={(event) =>
-									handleMenuClick(event, "Block")
-								}
-								leftSection={<Ban color="white" size={20} />}
-							>
-								<Text c={"white"}>
-									Block {tweet.authorUsername}
-								</Text>
-							</Menu.Item>
-							<Menu.Item
-								onClick={(event) =>
-									handleMenuClick(event, "Unblock")
-								}
-								leftSection={
-									<Checkbox color="white" size={20} />
-								}
-							>
-								<Text c={"white"}>
-									Unblock {tweet.authorUsername}
-								</Text>
-							</Menu.Item>
-						</Menu.Dropdown>
-					</Menu>
+								<Menu.Item
+									onClick={(event) =>
+										handleMenuClick(event, "Follow")
+									}
+									leftSection={
+										<UserPlus color="white" size={20} />
+									}
+								>
+									<Text c={"white"}>
+										Follow {tweet.authorUsername}
+									</Text>
+								</Menu.Item>
+								<Menu.Item
+									onClick={(event) =>
+										handleMenuClick(event, "Unfollow")
+									}
+									leftSection={
+										<UserMinus color="white" size={20} />
+									}
+								>
+									<Text c={"white"}>
+										Unfollow {tweet.authorUsername}
+									</Text>
+								</Menu.Item>
+								<Menu.Item
+									onClick={(event) =>
+										handleMenuClick(event, "Block")
+									}
+									leftSection={
+										<Ban color="white" size={20} />
+									}
+								>
+									<Text c={"white"}>
+										Block {tweet.authorUsername}
+									</Text>
+								</Menu.Item>
+								<Menu.Item
+									onClick={(event) =>
+										handleMenuClick(event, "Unblock")
+									}
+									leftSection={
+										<Checkbox color="white" size={20} />
+									}
+								>
+									<Text c={"white"}>
+										Unblock {tweet.authorUsername}
+									</Text>
+								</Menu.Item>
+							</Menu.Dropdown>
+						</Menu>
+					)}
 				</Group>
 				<TypographyStylesProvider className={classes.body}>
 					<Text c="white" style={{ wordWrap: "break-word" }}>
 						{tweet.text}
 					</Text>
+
 					<Group
 						justify="space-between"
 						gap={"30%"}
 						mt={10}
 						align="center"
 					>
-						<Group
-							gap={2}
-							className={styles.messageicon}
-							onClick={(e) => handleActionClick(e, "Reply")}
-						>
-							<MessageCircle2
-								size={22}
-								className={styles.messageActualIcon}
-							/>
-							<Text c={"white"} size="sm" fw={600}>
-								{tweet.childrenCount}
-							</Text>
-						</Group>
-						<Group
-							gap={2}
-							className={styles.hearticon}
-							onClick={(e) => handleActionClick(e, "Like")}
-						>
-							{tweet.likes.includes(user?.uid || "") ? (
-								<Heart
-									size={22}
-									className={styles.heartActualIcon}
-									color="#d279cb"
-								/>
-							) : (
-								<Heart
-									size={22}
-									className={styles.heartActualIcon}
-								/>
-							)}
+						{!isModal && (
+							<>
+								<Group
+									gap={2}
+									className={styles.messageicon}
+									onClick={(e) =>
+										handleActionClick(e, "Reply")
+									}
+								>
+									<MessageCircle2
+										size={22}
+										className={styles.messageActualIcon}
+									/>
+									<Text c={"white"} size="sm" fw={600}>
+										{tweet.childrenCount}
+									</Text>
+								</Group>
+								<Group
+									gap={2}
+									className={styles.hearticon}
+									onClick={(e) =>
+										handleActionClick(e, "Like")
+									}
+								>
+									{tweet.likes.includes(user?.uid || "") ? (
+										<Heart
+											size={22}
+											className={styles.heartActualIcon}
+											color="#d279cb"
+										/>
+									) : (
+										<Heart
+											size={22}
+											className={styles.heartActualIcon}
+										/>
+									)}
 
-							<Text c={"white"} size="sm" fw={600}>
-								{tweet.likesCount}
-							</Text>
-						</Group>
-						<Group
-							gap={0}
-							className={styles.bookmarkicon}
-							onClick={(e) => handleActionClick(e, "Bookmark")}
-						>
-							{tweet.bookmarks.includes(user?.uid || "") ? (
-								<Bookmark
-									size={22}
-									className={styles.bookmarkActualIcon}
-									color="#3cc94d"
-								/>
-							) : (
-								<Bookmark
-									size={22}
-									className={styles.bookmarkActualIcon}
-								/>
-							)}
+									<Text c={"white"} size="sm" fw={600}>
+										{tweet.likesCount}
+									</Text>
+								</Group>
+								<Group
+									gap={0}
+									className={styles.bookmarkicon}
+									onClick={(e) =>
+										handleActionClick(e, "Bookmark")
+									}
+								>
+									{tweet.bookmarks.includes(
+										user?.uid || ""
+									) ? (
+										<Bookmark
+											size={22}
+											className={
+												styles.bookmarkActualIcon
+											}
+											color="#3cc94d"
+										/>
+									) : (
+										<Bookmark
+											size={22}
+											className={
+												styles.bookmarkActualIcon
+											}
+										/>
+									)}
 
-							<Text c={"white"} size="sm" fw={600}>
-								{tweet.bookmarkCount}
-							</Text>
-						</Group>
+									<Text c={"white"} size="sm" fw={600}>
+										{tweet.bookmarkCount}
+									</Text>
+								</Group>
+							</>
+						)}
 					</Group>
 				</TypographyStylesProvider>
 			</Paper>

@@ -3,7 +3,6 @@ import TweetInput from "../TweetInput/TweetInput";
 import { TweetVariant } from "../../../constants/TweetVariant";
 import { TweetType } from "../../../Types/Tweet";
 import { BrowserRouter } from "react-router-dom";
-import { Browser } from "tabler-icons-react";
 
 type TweetReplyModalProps = {
 	tweet: TweetType;
@@ -16,6 +15,7 @@ const TweetReplyModal = ({ tweet }: TweetReplyModalProps & {}) => {
 				<TweetComponent
 					passedInStyles={TweetVariant.parent}
 					tweet={tweet}
+					isModal={true}
 				/>
 				<TweetInput
 					placeholderMessage="Post your reply"

@@ -1,7 +1,7 @@
 import { TweetComponent } from "../../../../Features/TweetComponent/TweetComponent";
 import { TweetVariant } from "../../../../../constants/TweetVariant";
 import { useGetUserTweets } from "../../../../../Hooks/useGetUserTweets";
-
+import LoadingTweet from "../../../../Features/LoadingTweet/LoadingTweet";
 import { useParams } from "react-router-dom";
 
 const Posts = () => {
@@ -11,7 +11,7 @@ const Posts = () => {
 	return (
 		<>
 			{isLoading
-				? "Loading..."
+				? <LoadingTweet />
 				: data?.map((tweet) => (
 						<TweetComponent
 							passedInStyles={TweetVariant.post}

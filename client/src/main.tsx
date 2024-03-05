@@ -15,6 +15,7 @@ import { ModalsProvider } from "@mantine/modals";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useUserStore } from "./Stores/userStore.ts";
 import { onAuthStateChanged } from "firebase/auth";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import React from "react";
 
 const theme = createTheme({
@@ -27,11 +28,12 @@ const theme = createTheme({
 		xxl: "121em",
 	},
 });
+const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
 	<React.StrictMode>
-		<MantineProvider theme={theme} forceColorScheme="dark">
-			<QueryClientProvider client={new QueryClient()}>
+		<QueryClientProvider client={queryClient}>
+			<MantineProvider theme={theme} forceColorScheme="dark">
 				<ModalsProvider>
 					<Notifications
 						position="bottom-right"
@@ -42,9 +44,13 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
 					/>
 
 					<App />
+					<ReactQueryDevtools
+						initialIsOpen={false}
+						client={queryClient}
+					/>
 				</ModalsProvider>
-			</QueryClientProvider>
-		</MantineProvider>
+			</MantineProvider>
+		</QueryClientProvider>
 	</React.StrictMode>
 );
 const firebaseConfig = {
