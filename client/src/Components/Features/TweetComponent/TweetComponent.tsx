@@ -176,16 +176,22 @@ export function TweetComponent({
 								>
 									{tweet.authorDisplayName as string}
 								</Text>
-								<Text
-									fz="xs"
-									c="#b097fcce"
-									component={Link}
-									to={`/dashboard/profile/${
-										tweet.authorUsername as string
-									}`}
-								>
-									{tweet.authorUsername as string}
-								</Text>
+								{isModal ? (
+									<Text fz="xs" c="#b097fcce">
+										{tweet.authorUsername as string}
+									</Text>
+								) : (
+									<Text
+										fz="xs"
+										c="#b097fcce"
+										component={Link}
+										to={`/dashboard/profile/${
+											tweet.authorUsername as string
+										}`}
+									>
+										{tweet.authorUsername as string}
+									</Text>
+								)}
 							</Group>
 
 							<Text fz="xs" c="dimmed">
