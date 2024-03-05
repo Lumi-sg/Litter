@@ -5,6 +5,7 @@ import { useMutation } from "@tanstack/react-query";
 import { displayNotification } from "../Helpers/displayNotification";
 import { modals } from "@mantine/modals";
 import { useQueryClient } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
 
 export const useTweetReply = (
 	tweetContent: string,
@@ -13,6 +14,7 @@ export const useTweetReply = (
 ) => {
 	const firebaseToken = Cookies.get("firebaseToken");
 	const queryClient = useQueryClient();
+	const navigate = useNavigate();
 	return useMutation({
 		mutationFn: async () => {
 			console.log("Creating reply...");
@@ -30,7 +32,7 @@ export const useTweetReply = (
 			return data;
 		},
 
-		onSuccess: () => {
+		onSuccess: async () => {
 			queryClient.invalidateQueries({
 				queryKey: ["tweets", tweetAuthor],
 			});
@@ -38,9 +40,9 @@ export const useTweetReply = (
 				queryKey: ["profile", tweetAuthor],
 			});
 
-            queryClient.invalidateQueries({
-                queryKey: ["tweets", parentTweetID],
-            });
+			queryClient.invalidateQueries({
+				queryKey: ["tweets", parentTweetID],
+			});
 
 			displayNotification(
 				"Tweet",
@@ -50,7 +52,9 @@ export const useTweetReply = (
 				""
 			);
 			modals.closeAll();
+			
 		},
+
 		onError: () => {
 			displayNotification("Error", "Failed to tweet", "#f87171", "", "");
 		},
