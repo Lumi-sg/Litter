@@ -94,7 +94,7 @@ export const getUserBookmarks = asyncHandler(
 		try {
 			const user = await UserModel.findOne({
 				username: req.params.username,
-			})
+			});
 
 			if (!user) {
 				res.status(404).json({ message: "User not found" });
@@ -106,8 +106,7 @@ export const getUserBookmarks = asyncHandler(
 				.sort({ timestamp: -1 })
 				.populate("author");
 			res.status(200).json({ tweets: allUserBookmarks });
-		}
-		catch (error: any) {
+		} catch (error: any) {
 			res.status(500).json({ message: error.message });
 		}
 	}
@@ -119,7 +118,7 @@ export const getUserLikes = asyncHandler(
 		try {
 			const user = await UserModel.findOne({
 				username: req.params.username,
-			})
+			});
 
 			if (!user) {
 				res.status(404).json({ message: "User not found" });
@@ -131,8 +130,69 @@ export const getUserLikes = asyncHandler(
 				.sort({ timestamp: -1 })
 				.populate("author");
 			res.status(200).json({ tweets: allUserLikes });
+		} catch (error: any) {
+			res.status(500).json({ message: error.message });
 		}
-		catch (error: any) {
+	}
+);
+
+export const followUser = asyncHandler(
+	async (req: express.Request, res: express.Response) => {
+		const session = await UserModel.startSession();
+		session.startTransaction();
+		console.log("Following user...");
+		try {
+			const userToBeFollowed = await UserModel.findOne({
+				username: req.params.username,
+			});
+			const currentUser = await UserModel.findOne({
+				firebaseID: (req as any).currentUser.uid,
+			});
+			if (!userToBeFollowed) {
+				await session.abortTransaction();
+				session.endSession();
+				res.status(404).json({ message: "User not found" });
+				console.log("User to be followed not found");
+				return;
+			}
+			if (!currentUser) {
+				await session.abortTransaction();
+				session.endSession();
+				res.status(404).json({ message: "User not found" });
+				console.log("Current user not found");
+				return;
+			}
+
+			//update currentUser 
+			await UserModel.updateOne(
+				{ firebaseID: (req as any).currentUser.uid },
+				{
+					$addToSet: { following: userToBeFollowed.firebaseID },
+					$inc: { followCount: 1 },
+				}
+			);
+
+			//update userToBeFollowed
+			await UserModel.updateOne(
+				{ firebaseID: userToBeFollowed.firebaseID },
+				{ $addToSet: { followers: currentUser.firebaseID },
+					$inc: { followerCount: 1 } }
+
+			)
+			await session.commitTransaction();
+			session.endSession();
+			res.status(200).json({ message: "User followed successfully" });
+		} catch (error: any) {
+			res.status(500).json({ message: error.message });
+		}
+	}
+);
+
+export const unfollowUser = asyncHandler(
+	async (req: express.Request, res: express.Response) => {
+		console.log("Unfollowing user...");
+		try {
+		} catch (error: any) {
 			res.status(500).json({ message: error.message });
 		}
 	}
