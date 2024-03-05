@@ -6,6 +6,7 @@ import { getTweet } from "../../../../Hooks/useGetTweet";
 import { useParams } from "react-router-dom";
 import { TweetType } from "../../../../Types/Tweet";
 import TopOfSinglePost from "../../../Features/TopOfSinglePost/TopOfSinglePost";
+import LoadingTweet from "../../../Features/LoadingTweet/LoadingTweet";
 const SinglePost = () => {
 	const { tweetID } = useParams();
 	const { data: tweet, isLoading } = getTweet(tweetID as string);
@@ -29,7 +30,7 @@ const SinglePost = () => {
 	return (
 		<>
 			{isLoading ? (
-				<div>Loading...</div>
+				<LoadingTweet />
 			) : (
 				<>
 					<TopOfSinglePost />
