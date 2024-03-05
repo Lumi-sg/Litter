@@ -162,6 +162,14 @@ export const followUser = asyncHandler(
 				console.log("Current user not found");
 				return;
 			}
+			if (currentUser._id === userToBeFollowed._id) {
+				await session.abortTransaction();
+				session.endSession();
+				res.status(400).json({
+					message: "You cannot unfollow yourself",
+				});
+				return;
+			}
 
 			//Update currentUser
 			await UserModel.updateOne(
@@ -208,6 +216,15 @@ export const unfollowUser = asyncHandler(
 				await session.abortTransaction();
 				session.endSession();
 				res.status(404).json({ message: "User not found" });
+				return;
+			}
+
+			if (currentUser._id === userToBeUnfollowed._id) {
+				await session.abortTransaction();
+				session.endSession();
+				res.status(400).json({
+					message: "You cannot unfollow yourself",
+				});
 				return;
 			}
 
