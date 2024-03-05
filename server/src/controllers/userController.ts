@@ -163,7 +163,7 @@ export const followUser = asyncHandler(
 				return;
 			}
 
-			//update currentUser 
+			//Update currentUser
 			await UserModel.updateOne(
 				{ firebaseID: (req as any).currentUser.uid },
 				{
@@ -172,13 +172,14 @@ export const followUser = asyncHandler(
 				}
 			);
 
-			//update userToBeFollowed
+			//Update userToBeFollowed
 			await UserModel.updateOne(
 				{ firebaseID: userToBeFollowed.firebaseID },
-				{ $addToSet: { followers: currentUser.firebaseID },
-					$inc: { followerCount: 1 } }
-
-			)
+				{
+					$addToSet: { followers: currentUser.firebaseID },
+					$inc: { followerCount: 1 },
+				}
+			);
 			await session.commitTransaction();
 			session.endSession();
 			res.status(200).json({ message: "User followed successfully" });
@@ -190,9 +191,52 @@ export const followUser = asyncHandler(
 
 export const unfollowUser = asyncHandler(
 	async (req: express.Request, res: express.Response) => {
+		const session = await UserModel.startSession();
+		session.startTransaction();
 		console.log("Unfollowing user...");
+
 		try {
+			const userToBeUnfollowed = await UserModel.findOne({
+				username: req.params.username,
+			});
+
+			const currentUser = await UserModel.findOne({
+				firebaseID: (req as any).currentUser.uid,
+			});
+
+			if (!userToBeUnfollowed || !currentUser) {
+				await session.abortTransaction();
+				session.endSession();
+				res.status(404).json({ message: "User not found" });
+				return;
+			}
+
+			// Update currentUser
+			await UserModel.updateOne(
+				{ firebaseID: (req as any).currentUser.uid },
+				{
+					$pull: { following: userToBeUnfollowed.firebaseID },
+					$inc: { followCount: -1 },
+				}
+			);
+
+			// Update userToBeUnfollowed
+			await UserModel.updateOne(
+				{ firebaseID: userToBeUnfollowed.firebaseID },
+				{
+					$pull: { followers: currentUser.firebaseID },
+					$inc: { followerCount: -1 },
+				}
+			);
+
+			await session.commitTransaction();
+			session.endSession();
+
+			res.status(200).json({ message: "User unfollowed successfully" });
 		} catch (error: any) {
+			console.error("Error unfollowing user:", error);
+			await session.abortTransaction();
+			session.endSession();
 			res.status(500).json({ message: error.message });
 		}
 	}
