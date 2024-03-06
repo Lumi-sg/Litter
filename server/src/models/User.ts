@@ -21,10 +21,10 @@ const UserSchema = new Schema({
 	username: { type: String, required: true },
 	displayName: { type: String, required: true },
 	followers: [{ type: Schema.Types.ObjectId, ref: "User" }],
-	followCount: { type: Number, default: 0 },
+	followCount: { type: Number, default: 0, min: 0 },
 	following: [{ type: Schema.Types.ObjectId, ref: "User" }],
-	followerCount: { type: Number, default: 0 },
-	tweetCount: { type: Number, default: 0 },
+	followerCount: { type: Number, default: 0, min: 0 },
+	tweetCount: { type: Number, default: 0, min: 0 },
 	bookmarks: [{ type: Schema.Types.ObjectId, ref: "Tweet" }],
 	pictureURL: { type: String, required: true },
 });
