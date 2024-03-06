@@ -261,3 +261,18 @@ export const unfollowUser = asyncHandler(
 		}
 	}
 );
+
+export const getThreeRandomUsers = asyncHandler(
+	async (req: express.Request, res: express.Response) => {
+		try {
+			const users = await UserModel.aggregate([
+				{
+					$sample: { size: 3 },
+				},
+			]);
+			res.status(200).json({ users });
+		} catch (error: any) {
+			res.status(500).json({ message: error.message });
+		}
+	}
+);

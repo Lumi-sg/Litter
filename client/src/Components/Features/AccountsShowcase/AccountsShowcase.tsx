@@ -8,8 +8,6 @@ const AccountsShowcase = () => {
 			<SingleAccountComponent />
 			<SingleAccountComponent />
 			<SingleAccountComponent />
-			<SingleAccountComponent />
-			<SingleAccountComponent />
 
 		</>
 	);

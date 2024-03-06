@@ -9,28 +9,9 @@ import Bookmarks from "./MainView/Bookmarks/Bookmarks";
 import Profile from "./MainView/Profile/Profile";
 import SinglePost from "./MainView/SinglePost/SinglePost";
 import Infopanel from "./Infopanel/Infopanel";
-import { Routes, Route, Link, Outlet } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 export function Dashboard() {
 	const { selectedComponent } = useComponentStore();
-
-	// const renderSwitch = () => {
-	// 	switch (selectedComponent) {
-	// 		case "Home":
-	// 			return <Home />;
-	// 		case "Notifications":
-	// 			return <Notifications />;
-	// 		case "Messages":
-	// 			return <Messages />;
-	// 		case "Bookmarks":
-	// 			return <Bookmarks />;
-	// 		case "Profile":
-	// 			return <Profile />;
-	// 		case "SinglePost":
-	// 			return <SinglePost />;
-	// 		default:
-	// 			return <Home />;
-	// 	}
-	// };
 
 	return (
 		<AppShell
