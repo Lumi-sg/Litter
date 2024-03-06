@@ -162,12 +162,15 @@ export const followUser = asyncHandler(
 				console.log("Current user not found");
 				return;
 			}
-			if (currentUser._id === userToBeFollowed._id) {
+			if (
+				currentUser._id.toString() === userToBeFollowed._id.toString()
+			) {
 				await session.abortTransaction();
 				session.endSession();
 				res.status(400).json({
-					message: "You cannot unfollow yourself",
+					message: "You cannot follow yourself",
 				});
+				console.log("Cannot follow yourself");
 				return;
 			}
 
