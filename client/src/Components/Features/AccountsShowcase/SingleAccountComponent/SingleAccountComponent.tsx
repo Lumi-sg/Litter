@@ -1,17 +1,35 @@
 import { Avatar, Text, Group, Button } from "@mantine/core";
 import classes from "./UserInfoIcons.module.css";
 import { useUserStore } from "../../../../Stores/userStore";
-import { convertEmailToUsername } from "../../../../Helpers/convertEmailToUsername";
 import { useFollowUser } from "../../../../Hooks/useFollowUser";
 import { useUnfollowUser } from "../../../../Hooks/useUnfollowUser";
 import FirebaseUserType from "../../../../Types/User";
 
 type UserInfoIconsProps = {
 	randomUser: FirebaseUserType | undefined;
+	currentlyLoggedInUser: FirebaseUserType | undefined;
 };
 
-export function SingleAccountComponent({ randomUser }: UserInfoIconsProps) {
+export function SingleAccountComponent({
+	randomUser,
+	currentlyLoggedInUser,
+}: UserInfoIconsProps) {
 	const { user } = useUserStore();
+	const { mutate: followUser } = useFollowUser(
+		randomUser?.username as string
+	);
+	const { mutate: unfollowUser } = useUnfollowUser(
+		randomUser?.username as string
+	);
+
+	const isCurrentUserFollowingTarget = randomUser?.followers.some(
+		(follower) => {
+			if (follower === currentlyLoggedInUser?._id.toString()) {
+				return true;
+			}
+			return false;
+		}
+	);
 
 	const handleFollowClick = () => {};
 	return (
@@ -52,7 +70,7 @@ export function SingleAccountComponent({ randomUser }: UserInfoIconsProps) {
 						color={"violet"}
 						size="xs"
 					>
-						Follow
+						{isCurrentUserFollowingTarget ? "Unfollow" : "Follow"}
 					</Button>
 				</div>
 			</Group>

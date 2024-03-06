@@ -266,7 +266,17 @@ export const getThreeRandomUsers = asyncHandler(
 	async (req: express.Request, res: express.Response) => {
 		console.log("Getting three random users...");
 		try {
+			const loggedInUser = await UserModel.findOne({
+				firebaseID: (req as any).currentUser.uid,
+			});
+			if (!loggedInUser) {
+				res.status(404).json({ message: "User not found" });
+				return;
+			}
 			const users = await UserModel.aggregate([
+				{
+					$match: { _id: { $ne: loggedInUser._id } }, // Exclude the logged-in user
+				},
 				{
 					$sample: { size: 3 },
 				},

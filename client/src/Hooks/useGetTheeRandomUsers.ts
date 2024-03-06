@@ -18,9 +18,9 @@ export const useGetTheeRandomUsers = () => {
 					},
 				}
 			);
-            console.table(data.users)
 			return data.users as UserType[];
 		},
+		staleTime: 30_000,
         
 	});
 };
