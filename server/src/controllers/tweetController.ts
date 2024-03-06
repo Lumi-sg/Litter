@@ -88,7 +88,7 @@ export const getTweet = asyncHandler(
 
 			const childrenTweets = await TweetModel.find({
 				parent: tweet._id,
-			});
+			}).sort({ timestamp: -1 });
 
 			const tweetWithChildren = {
 				...tweet.toObject(),
