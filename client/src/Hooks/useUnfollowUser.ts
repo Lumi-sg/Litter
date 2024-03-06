@@ -9,7 +9,7 @@ import { convertEmailToUsername } from "../Helpers/convertEmailToUsername";
 
 export const useUnfollowUser = (usernameToUnfollow: string) => {
 	const firebaseToken = Cookies.get("firebaseToken");
-	const {user} = useUserStore();
+	const { user } = useUserStore();
 	const queryClient = useQueryClient();
 	return useMutation({
 		mutationFn: async () => {
@@ -30,9 +30,14 @@ export const useUnfollowUser = (usernameToUnfollow: string) => {
 				queryKey: ["profile", usernameToUnfollow],
 			});
 			queryClient.invalidateQueries({
-				queryKey: ["profile", convertEmailToUsername(user?.email as string)],
-			})
-
+				queryKey: [
+					"profile",
+					convertEmailToUsername(user?.email as string),
+				],
+			});
+			queryClient.invalidateQueries({
+				queryKey: ["tweets", usernameToUnfollow],
+			});
 
 			displayNotification(
 				"Unfollow",

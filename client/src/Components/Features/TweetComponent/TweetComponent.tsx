@@ -21,7 +21,6 @@ import {
 	Checkbox,
 } from "tabler-icons-react";
 import { useComponentStore } from "../../../Stores/componentStore";
-import { displayNotification } from "../../../Helpers/displayNotification";
 import { useParentTweetStoreAuthor } from "../../../Stores/parentTweetStoreAuthor";
 import TweetReplyModal from "../TweetReplyModal/TweetReplyModal";
 import { modals } from "@mantine/modals";
@@ -31,6 +30,10 @@ import { useLikeTweet } from "../../../Hooks/useLikeTweet";
 import { useUnlikeTweet } from "../../../Hooks/useUnlikeTweet";
 import { useBookmarkTweet } from "../../../Hooks/useBookmarkTweet";
 import { useRemoveBookmarkTweet } from "../../../Hooks/useRemoveBookmark";
+import { useFollowUser } from "../../../Hooks/useFollowUser";
+import { useUnfollowUser } from "../../../Hooks/useUnfollowUser";
+import { useProfileGet } from "../../../Hooks/useProfileGet";
+import { convertEmailToUsername } from "../../../Helpers/convertEmailToUsername";
 type TweetComponentProps = {
 	passedInStyles: React.CSSProperties;
 	tweet: TweetType;
@@ -49,11 +52,29 @@ export function TweetComponent({
 	const { mutate: mutateUnlike } = useUnlikeTweet(tweet);
 	const { mutate: mutateBookmark } = useBookmarkTweet(tweet);
 	const { mutate: mutateRemoveBookmark } = useRemoveBookmarkTweet(tweet);
+	const { mutate: mutateFollowUser } = useFollowUser(tweet.author.username);
+	const { mutate: mutateUnfollowUser } = useUnfollowUser(
+		tweet.author.username
+	);
+	const { data: loggedInUser } = useProfileGet(
+		convertEmailToUsername(user?.email as string)
+	);
 
 	const handleDotsClick = (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.stopPropagation();
 		e.preventDefault();
 	};
+
+	const isCurrentUserFollowingTarget = tweet.author.followers.some(
+		(follower) => {
+			if (follower._id === loggedInUser?.id) {
+				return true;
+			}
+			return false;
+		}
+	);
+
+	const isLoggedInUserAuthorOfTweet = tweet.firebaseID === user?.uid;
 
 	const handleActionClick = (
 		e: React.MouseEvent<HTMLDivElement>,
@@ -105,41 +126,29 @@ export function TweetComponent({
 		e.preventDefault();
 		switch (action) {
 			case "Follow":
-				displayNotification(
-					action,
-					"followed",
-					"#3cc94d",
-					user?.displayName as string,
-					"account"
-				);
+				mutateFollowUser();
 				return;
 			case "Unfollow":
-				displayNotification(
-					action,
-					"unfollowed",
-					"red",
-					user?.displayName as string,
-					"account"
-				);
+				mutateUnfollowUser();
 				return;
-			case "Block":
-				displayNotification(
-					action,
-					"blocked",
-					"red",
-					user?.displayName as string,
-					"account"
-				);
-				return;
-			case "Unblock":
-				displayNotification(
-					action,
-					"unblocked",
-					"green",
-					user?.displayName as string,
-					"account"
-				);
-				return;
+			// case "Block":
+			// 	displayNotification(
+			// 		action,
+			// 		"blocked",
+			// 		"red",
+			// 		user?.displayName as string,
+			// 		"account"
+			// 	);
+			// 	return;
+			// case "Unblock":
+			// 	displayNotification(
+			// 		action,
+			// 		"unblocked",
+			// 		"green",
+			// 		user?.displayName as string,
+			// 		"account"
+			// 	);
+			// 	return;
 			default:
 				return;
 		}
@@ -199,7 +208,7 @@ export function TweetComponent({
 							</Text>
 						</div>
 					</Group>
-					{!isModal && (
+					{!isModal && !isLoggedInUserAuthorOfTweet && (
 						<Menu position="right-start">
 							<Menu.Target>
 								<Button
@@ -215,31 +224,38 @@ export function TweetComponent({
 								bg={"#242424"}
 								style={{ border: "1px solid #8d7ac8" }}
 							>
-								<Menu.Item
-									onClick={(event) =>
-										handleMenuClick(event, "Follow")
-									}
-									leftSection={
-										<UserPlus color="white" size={20} />
-									}
-								>
-									<Text c={"white"}>
-										Follow {tweet.authorUsername}
-									</Text>
-								</Menu.Item>
-								<Menu.Item
-									onClick={(event) =>
-										handleMenuClick(event, "Unfollow")
-									}
-									leftSection={
-										<UserMinus color="white" size={20} />
-									}
-								>
-									<Text c={"white"}>
-										Unfollow {tweet.authorUsername}
-									</Text>
-								</Menu.Item>
-								<Menu.Item
+								{!isCurrentUserFollowingTarget ? (
+									<Menu.Item
+										onClick={(event) =>
+											handleMenuClick(event, "Follow")
+										}
+										leftSection={
+											<UserPlus color="white" size={20} />
+										}
+									>
+										<Text c={"white"}>
+											Follow {tweet.authorUsername}
+										</Text>
+									</Menu.Item>
+								) : (
+									<Menu.Item
+										onClick={(event) =>
+											handleMenuClick(event, "Unfollow")
+										}
+										leftSection={
+											<UserMinus
+												color="white"
+												size={20}
+											/>
+										}
+									>
+										<Text c={"white"}>
+											Unfollow {tweet.authorUsername}
+										</Text>
+									</Menu.Item>
+								)}
+
+								{/* <Menu.Item
 									onClick={(event) =>
 										handleMenuClick(event, "Block")
 									}
@@ -262,7 +278,7 @@ export function TweetComponent({
 									<Text c={"white"}>
 										Unblock {tweet.authorUsername}
 									</Text>
-								</Menu.Item>
+								</Menu.Item> */}
 							</Menu.Dropdown>
 						</Menu>
 					)}

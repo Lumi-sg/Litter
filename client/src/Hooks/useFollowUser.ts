@@ -33,6 +33,9 @@ export const useFollowUser = (usernameToFollow: string) => {
 			queryClient.invalidateQueries({
 				queryKey: ["profile", convertEmailToUsername(user?.email as string)],
 			})
+			queryClient.invalidateQueries({
+				queryKey: ["tweets", usernameToFollow],
+			})
 
 			displayNotification(
 				"Follow",

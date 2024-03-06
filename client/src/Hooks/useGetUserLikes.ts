@@ -10,7 +10,7 @@ import { useUserStore } from "../Stores/userStore";
 export const useGetUserLikes = (username: string) => {
     const { user } = useUserStore();
     const firebaseToken = Cookies.get("firebaseToken");
-    console.log("Fetching likes...");
+    
     return useQuery({
         queryKey: ["likes", user?.uid],
         queryFn: async () => {
