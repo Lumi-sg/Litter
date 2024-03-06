@@ -264,6 +264,7 @@ export const unfollowUser = asyncHandler(
 
 export const getThreeRandomUsers = asyncHandler(
 	async (req: express.Request, res: express.Response) => {
+		console.log("Getting three random users...");
 		try {
 			const users = await UserModel.aggregate([
 				{
@@ -272,6 +273,7 @@ export const getThreeRandomUsers = asyncHandler(
 			]);
 			res.status(200).json({ users });
 		} catch (error: any) {
+			console.log("Error getting three random users:", error);
 			res.status(500).json({ message: error.message });
 		}
 	}
