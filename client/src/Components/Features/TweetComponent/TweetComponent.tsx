@@ -46,15 +46,18 @@ export function TweetComponent({
 	isModal = false,
 }: TweetComponentProps) {
 	const { user } = useUserStore();
+	const { data: tweetAuthorData } = useProfileGet(tweet.authorUsername);
 	const { setSelectedComponent } = useComponentStore();
 	const { setParentTweetAuthor } = useParentTweetStoreAuthor();
 	const { mutate: mutateLike } = useLikeTweet(tweet);
 	const { mutate: mutateUnlike } = useUnlikeTweet(tweet);
 	const { mutate: mutateBookmark } = useBookmarkTweet(tweet);
 	const { mutate: mutateRemoveBookmark } = useRemoveBookmarkTweet(tweet);
-	const { mutate: mutateFollowUser } = useFollowUser(tweet.author.username);
+	const { mutate: mutateFollowUser } = useFollowUser(
+		tweetAuthorData?.username as string
+	);
 	const { mutate: mutateUnfollowUser } = useUnfollowUser(
-		tweet.author.username
+		tweetAuthorData?.username as string
 	);
 	const { data: loggedInUser } = useProfileGet(
 		convertEmailToUsername(user?.email as string)
@@ -65,7 +68,7 @@ export function TweetComponent({
 		e.preventDefault();
 	};
 
-	const isCurrentUserFollowingTarget = tweet.author.followers.some(
+	const isCurrentUserFollowingTarget = tweetAuthorData?.followers.some(
 		(follower) => {
 			if (follower._id === loggedInUser?.id) {
 				return true;
