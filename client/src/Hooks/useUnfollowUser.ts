@@ -22,17 +22,26 @@ export const useUnfollowUser = (usernameToUnfollow: string) => {
 			);
 			return data;
 		},
-        onSuccess: async () => {
-            queryClient.invalidateQueries({
-                queryKey: ["profile", usernameToUnfollow],
-            });
-            displayNotification(
-                "Follow",
-                `have successfully unfollowed ${usernameToUnfollow}.`,
-                "#4db5e5",
-                ``,
-                ""
-            );
-        }
+		onSuccess: async () => {
+			queryClient.invalidateQueries({
+				queryKey: ["profile", usernameToUnfollow],
+			});
+			displayNotification(
+				"Unfollow",
+				`have successfully unfollowed ${usernameToUnfollow}.`,
+				"#e03131",
+				``,
+				""
+			);
+		},
+		onError: () => {
+			displayNotification(
+				"Error",
+				"Failed to unfollow user",
+				"#f87171",
+				"",
+				""
+			);
+		},
 	});
 };

@@ -29,10 +29,19 @@ export const useFollowUser = (usernameToFollow: string) => {
             displayNotification(
                 "Follow",
                 `have successfully followed ${usernameToFollow}.`,
-                "#4db5e5",
+                "#3cc94d",
                 ``,
                 ""
             );
-        }
+        },
+		onError: () => {
+			displayNotification(
+				"Error",
+				"Failed to follow user",
+				"#f87171",
+				"",
+				""
+			);
+		},
 	});
 };
