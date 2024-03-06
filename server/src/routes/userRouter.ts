@@ -8,6 +8,7 @@ router.get(
 	verifyFirebaseToken,
 	userController.getThreeRandomUsers
 );
+router.get("/allusers", verifyFirebaseToken, userController.getAllUsers);
 router.post("/register", verifyFirebaseToken, userController.registerUser);
 router.get("/:username", verifyFirebaseToken, userController.getUser);
 router.get(
