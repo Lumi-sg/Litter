@@ -5,6 +5,7 @@ import { useFollowUser } from "../../../../Hooks/useFollowUser";
 import { useUnfollowUser } from "../../../../Hooks/useUnfollowUser";
 import FirebaseUserType from "../../../../Types/User";
 import { useProfileGet } from "../../../../Hooks/useProfileGet";
+import { Link } from "react-router-dom";
 
 type UserInfoIconsProps = {
 	randomUser: string;
@@ -17,12 +18,8 @@ export function SingleAccountComponent({
 }: UserInfoIconsProps) {
 	const { user } = useUserStore();
 	const { data: randomUserData } = useProfileGet(randomUser);
-	const { mutate: followUser } = useFollowUser(
-		randomUser as string
-	);
-	const { mutate: unfollowUser } = useUnfollowUser(
-		randomUser as string
-	);
+	const { mutate: followUser } = useFollowUser(randomUser as string);
+	const { mutate: unfollowUser } = useUnfollowUser(randomUser as string);
 
 	const isCurrentUserFollowingTarget = randomUserData?.followers.some(
 		(follower) => {
@@ -67,7 +64,12 @@ export function SingleAccountComponent({
 						</Text>
 
 						<Group wrap="nowrap" gap={10} mt={3}>
-							<Text fz="xs" c="dimmed">
+							<Text
+								fz="xs"
+								c="dimmed"
+								component={Link}
+								to={`/dashboard/profile/${randomUserData?.username}`}
+							>
 								{randomUserData?.username}
 							</Text>
 						</Group>
