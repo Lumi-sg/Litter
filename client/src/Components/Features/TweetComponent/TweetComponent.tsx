@@ -34,6 +34,7 @@ import { useFollowUser } from "../../../Hooks/useFollowUser";
 import { useUnfollowUser } from "../../../Hooks/useUnfollowUser";
 import { useProfileGet } from "../../../Hooks/useProfileGet";
 import { convertEmailToUsername } from "../../../Helpers/convertEmailToUsername";
+import formatTimestamp from "../../../Helpers/formatTimeStamp";
 type TweetComponentProps = {
 	passedInStyles: React.CSSProperties;
 	tweet: TweetType;
@@ -207,7 +208,7 @@ export function TweetComponent({
 							</Group>
 
 							<Text fz="xs" c="dimmed">
-								{tweet.timestamp.toString()}
+								{formatTimestamp(tweet.timestamp.toString())}
 							</Text>
 						</div>
 					</Group>
