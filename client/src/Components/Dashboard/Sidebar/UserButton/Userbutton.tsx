@@ -10,6 +10,15 @@ import { convertEmailToUsername } from "../../../../Helpers/convertEmailToUserna
 export function UserButton() {
 	const { user } = useUserStore();
 	const navigate = useNavigate();
+
+	const trimDisplayName = (displayName: string) => {
+		if (!displayName) {
+			console.log("No display name provided");
+			return;
+		}
+
+		return displayName.split(" ")[0];
+	};
 	// const { toggleColorScheme } = useMantineColorScheme();
 
 	// const handleThemeToggle = () => {
@@ -34,7 +43,7 @@ export function UserButton() {
 
 						<div style={{ flex: 1 }}>
 							<Text size="md" fw={700} c={"white"}>
-								{user?.displayName}
+								{trimDisplayName(user?.displayName as string)}
 							</Text>
 
 							<Text c="dimmed" size="xs">
