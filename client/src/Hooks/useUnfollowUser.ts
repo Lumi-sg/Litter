@@ -26,6 +26,7 @@ export const useUnfollowUser = (usernameToUnfollow: string) => {
 			queryClient.invalidateQueries({
 				queryKey: ["profile", usernameToUnfollow],
 			});
+
 			displayNotification(
 				"Unfollow",
 				`have successfully unfollowed ${usernameToUnfollow}.`,

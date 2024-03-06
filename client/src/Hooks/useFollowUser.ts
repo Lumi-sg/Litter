@@ -22,18 +22,20 @@ export const useFollowUser = (usernameToFollow: string) => {
 			);
 			return data;
 		},
-        onSuccess: async () => {
-            queryClient.invalidateQueries({
-                queryKey: ["profile", usernameToFollow],
-            });
-            displayNotification(
-                "Follow",
-                `have successfully followed ${usernameToFollow}.`,
-                "#3cc94d",
-                ``,
-                ""
-            );
-        },
+		onSuccess: async () => {
+			console.log(`invalidating queries... ${usernameToFollow}`);
+			queryClient.invalidateQueries({
+				queryKey: ["profile", usernameToFollow],
+			});
+
+			displayNotification(
+				"Follow",
+				`have successfully followed ${usernameToFollow}.`,
+				"#3cc94d",
+				``,
+				""
+			);
+		},
 		onError: () => {
 			displayNotification(
 				"Error",

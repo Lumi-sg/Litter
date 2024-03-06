@@ -4,9 +4,10 @@ import { useUserStore } from "../../../../Stores/userStore";
 import { useFollowUser } from "../../../../Hooks/useFollowUser";
 import { useUnfollowUser } from "../../../../Hooks/useUnfollowUser";
 import FirebaseUserType from "../../../../Types/User";
+import { useProfileGet } from "../../../../Hooks/useProfileGet";
 
 type UserInfoIconsProps = {
-	randomUser: FirebaseUserType | undefined;
+	randomUser: string;
 	currentlyLoggedInUser: FirebaseUserType | undefined;
 };
 
@@ -15,14 +16,15 @@ export function SingleAccountComponent({
 	currentlyLoggedInUser,
 }: UserInfoIconsProps) {
 	const { user } = useUserStore();
+	const { data: randomUserData } = useProfileGet(randomUser);
 	const { mutate: followUser } = useFollowUser(
-		randomUser?.username as string
+		randomUser as string
 	);
 	const { mutate: unfollowUser } = useUnfollowUser(
-		randomUser?.username as string
+		randomUser as string
 	);
 
-	const isCurrentUserFollowingTarget = randomUser?.followers.some(
+	const isCurrentUserFollowingTarget = randomUserData?.followers.some(
 		(follower) => {
 			if (follower === currentlyLoggedInUser?._id.toString()) {
 				return true;
@@ -31,7 +33,15 @@ export function SingleAccountComponent({
 		}
 	);
 
-	const handleFollowClick = () => {};
+	const handleFollowClick = () => {
+		if (user) {
+			if (isCurrentUserFollowingTarget) {
+				unfollowUser();
+			} else {
+				followUser();
+			}
+		}
+	};
 	return (
 		<div>
 			<Group
@@ -42,7 +52,7 @@ export function SingleAccountComponent({
 			>
 				<Group>
 					<Avatar
-						src={randomUser?.pictureURL}
+						src={randomUserData?.pictureURL}
 						size={60}
 						radius="50%"
 					/>
@@ -53,12 +63,12 @@ export function SingleAccountComponent({
 							className={classes.name}
 							c={"white"}
 						>
-							{randomUser?.displayName}
+							{randomUserData?.displayName}
 						</Text>
 
 						<Group wrap="nowrap" gap={10} mt={3}>
 							<Text fz="xs" c="dimmed">
-								{randomUser?.username}
+								{randomUserData?.username}
 							</Text>
 						</Group>
 					</div>

@@ -281,7 +281,9 @@ export const getThreeRandomUsers = asyncHandler(
 					$sample: { size: 3 },
 				},
 			]);
-			res.status(200).json({ users });
+
+			const arrayOfUsernames = users.map((user: any) => user.username);
+			res.status(200).json({ arrayOfUsernames });
 		} catch (error: any) {
 			console.log("Error getting three random users:", error);
 			res.status(500).json({ message: error.message });

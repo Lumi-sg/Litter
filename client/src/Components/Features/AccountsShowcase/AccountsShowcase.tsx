@@ -6,6 +6,7 @@ import LoadingTweet from "../LoadingTweet/LoadingTweet";
 import { useUserStore } from "../../../Stores/userStore";
 import { convertEmailToUsername } from "../../../Helpers/convertEmailToUsername";
 
+
 const AccountsShowcase = () => {
 	const { user } = useUserStore();
 	const { data: users, isLoading } = useGetTheeRandomUsers();
@@ -15,16 +16,16 @@ const AccountsShowcase = () => {
 
 	return (
 		<>
-			<Text c={"white"} size="lg" ta={"center"}>
-				Who To Follow
-			</Text>
-			{isLoading ? (
+			{isLoading  && !users ? (
 				<LoadingTweet />
 			) : (
 				<>
+					<Text c={"white"} size="lg" ta={"center"}>
+						Who To Follow
+					</Text>
 					{users?.map((user) => (
 						<SingleAccountComponent
-							key={user._id}
+							key={user}
 							randomUser={user}
 							currentlyLoggedInUser={currentlyLoggedInUser}
 						/>
