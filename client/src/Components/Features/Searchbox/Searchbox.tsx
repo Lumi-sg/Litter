@@ -1,8 +1,27 @@
 import { ActionIcon, rem, Autocomplete } from "@mantine/core";
 import { IconSearch, IconArrowRight } from "@tabler/icons-react";
 import styles from "./Searchbox.module.css";
+import { useGetAllUsers } from "../../../Hooks/useGetAllUsers";
+import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 export function Searchbox() {
+	const { data: allUsers } = useGetAllUsers();
+	const navigate = useNavigate();
+	const [searchInputText, setSearchInputText] = useState("");
+
+	const [isSearchedUserClicked, setIsSearchedUserClicked] = useState(false);
+
+	useEffect(() => {
+		if (isSearchedUserClicked) {
+			const selectedUserName = searchInputText;
+			setSearchInputText("");
+			navigate(`/dashboard/profile/${selectedUserName}`);
+			setIsSearchedUserClicked(false);
+			
+		}
+	}, [isSearchedUserClicked]);
+
 	return (
 		<Autocomplete
 			radius="xl"
@@ -15,7 +34,11 @@ export function Searchbox() {
 					color: "white",
 				},
 			}}
-			data={["React", "Angular", "Vue", "Svelte"]}
+			limit={5}
+			data={allUsers?.map((user) => user.username)}
+			onChange={setSearchInputText}
+			onOptionSubmit={() => setIsSearchedUserClicked(true)}
+			value={searchInputText}
 			classNames={{
 				input: styles.input,
 				options: styles.options,

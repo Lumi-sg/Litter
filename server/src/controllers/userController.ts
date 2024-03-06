@@ -295,11 +295,8 @@ export const getAllUsers = asyncHandler(
 	async (req: express.Request, res: express.Response) => {
 		console.log("Getting all users...");
 
-		const currentUser = await UserModel.findOne({
-			firebaseID: (req as any).currentUser.uid,
-		})
 		try {
-			const users = await UserModel.find({ _id: { $ne: currentUser?._id } });
+			const users = await UserModel.find();
 			res.status(200).json({ users });
 		} catch (error: any) {
 			console.log("Error getting all users:", error);
