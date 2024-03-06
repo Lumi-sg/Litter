@@ -3,6 +3,7 @@ import { verifyFirebaseToken } from "../middleware/firebaseAuth";
 import * as userController from "../controllers/userController";
 
 const router: Router = express.Router();
+router.get("/homefeed", verifyFirebaseToken, userController.getHomeFeed);
 router.get("/allusers", verifyFirebaseToken, userController.getAllUsers);
 router.get(
 	"/randomusers",

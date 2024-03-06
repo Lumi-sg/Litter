@@ -304,3 +304,24 @@ export const getAllUsers = asyncHandler(
 		}
 	}
 );
+
+export const getHomeFeed = asyncHandler(
+	async (req: express.Request, res: express.Response) => {
+		const currentUser = await UserModel.findOne({
+			firebaseID: (req as any).currentUser.uid,
+		});
+
+		if (!currentUser) {
+			res.status(404).json({ message: "User not found" });
+			return;
+		}
+		const followedUsers = await UserModel.find({
+			_id: { $in: currentUser.following },
+		});
+		const followedUserTweets = await TweetModel.find({
+			user: { $in: followedUsers },
+			parent: null, 
+		});
+		res.status(200).json({ followedUserTweets });
+	}
+);
