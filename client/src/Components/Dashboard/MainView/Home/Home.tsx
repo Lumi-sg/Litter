@@ -1,24 +1,25 @@
 import { TweetComponent } from "../../../Features/TweetComponent/TweetComponent";
 import TweetInput from "../../../Features/TweetInput/TweetInput";
 import { TweetVariant } from "../../../../constants/TweetVariant";
-import { useParentTweetStoreAuthor } from "../../../../Stores/parentTweetStoreAuthor";
-import { useEffect } from "react";
+import useGetHomeFeed from "../../../../Hooks/useGetHomeFeed";
+import LoadingTweet from "../../../Features/LoadingTweet/LoadingTweet";
 
 const Home = () => {
-	const { setParentTweetAuthor } = useParentTweetStoreAuthor();
+	const { data: homeFeedTweets, isLoading } = useGetHomeFeed();
 
-	useEffect(() => {
-		setParentTweetAuthor(null);
-	}, []);
 	return (
 		<>
+			{isLoading ? <LoadingTweet /> : null}
 			<TweetInput placeholderMessage="What's happening" isReply={false} />
-			<TweetComponent passedInStyles={TweetVariant.parent} />
-			<TweetComponent passedInStyles={TweetVariant.parent} />
-			<TweetComponent passedInStyles={TweetVariant.parent} />
-			<TweetComponent passedInStyles={TweetVariant.parent} />
-			<TweetComponent passedInStyles={TweetVariant.parent} />
-			<TweetComponent passedInStyles={TweetVariant.parent} />
+			{homeFeedTweets?.map((tweet) => (
+				<TweetComponent
+					key={tweet._id}
+					passedInStyles={TweetVariant.parent}
+					tweet={tweet}
+				/>
+			))}
+			{/*
+			<TweetComponent passedInStyles={TweetVariant.parent} /> */}
 		</>
 	);
 };

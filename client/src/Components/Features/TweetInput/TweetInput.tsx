@@ -43,8 +43,9 @@ const TweetInput = ({
 		parentTweet?._id
 	);
 
-	const handleSubmitTweet = () => {
-		mutate();
+	const handleSubmitTweet = async () => {
+		await mutate();
+		setTweetInput("");
 	};
 
 	const handleSubmitReply = async () => {

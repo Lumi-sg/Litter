@@ -307,21 +307,31 @@ export const getAllUsers = asyncHandler(
 
 export const getHomeFeed = asyncHandler(
 	async (req: express.Request, res: express.Response) => {
-		const currentUser = await UserModel.findOne({
-			firebaseID: (req as any).currentUser.uid,
-		});
+		console.log("Getting home feed...");
+		try {
+			const currentUser = await UserModel.findOne({
+				firebaseID: (req as any).currentUser.uid,
+			});
 
-		if (!currentUser) {
-			res.status(404).json({ message: "User not found" });
-			return;
+			if (!currentUser) {
+				console.log("User not found");
+				res.status(404).json({ message: "User not found" });
+				return;
+			}
+			const followedUsers = await UserModel.find({
+				_id: { $in: currentUser.following },
+			});
+			const followedUserTweets = await TweetModel.find({
+				author: { $in: followedUsers },
+				parent: null,
+			});
+			const allTweets = followedUserTweets
+				.map((tweet) => tweet.toObject())
+				.sort((a, b) => b.timestamp.getTime() - a.timestamp.getTime());
+			res.status(200).json({ allTweets });
+		} catch (error: any) {
+			console.log("Error getting home feed:", error);
+			res.status(500).json({ message: error.message });
 		}
-		const followedUsers = await UserModel.find({
-			_id: { $in: currentUser.following },
-		});
-		const followedUserTweets = await TweetModel.find({
-			user: { $in: followedUsers },
-			parent: null, 
-		});
-		res.status(200).json({ followedUserTweets });
 	}
 );

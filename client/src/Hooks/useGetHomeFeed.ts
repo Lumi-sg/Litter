@@ -17,8 +17,7 @@ export const useGetHomeFeed = () => {
 					Authorization: `Bearer ${firebaseToken}`,
 				},
 			});
-            console.table(data.tweets)
-			return data.tweets as TweetType[];
+			return data.allTweets as TweetType[];
 		},
 	});
 };
