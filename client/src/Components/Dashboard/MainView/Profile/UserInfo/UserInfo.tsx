@@ -35,7 +35,9 @@ export function UserCardImage({
 		</div>
 	));
 	const { user } = useUserStore();
-	const { mutate: followUser } = useFollowUser(profileUserData?.username as string);
+	const { mutate: followUser } = useFollowUser(
+		profileUserData?.username as string
+	);
 	const { mutate: unfollowUser } = useUnfollowUser(
 		profileUserData?.username as string
 	);
@@ -48,6 +50,9 @@ export function UserCardImage({
 			return false;
 		}
 	);
+
+	const isLoggedInUserOwnerOfProfile =
+		profileUserData?._id.toString() === currentUserData?._id.toString();
 
 	const handleFollowClick = () => {
 		if (user) {
@@ -72,7 +77,10 @@ export function UserCardImage({
 			style={{ border: "1px solid #8d7ac8" }}
 		>
 			<Center>
-				<UserInfoIcons userData={profileUserData} isLoading={isLoading} />
+				<UserInfoIcons
+					userData={profileUserData}
+					isLoading={isLoading}
+				/>
 			</Center>
 			<Group mt="md" justify="center" gap={30}>
 				{items}
@@ -86,6 +94,7 @@ export function UserCardImage({
 					variant="outline"
 					color="violet"
 					onClick={handleFollowClick}
+					disabled={isLoggedInUserOwnerOfProfile}
 				>
 					{isCurrentUserFollowingTarget ? "Unfollow" : "Follow"}
 				</Button>
