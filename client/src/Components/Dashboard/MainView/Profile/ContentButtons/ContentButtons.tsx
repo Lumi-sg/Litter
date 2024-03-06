@@ -28,7 +28,7 @@ const ContentButtons = ({ handleProfileViewClick }: ContentButtonPros) => {
 					setIsPostsSelected(true);
 				}}
 			>
-				Posts
+				Tweets
 			</Button>
 			<Divider orientation="vertical" ml={50} mr={50} size="xs"></Divider>
 			<Button
