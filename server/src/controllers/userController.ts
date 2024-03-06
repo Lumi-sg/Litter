@@ -175,7 +175,7 @@ export const followUser = asyncHandler(
 			await UserModel.updateOne(
 				{ firebaseID: (req as any).currentUser.uid },
 				{
-					$addToSet: { following: userToBeFollowed.firebaseID },
+					$addToSet: { following: userToBeFollowed.id },
 					$inc: { followCount: 1 },
 				}
 			);
@@ -184,7 +184,7 @@ export const followUser = asyncHandler(
 			await UserModel.updateOne(
 				{ firebaseID: userToBeFollowed.firebaseID },
 				{
-					$addToSet: { followers: currentUser.firebaseID },
+					$addToSet: { followers: currentUser.id },
 					$inc: { followerCount: 1 },
 				}
 			);
@@ -232,7 +232,7 @@ export const unfollowUser = asyncHandler(
 			await UserModel.updateOne(
 				{ firebaseID: (req as any).currentUser.uid },
 				{
-					$pull: { following: userToBeUnfollowed.firebaseID },
+					$pull: { following: userToBeUnfollowed.id },
 					$inc: { followCount: -1 },
 				}
 			);
@@ -241,7 +241,7 @@ export const unfollowUser = asyncHandler(
 			await UserModel.updateOne(
 				{ firebaseID: userToBeUnfollowed.firebaseID },
 				{
-					$pull: { followers: currentUser.firebaseID },
+					$pull: { followers: currentUser.id },
 					$inc: { followerCount: -1 },
 				}
 			);

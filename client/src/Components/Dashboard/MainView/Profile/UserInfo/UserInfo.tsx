@@ -3,17 +3,26 @@ import classes from "./UserCardImage.module.css";
 
 import { UserInfoIcons } from "./UserInfoIcon";
 import UserType from "../../../../../Types/User";
+import { useUserStore } from "../../../../../Stores/userStore";
+import { useFollowUser } from "../../../../../Hooks/useFollowUser";
+import { useUnfollowUser } from "../../../../../Hooks/useUnfollowUser.ts";
+import LoadingTweet from "../../../../Features/LoadingTweet/LoadingTweet.tsx";
 
 type UserCardImageProps = {
-	userData: UserType | undefined;
+	profileUserData: UserType | undefined;
+	currentUserData: UserType | undefined;
 	isLoading: boolean;
 };
 
-export function UserCardImage({ userData, isLoading }: UserCardImageProps) {
+export function UserCardImage({
+	profileUserData,
+	currentUserData,
+	isLoading,
+}: UserCardImageProps) {
 	const stats = [
-		{ value: userData?.followerCount, label: "Followers" },
-		{ value: userData?.followCount, label: "Following" },
-		{ value: userData?.tweetCount, label: "Tweets" },
+		{ value: profileUserData?.followerCount, label: "Followers" },
+		{ value: profileUserData?.followCount, label: "Following" },
+		{ value: profileUserData?.tweetCount, label: "Tweets" },
 	];
 	const items = stats.map((stat) => (
 		<div key={stat.label}>
@@ -25,8 +34,34 @@ export function UserCardImage({ userData, isLoading }: UserCardImageProps) {
 			</Text>
 		</div>
 	));
+	const { user } = useUserStore();
+	const { mutate: followUser } = useFollowUser(profileUserData?.username as string);
+	const { mutate: unfollowUser } = useUnfollowUser(
+		profileUserData?.username as string
+	);
 
-	return isLoading ? null : (
+	const isCurrentUserFollowingTarget = profileUserData?.followers.some(
+		(follower) => {
+			if (follower === currentUserData?._id.toString()) {
+				return true;
+			}
+			return false;
+		}
+	);
+
+	const handleFollowClick = () => {
+		if (user) {
+			if (isCurrentUserFollowingTarget) {
+				unfollowUser();
+			} else {
+				followUser();
+			}
+		}
+	};
+
+	return isLoading ? (
+		<LoadingTweet />
+	) : (
 		<Card
 			withBorder
 			radius="md"
@@ -37,7 +72,7 @@ export function UserCardImage({ userData, isLoading }: UserCardImageProps) {
 			style={{ border: "1px solid #8d7ac8" }}
 		>
 			<Center>
-				<UserInfoIcons userData={userData} isLoading={isLoading} />
+				<UserInfoIcons userData={profileUserData} isLoading={isLoading} />
 			</Center>
 			<Group mt="md" justify="center" gap={30}>
 				{items}
@@ -50,8 +85,9 @@ export function UserCardImage({ userData, isLoading }: UserCardImageProps) {
 					size="md"
 					variant="outline"
 					color="violet"
+					onClick={handleFollowClick}
 				>
-					Follow
+					{isCurrentUserFollowingTarget ? "Unfollow" : "Follow"}
 				</Button>
 				<Button
 					w={"25%"}
