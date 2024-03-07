@@ -9,7 +9,7 @@ import Bookmarks from "./MainView/Bookmarks/Bookmarks";
 import Profile from "./MainView/Profile/Profile";
 import SinglePost from "./MainView/SinglePost/SinglePost";
 import Infopanel from "./Infopanel/Infopanel";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 export function Dashboard() {
 	const { selectedComponent } = useComponentStore();
 
@@ -34,6 +34,7 @@ export function Dashboard() {
 			<AppShell.Main>
 				{" "}
 				<Routes>
+					<Route path="/" element={<Navigate to="home" />} />
 					<Route path="home" element={<Home />} />
 					<Route path="notifications" element={<Notifications />} />
 					<Route path="messages" element={<Messages />} />

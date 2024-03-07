@@ -38,6 +38,9 @@ export const useUnfollowUser = (usernameToUnfollow: string) => {
 			queryClient.invalidateQueries({
 				queryKey: ["tweets", usernameToUnfollow],
 			});
+			queryClient.invalidateQueries({
+				queryKey: ["homefeed", user?.uid],
+			});
 
 			displayNotification(
 				"Unfollow",

@@ -10,7 +10,7 @@ export function AuthenticationForm(props: PaperProps) {
 	const handleLoginClick = async () => {
 		const loginSuccess = await useUserStore.getState().login();
 		if (loginSuccess) {
-			navigate("/dashboard");
+			navigate("/dashboard/home");
 			return;
 		}
 		console.log("Login failed");
