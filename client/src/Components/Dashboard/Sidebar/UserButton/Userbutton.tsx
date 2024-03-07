@@ -1,6 +1,6 @@
 import { UnstyledButton, Group, Avatar, Text, rem, Menu } from "@mantine/core";
 import { IconChevronUp } from "@tabler/icons-react";
-import { Logout, SunMoon } from "tabler-icons-react";
+import { Logout } from "tabler-icons-react";
 import classes from "./UserButton.module.css";
 // import { useMantineColorScheme } from "@mantine/core";
 import { useUserStore } from "../../../../Stores/userStore";
@@ -19,11 +19,6 @@ export function UserButton() {
 
 		return displayName.split(" ")[0];
 	};
-	// const { toggleColorScheme } = useMantineColorScheme();
-
-	// const handleThemeToggle = () => {
-	// 	toggleColorScheme();
-	// };
 
 	const handleLogoutClick = async () => {
 		const logoutSuccess = await useUserStore.getState().logout();
@@ -61,14 +56,6 @@ export function UserButton() {
 				</UnstyledButton>
 			</Menu.Target>
 			<Menu.Dropdown bg={"#242424"}>
-				{/* <Menu.Item
-					onClick={handleThemeToggle}
-					leftSection={
-						<SunMoon style={{ width: rem(18), height: rem(18) }} />
-					}
-				>
-					<Text>Toggle Theme</Text>
-				</Menu.Item> */}
 				<Menu.Item
 					onClick={handleLogoutClick}
 					color="red"

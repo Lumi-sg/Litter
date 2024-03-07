@@ -31,7 +31,6 @@ const TweetInput = ({
 	const { user } = useUserStore();
 	const [tweetInput, setTweetInput] = useState("");
 	const [tweetCharacterLength, setTweetCharacterLength] = useState(0);
-	const closeModal = () => modals.closeAll();
 	const { mutate, isPending } = useTweetPost(
 		tweetInput,
 		convertEmailToUsername(user?.email as string)
