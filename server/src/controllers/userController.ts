@@ -198,6 +198,7 @@ export const followUser = asyncHandler(
 			console.log("Creating notification...");
 			const newNotification = new NotificationModel({
 				recipient: userToBeFollowed,
+				recipientFirebaseID: userToBeFollowed.firebaseID,
 				recipientUsername: userToBeFollowed.username,
 				sender: currentUser,
 				senderUsername: currentUser.username,
@@ -206,7 +207,7 @@ export const followUser = asyncHandler(
 				timestamp: new Date(),
 			});
 			await newNotification.save();
-			console.log("Created notification:", newNotification);
+			console.log("Created notification:", newNotification._id);
 			await session.commitTransaction();
 			session.endSession();
 			res.status(200).json({ message: "User followed successfully" });

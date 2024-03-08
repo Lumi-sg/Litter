@@ -144,6 +144,7 @@ export const likeTweet = asyncHandler(
 				console.log("Creating notification...");
 				const notification = new NotificationModel({
 					recipient: tweet.author,
+					recipientFirebaseID: tweet.firebaseID,
 					recipientUsername: tweet.authorUsername,
 					sender: sender,
 					senderUsername: sender.username,
@@ -348,6 +349,7 @@ export const replyTweet = [
 
 				const notification = new NotificationModel({
 					recipient: parentTweet.author,
+					recipientFirebaseID: parentTweet.firebaseID,
 					recipientUsername: parentTweet.authorUsername,
 					sender: newTweetAuthor,
 					senderUsername: newTweetAuthor.username,

@@ -12,6 +12,7 @@ export enum NotificationTypeEnum {
 export type NotificationType = Document & {
 	_id?: Types.ObjectId;
 	recipient: UserType;
+	recipientFirebaseID: string;
 	recipientUsername: string;
 	sender: UserType;
 	senderUsername: string;
@@ -24,6 +25,7 @@ export type NotificationType = Document & {
 
 const notificationSchema = new Schema<NotificationType>({
 	recipient: { type: Schema.Types.ObjectId, ref: "User", required: true },
+	recipientFirebaseID: { type: String, required: true },
 	recipientUsername: { type: String, required: true },
 	sender: { type: Schema.Types.ObjectId, ref: "User", required: true },
 	senderUsername: { type: String, required: true },
