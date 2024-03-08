@@ -3,27 +3,39 @@ import { TweetType } from "./Tweet";
 import { UserType } from "./User";
 import { ConversationType } from "./Conversation";
 
+export enum NotificationTypeEnum {
+	LIKE = "like",
+	COMMENT = "comment",
+	FOLLOW = "follow",
+}
+
 export type NotificationType = Document & {
 	_id?: Types.ObjectId;
 	recipient: UserType;
-    recipientUsername: string;
+	recipientUsername: string;
 	sender: UserType;
-    senderUsername: string;
-	type: string;
-	tweet?: TweetType;
-	conversation?: ConversationType;
+	senderUsername: string;
+	type: NotificationTypeEnum;
+	tweetID?: string;
+	conversationID?: string;
 	read: boolean;
-	createdAt: Date;
+	timestamp: Date;
 };
 
 const notificationSchema = new Schema<NotificationType>({
-	recipient: { type: Schema.Types.ObjectId, ref: "User" },
-	sender: { type: Schema.Types.ObjectId, ref: "User" },
-	type: { type: String, required: true },
-	tweet: { type: Schema.Types.ObjectId, ref: "Tweet" },
-	conversation: { type: Schema.Types.ObjectId, ref: "Conversation" },
+	recipient: { type: Schema.Types.ObjectId, ref: "User", required: true },
+	recipientUsername: { type: String, required: true },
+	sender: { type: Schema.Types.ObjectId, ref: "User", required: true },
+	senderUsername: { type: String, required: true },
+	type: {
+		type: String,
+		enum: Object.values(NotificationTypeEnum),
+		required: true,
+	},
+	tweetID: { type: String },
+	conversationID: { type: String },
 	read: { type: Boolean, default: false },
-	createdAt: { type: Date, default: Date.now },
+	timestamp: { type: Date, default: Date.now, required: true },
 });
 
 export const NotificationModel = mongoose.model<NotificationType>(

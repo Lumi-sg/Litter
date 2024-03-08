@@ -5,6 +5,10 @@ import { UserModel } from "../models/User";
 import { convertEmailToUsername } from "../helpers/convertEmailToUsername";
 import { trimDisplayName } from "../helpers/trimDisplayName";
 import { TweetModel } from "../models/Tweet";
+import {
+	NotificationModel,
+	NotificationTypeEnum,
+} from "../models/Notification";
 
 export const createTweet = [
 	body("tweetContent")
@@ -107,10 +111,26 @@ export const likeTweet = asyncHandler(
 	async (req: express.Request, res: express.Response) => {
 		console.log("Like tweet...");
 		try {
-			const tweet = await TweetModel.findOne({ _id: req.params.tweetID });
+			const session = await TweetModel.startSession();
+			session.startTransaction();
+			const tweet = await TweetModel.findOne({
+				_id: req.params.tweetID,
+			}).populate("author");
+
 			const { uid } = (req as any).currentUser;
 			if (!tweet) {
 				res.status(404).json({ message: "Tweet not found" });
+				return;
+			}
+
+			const sender = await UserModel.findOne({
+				firebaseID: uid,
+			}).populate("username");
+			if (!sender) {
+				console.log("Sender not found");
+				session.abortTransaction();
+				session.endSession();
+				res.status(404).json({ message: "User not found" });
 				return;
 			}
 
@@ -119,6 +139,25 @@ export const likeTweet = asyncHandler(
 				{ _id: req.params.tweetID },
 				{ $addToSet: { likes: uid }, $inc: { likesCount: 1 } }
 			);
+
+			if (tweet.authorUsername !== sender.username) {
+				console.log("Creating notification...");
+				const notification = new NotificationModel({
+					recipient: tweet.author,
+					recipientUsername: tweet.authorUsername,
+					sender: sender,
+					senderUsername: sender.username,
+					type: NotificationTypeEnum.LIKE,
+					tweetID: tweet._id.toString(),
+					read: false,
+					timestamp: new Date(),
+				});
+				await notification.save();
+				console.log("Created notification:", notification._id);
+			}
+
+			session.commitTransaction();
+			session.endSession();
 			res.status(200).json({ message: "Tweet liked successfully" });
 			return;
 		} catch (error: any) {
