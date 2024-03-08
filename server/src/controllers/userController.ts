@@ -5,6 +5,10 @@ import { UserModel } from "../models/User";
 import { convertEmailToUsername } from "../helpers/convertEmailToUsername";
 import { trimDisplayName } from "../helpers/trimDisplayName";
 import { TweetModel } from "../models/Tweet";
+import {
+	NotificationModel,
+	NotificationTypeEnum,
+} from "../models/Notification";
 
 export const registerUser = asyncHandler(
 	async (req: express.Request, res: express.Response) => {
@@ -191,6 +195,18 @@ export const followUser = asyncHandler(
 					$inc: { followerCount: 1 },
 				}
 			);
+			console.log("Creating notification...");
+			const newNotification = new NotificationModel({
+				recipient: userToBeFollowed,
+				recipientUsername: userToBeFollowed.username,
+				sender: currentUser,
+				senderUsername: currentUser.username,
+				type: NotificationTypeEnum.FOLLOW,
+				read: false,
+				timestamp: new Date(),
+			});
+			await newNotification.save();
+			console.log("Created notification:", newNotification);
 			await session.commitTransaction();
 			session.endSession();
 			res.status(200).json({ message: "User followed successfully" });
