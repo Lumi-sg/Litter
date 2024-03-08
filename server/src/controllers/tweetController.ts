@@ -96,7 +96,7 @@ export const getTweet = asyncHandler(
 			};
 
 			console.log("Found tweet:", tweet._id);
-			res.status(200).json( tweetWithChildren );
+			res.status(200).json(tweetWithChildren);
 		} catch (error: any) {
 			res.status(500).json({ message: error.message });
 		}
@@ -298,6 +298,10 @@ export const replyTweet = [
 					$addToSet: { children: tweet._id },
 					$inc: { childrenCount: 1 },
 				}
+			);
+			await UserModel.updateOne(
+				{ firebaseID: uid },
+				{ $inc: { tweetCount: 1 } }
 			);
 			await tweetSession.commitTransaction();
 			tweetSession.endSession();

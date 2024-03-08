@@ -3,12 +3,14 @@ import { IconSearch, IconArrowRight } from "@tabler/icons-react";
 import styles from "./Searchbox.module.css";
 import { useGetAllUsers } from "../../../Hooks/useGetAllUsers";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 export function Searchbox() {
 	const { data: allUsers } = useGetAllUsers();
 	const navigate = useNavigate();
 	const [searchInputText, setSearchInputText] = useState("");
+
+	const inputRef = useRef<HTMLInputElement>(null);
 
 	const [isSearchedUserClicked, setIsSearchedUserClicked] = useState(false);
 
@@ -18,7 +20,6 @@ export function Searchbox() {
 			setSearchInputText("");
 			navigate(`/dashboard/profile/${selectedUserName}`);
 			setIsSearchedUserClicked(false);
-			
 		}
 	}, [isSearchedUserClicked]);
 
@@ -34,6 +35,7 @@ export function Searchbox() {
 					color: "white",
 				},
 			}}
+			ref={inputRef}
 			limit={5}
 			data={allUsers?.map((user) => user.username)}
 			onChange={setSearchInputText}
