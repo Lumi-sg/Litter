@@ -5,7 +5,7 @@ import { ConversationType } from "./Conversation";
 
 export enum NotificationTypeEnum {
 	LIKE = "like",
-	COMMENT = "comment",
+	REPLY = "reply",
 	FOLLOW = "follow",
 }
 

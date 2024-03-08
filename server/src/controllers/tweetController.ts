@@ -303,6 +303,7 @@ export const replyTweet = [
 			const parentTweet = await TweetModel.findOne({
 				_id: req.params.tweetID,
 			});
+
 			if (!parentTweet) {
 				res.status(404).json({ message: "Tweet not found" });
 				return;
@@ -342,6 +343,23 @@ export const replyTweet = [
 				{ firebaseID: uid },
 				{ $inc: { tweetCount: 1 } }
 			);
+			if (parentTweet.authorUsername !== newTweetAuthor.username) {
+				console.log("Creating notification...");
+
+				const notification = new NotificationModel({
+					recipient: parentTweet.author,
+					recipientUsername: parentTweet.authorUsername,
+					sender: newTweetAuthor,
+					senderUsername: newTweetAuthor.username,
+					type: NotificationTypeEnum.REPLY,
+					tweetID: tweet._id,
+					read: false,
+					timestamp: new Date(),
+				});
+				await notification.save();
+				console.log(`Notification created, ID: ${notification._id}`);
+			}
+
 			await tweetSession.commitTransaction();
 			tweetSession.endSession();
 			await userSession.commitTransaction();
