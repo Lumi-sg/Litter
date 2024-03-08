@@ -6,7 +6,9 @@ import { ConversationType } from "./Conversation";
 export type NotificationType = Document & {
 	_id?: Types.ObjectId;
 	recipient: UserType;
+    recipientUsername: string;
 	sender: UserType;
+    senderUsername: string;
 	type: string;
 	tweet?: TweetType;
 	conversation?: ConversationType;
