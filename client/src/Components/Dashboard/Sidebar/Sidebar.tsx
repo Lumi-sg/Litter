@@ -1,4 +1,12 @@
-import { Button, Stack, Flex, Space, Text, Divider } from "@mantine/core";
+import {
+	Button,
+	Stack,
+	Flex,
+	Space,
+	Text,
+	Divider,
+	Badge,
+} from "@mantine/core";
 import {
 	Home,
 	Bell,
@@ -16,6 +24,10 @@ import { useUserStore } from "../../../Stores/userStore";
 import { Link } from "react-router-dom";
 import { convertEmailToUsername } from "../../../Helpers/convertEmailToUsername";
 import { useGetNotifications } from "../../../Hooks/useGetNotifications";
+import LoadingTweet from "../../Features/LoadingTweet/LoadingTweet";
+import { useMarkNotificationsRead } from "../../../Hooks/useMarkNotificationsRead";
+import { NotificationType } from "../../../Types/Notifications";
+import { set } from "mongoose";
 
 const Sidebar = () => {
 	const { setSelectedComponent } = useComponentStore();
@@ -24,7 +36,17 @@ const Sidebar = () => {
 
 	const { user } = useUserStore();
 
-	const { data: notifications } = useGetNotifications(user?.uid as string);
+	const { data: notifications, isLoading } = useGetNotifications(
+		user?.uid as string
+	);
+
+	const { mutate: markNotificationsRead } = useMarkNotificationsRead(
+		notifications as NotificationType[]
+	);
+
+	const newNotifcations = notifications?.filter(
+		(notification: any) => notification.read === false
+	);
 
 	const handlePostClick = () => {
 		setParentTweetAuthor(null);
@@ -36,7 +58,14 @@ const Sidebar = () => {
 		});
 	};
 
-	return (
+	const handleNotifcationsClick = () => {
+		setSelectedComponent("Notifications")
+		markNotificationsRead();
+	};
+
+	return isLoading ? (
+		<LoadingTweet />
+	) : (
 		<Flex
 			w={"100%"}
 			h={"100%"}
@@ -68,56 +97,66 @@ const Sidebar = () => {
 
 				<Flex direction="column" align="flex-start" gap="lg">
 					<Link to="/dashboard/home">
-					<Button
-						onClick={() => setSelectedComponent("Home")}
-						variant="subtle"
-						color="violet"
-						size="xl"
-						radius="xl"
-					>
-						<Home />
-						<Space w="md" />
-						Home
-					</Button>
+						<Button
+							onClick={() => setSelectedComponent("Home")}
+							variant="subtle"
+							color="violet"
+							size="xl"
+							radius="xl"
+						>
+							<Home />
+							<Space w="md" />
+							Home
+						</Button>
 					</Link>
 					<Link to="/dashboard/notifications">
-					<Button
-						onClick={() => setSelectedComponent("Notifications")}
-						variant="subtle"
-						color="violet"
-						size="xl"
-						radius="xl"
-					>
-						<Bell />
-						<Space w="md" />
-						Notifications
-					</Button>
+						<Button
+							onClick={
+								handleNotifcationsClick
+							}
+	
+							
+							variant="subtle"
+							color="violet"
+							size="xl"
+							radius="xl"
+						>
+							<Bell />
+							<Space w="md" />
+							Notifications
+							<Space w="md" />
+							{newNotifcations && newNotifcations.length > 0 ? (
+								<Badge color={"violet"} variant="outline">
+									{newNotifcations.length}
+								</Badge>
+							) : null}
+						</Button>
 					</Link>
 					<Link to="/dashboard/messages">
-					<Button
-						onClick={() => setSelectedComponent("Messages")}
-						variant="subtle"
-						color="violet"
-						size="xl"
-						radius="xl"
-					>
-						<Mail />
-						<Space w="md" />
-						Messages
-					</Button>
+						<Button
+							onClick={() => setSelectedComponent("Messages")}
+							variant="subtle"
+							color="violet"
+							size="xl"
+							radius="xl"
+						>
+							<Mail />
+							<Space w="md" />
+							Messages
+						</Button>
 					</Link>
 					<Link to="/dashboard/bookmarks">
-					<Button
-						onClick={() => setSelectedComponent("Bookmarks")}
-						variant="subtle"
-						color="violet"
-						size="xl"
-						radius="xl"
-					>
-						<BookmarksIcon />
-						<Space w="md" />
-						Bookmarks
-					</Button>
+						<Button
+							onClick={() => setSelectedComponent("Bookmarks")}
+							variant="subtle"
+							color="violet"
+							size="xl"
+							radius="xl"
+						>
+							<BookmarksIcon />
+							<Space w="md" />
+							Bookmarks
+						</Button>
 					</Link>
 					<Link
 						to={`/dashboard/profile/${convertEmailToUsername(

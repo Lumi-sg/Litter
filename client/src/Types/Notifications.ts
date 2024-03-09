@@ -1,0 +1,20 @@
+import { Document, Types } from "mongoose";
+import { UserType } from "./User";
+export enum NotificationTypeEnum {
+	LIKE = "like",
+	REPLY = "reply",
+	FOLLOW = "follow",
+}
+export type NotificationType = Document & {
+	_id?: Types.ObjectId;
+	recipient: UserType;
+	recipientFirebaseID: string;
+	recipientUsername: string;
+	sender: UserType;
+	senderUsername: string;
+	type: NotificationTypeEnum;
+	tweetID?: string;
+	conversationID?: string;
+	read: boolean;
+	timestamp: Date;
+};
