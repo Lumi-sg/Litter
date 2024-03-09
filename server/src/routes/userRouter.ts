@@ -38,5 +38,10 @@ router.post(
 	verifyFirebaseToken,
 	userController.unfollowUser
 );
+router.get(
+	"/:username/notifications",
+	verifyFirebaseToken,
+	userController.getUserNotifications
+);
 
 export default router;

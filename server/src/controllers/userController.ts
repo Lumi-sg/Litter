@@ -353,3 +353,25 @@ export const getHomeFeed = asyncHandler(
 		}
 	}
 );
+
+export const getUserNotifications = asyncHandler(
+	async (req: express.Request, res: express.Response) => {
+		console.log("Fetching user notifications...");
+		try {
+			const currentUser = await UserModel.findOne({
+				firebaseID: (req as any).currentUser.uid,
+			});
+			if (!currentUser) {
+				res.status(404).json({ message: "User not found" });
+				return;
+			}
+			const allUserNotifications = await NotificationModel.find({
+				recipientUsername: currentUser.username,
+			}).sort({ timestamp: -1 });
+			res.status(200).json({ notifications: allUserNotifications });
+		} catch (error: any) {
+			console.log("Error fetching user notifications:", error);
+			res.status(500).json({ message: error.message });
+		}
+	}
+)

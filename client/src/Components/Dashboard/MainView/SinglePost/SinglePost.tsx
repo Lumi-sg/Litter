@@ -7,7 +7,7 @@ import { useParams } from "react-router-dom";
 import { TweetType } from "../../../../Types/Tweet";
 import TopOfSinglePost from "../../../Features/TopOfSinglePost/TopOfSinglePost";
 import LoadingTweet from "../../../Features/LoadingTweet/LoadingTweet";
-import { Divider, Space } from "@mantine/core";
+import { Space } from "@mantine/core";
 const SinglePost = () => {
 	const { tweetID } = useParams();
 	const { data: tweet, isLoading } = getTweet(tweetID as string);
@@ -36,7 +36,7 @@ const SinglePost = () => {
 	}, []);
 	return (
 		<>
-			{isLoading  && parentTweetIsLoading ? (
+			{isLoading && parentTweetIsLoading ? (
 				<LoadingTweet />
 			) : (
 				<>

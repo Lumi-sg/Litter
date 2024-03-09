@@ -15,6 +15,7 @@ import TweetComposeModal from "../../Features/TweetComposeModal/TweetComposeModa
 import { useUserStore } from "../../../Stores/userStore";
 import { Link } from "react-router-dom";
 import { convertEmailToUsername } from "../../../Helpers/convertEmailToUsername";
+import { useGetNotifications } from "../../../Hooks/useGetNotifications";
 
 const Sidebar = () => {
 	const { setSelectedComponent } = useComponentStore();
@@ -22,6 +23,8 @@ const Sidebar = () => {
 	const { setParentTweetAuthor } = useParentTweetStoreAuthor();
 
 	const { user } = useUserStore();
+
+	const { data: notifications } = useGetNotifications(user?.uid as string);
 
 	const handlePostClick = () => {
 		setParentTweetAuthor(null);
