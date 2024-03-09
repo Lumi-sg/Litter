@@ -3,6 +3,7 @@ import { Badge, Table, Group, Text } from "@mantine/core";
 import LoadingTweet from "../../../Features/LoadingTweet/LoadingTweet";
 import formatTimeStamp from "../../../../Helpers/formatTimeStamp";
 import { useGetNotifications } from "../../../../Hooks/useGetNotifications";
+import { Link } from "react-router-dom";
 
 const Notifications = () => {
 	const { user } = useUserStore();
@@ -20,7 +21,13 @@ const Notifications = () => {
 				<Table.Td>
 					<Group gap="sm">
 						<div>
-							<Text fz="sm" fw={500} c={"white"}>
+							<Text
+								fz="sm"
+								fw={700}
+								c={"white"}
+								component={Link}
+								to={`/dashboard/profile/${notification.senderUsername}`}
+							>
 								{notification.senderUsername}
 							</Text>
 						</div>
@@ -28,7 +35,47 @@ const Notifications = () => {
 				</Table.Td>
 
 				<Table.Td>
-					{capitalizeFirstLetter(notification.type.toString())}
+					<Text>
+						{notification.type === "like" && (
+							<Text
+								fz="sm"
+								fw={700}
+								c={"white"}
+								component={Link}
+								to={`/dashboard/tweet/${notification.tweetID}`}
+							>
+								{capitalizeFirstLetter(
+									notification.type.toString()
+								)}
+							</Text>
+						)}
+						{notification.type === "follow" && (
+							<Text
+								fz="sm"
+								fw={700}
+								c={"white"}
+								component={Link}
+								to={`/dashboard/profile/${notification.senderUsername}`}
+							>
+								{capitalizeFirstLetter(
+									notification.type.toString()
+								)}
+							</Text>
+						)}
+						{notification.type === "reply" && (
+							<Text
+								fz="sm"
+								fw={700}
+								c={"white"}
+								component={Link}
+								to={`/dashboard/tweet/${notification.tweetID}`}
+							>
+								{capitalizeFirstLetter(
+									notification.type.toString()
+								)}
+							</Text>
+						)}
+					</Text>
 				</Table.Td>
 				<Table.Td>
 					{formatTimeStamp(notification.timestamp.toString())}
@@ -49,13 +96,19 @@ const Notifications = () => {
 
 		return (
 			<Table.ScrollContainer minWidth="100%">
-				<Table verticalSpacing="sm">
+				<Table
+					verticalSpacing="md"
+					striped
+					highlightOnHover
+					highlightOnHoverColor="#9272f411"
+          withTableBorder
+				>
 					<Table.Thead>
 						<Table.Tr>
 							<Table.Th>Sender</Table.Th>
 							<Table.Th>Notification Type</Table.Th>
 							<Table.Th>Date Sent</Table.Th>
-							<Table.Th>Read?</Table.Th>
+							<Table.Th>Status</Table.Th>
 						</Table.Tr>
 					</Table.Thead>
 					<Table.Tbody>{rows}</Table.Tbody>
