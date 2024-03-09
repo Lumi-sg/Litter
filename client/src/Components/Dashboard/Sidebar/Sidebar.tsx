@@ -44,7 +44,7 @@ const Sidebar = () => {
 	);
 
 	const newNotifcations = notifications?.filter(
-		(notification: any) => notification.read === false
+		(notification: NotificationType) => notification.read === false
 	);
 
 	const handlePostClick = () => {
