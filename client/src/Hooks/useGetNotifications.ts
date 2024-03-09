@@ -2,7 +2,6 @@ import Cookies from "js-cookie";
 import { baseURL } from "../constants/baseURL";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
-import { TweetType } from "../Types/Tweet";
 import { useUserStore } from "../Stores/userStore";
 import { NotificationType } from "../Types/Notifications";
 

@@ -374,4 +374,26 @@ export const getUserNotifications = asyncHandler(
 			res.status(500).json({ message: error.message });
 		}
 	}
-)
+);
+
+export const markNotificationsRead = asyncHandler(
+	async (req: express.Request, res: express.Response) => {
+		console.log("Marking notifications read...");
+		try {
+			const {notificationIDArray} = req.body;
+			if (notificationIDArray.length === 0) {
+				res.status(404).json({ message: "Notifications not provided" });
+				return;
+			}
+			const result = await NotificationModel.updateMany(
+				{ _id: { $in: notificationIDArray } },
+				{ $set: { read: true } }
+			  );
+			  console.log("Marked notifications read:", result);
+			  res.status(200).json({ message: "Notifications marked read successfully" });
+		} catch (error: any) {
+			console.log("Error marking notifications read:", error);
+			res.status(500).json({ message: error.message });
+		}
+	}
+);

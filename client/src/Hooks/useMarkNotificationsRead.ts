@@ -8,17 +8,17 @@ import { useUserStore } from "../Stores/userStore";
 
 export const useMarkNotificationsRead = (notifications: NotificationType[]) => {
 	const firebaseToken = Cookies.get("firebaseToken");
-    const {user} = useUserStore();
+	const { user } = useUserStore();
 
 	return useMutation({
 		mutationFn: async () => {
-			const notificationsIDToBeMarkedRead = notifications.map(
-				(notification) => notification._id
-			);
-            console.table(notificationsIDToBeMarkedRead)
+			const notificationsIDToBeMarkedRead = notifications
+				.filter((notification) => !notification.read)
+				.map((notification) => notification._id);
+			if (notificationsIDToBeMarkedRead.length === 0) return;
 			const { data } = await axios.post(
 				`${baseURL}/user/mark-notifications-read`,
-				{ notificationIds: notificationsIDToBeMarkedRead },
+				{ notificationIDArray: notificationsIDToBeMarkedRead },
 				{
 					headers: {
 						Authorization: `Bearer ${firebaseToken}`,
@@ -27,12 +27,12 @@ export const useMarkNotificationsRead = (notifications: NotificationType[]) => {
 			);
 			return data.notifications as NotificationType[];
 		},
-        
-        onSuccess: () => {
-            const queryClient = useQueryClient();
-            queryClient.invalidateQueries({
-                queryKey: ["notifications", user?.uid as string],
-            })
-        }
+
+		onSuccess: () => {
+			const queryClient = useQueryClient();
+			queryClient.invalidateQueries({
+				queryKey: ["notifications", user?.uid as string],
+			});
+		},
 	});
 };

@@ -27,7 +27,6 @@ import { useGetNotifications } from "../../../Hooks/useGetNotifications";
 import LoadingTweet from "../../Features/LoadingTweet/LoadingTweet";
 import { useMarkNotificationsRead } from "../../../Hooks/useMarkNotificationsRead";
 import { NotificationType } from "../../../Types/Notifications";
-import { set } from "mongoose";
 
 const Sidebar = () => {
 	const { setSelectedComponent } = useComponentStore();
