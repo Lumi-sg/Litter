@@ -340,10 +340,10 @@ export const replyTweet = [
 					$inc: { childrenCount: 1 },
 				}
 			);
-			await UserModel.updateOne(
-				{ firebaseID: uid },
-				{ $inc: { tweetCount: 1 } }
-			);
+			// await UserModel.updateOne(
+			// 	{ firebaseID: uid },
+			// 	{ $inc: { tweetCount: 1 } }
+			// );
 			if (parentTweet.authorUsername !== newTweetAuthor.username) {
 				console.log("Creating notification...");
 

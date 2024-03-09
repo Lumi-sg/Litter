@@ -81,6 +81,7 @@ export const getUserTweets = asyncHandler(
 			}
 			const allUserTweets = await TweetModel.find({
 				authorUsername: user.username,
+				parent: { $eq: null },
 			})
 				.sort({ timestamp: -1 })
 				.populate("author");

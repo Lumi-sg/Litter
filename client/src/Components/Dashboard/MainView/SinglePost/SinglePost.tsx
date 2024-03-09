@@ -10,6 +10,7 @@ import LoadingTweet from "../../../Features/LoadingTweet/LoadingTweet";
 const SinglePost = () => {
 	const { tweetID } = useParams();
 	const { data: tweet, isLoading } = getTweet(tweetID as string);
+
 	useEffect(() => {
 		const scrollFunction = () => {
 			window.scrollTo({
