@@ -7,9 +7,15 @@ import { useParams } from "react-router-dom";
 import { TweetType } from "../../../../Types/Tweet";
 import TopOfSinglePost from "../../../Features/TopOfSinglePost/TopOfSinglePost";
 import LoadingTweet from "../../../Features/LoadingTweet/LoadingTweet";
+import { Divider, Space } from "@mantine/core";
 const SinglePost = () => {
 	const { tweetID } = useParams();
 	const { data: tweet, isLoading } = getTweet(tweetID as string);
+	const { data: parentTweet, isLoading: parentTweetIsLoading } = getTweet(
+		tweet?.parent?.toString() as string
+	);
+
+	const doesTweetHaveParent = tweet?.parent !== null;
 
 	useEffect(() => {
 		const scrollFunction = () => {
@@ -30,16 +36,31 @@ const SinglePost = () => {
 	}, []);
 	return (
 		<>
-			{isLoading ? (
+			{isLoading  && parentTweetIsLoading ? (
 				<LoadingTweet />
 			) : (
 				<>
 					<TopOfSinglePost />
+					{doesTweetHaveParent && (
+						<>
+							<TweetComponent
+								key={parentTweet?._id}
+								passedInStyles={TweetVariant.parent}
+								tweet={parentTweet as TweetType}
+							/>
+							<Space h={10} />
+						</>
+					)}
 					<TweetComponent
 						key={tweet?._id}
-						passedInStyles={TweetVariant.parent}
+						passedInStyles={
+							doesTweetHaveParent
+								? TweetVariant.reply
+								: TweetVariant.parent
+						}
 						tweet={tweet as TweetType}
 					/>
+					<Space h={10} />
 					<TweetInput
 						placeholderMessage="Post your reply"
 						isReply={true}
