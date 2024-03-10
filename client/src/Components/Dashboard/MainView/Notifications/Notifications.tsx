@@ -163,10 +163,18 @@ const Notifications = () => {
 				>
 					<Table.Thead>
 						<Table.Tr>
-							<Table.Th>Sender</Table.Th>
-							<Table.Th>Type</Table.Th>
-							<Table.Th>Link</Table.Th>
-							<Table.Th>Date Sent</Table.Th>
+							<Table.Th>
+								<Text fw={700}>Sender</Text>
+							</Table.Th>
+							<Table.Th>
+								<Text fw={700}>Type</Text>
+							</Table.Th>
+							<Table.Th>
+								<Text fw={700}>Link</Text>
+							</Table.Th>
+							<Table.Th>
+								<Text fw={700}>Date Sent</Text>
+							</Table.Th>
 							<Table.Th>
 								{!areAllNotificationsRead() ? (
 									<Button
@@ -174,11 +182,9 @@ const Notifications = () => {
 										color="violet"
 										fullWidth
 										onClick={() => markNotificationsRead()}
-									>
-										Mark All Read
-									</Button>
+									></Button>
 								) : (
-									<span>Status</span>
+									<Text fw={700}>Mark All Read</Text>
 								)}
 							</Table.Th>
 						</Table.Tr>
