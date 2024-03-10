@@ -1,12 +1,5 @@
 import { useUserStore } from "../../../../Stores/userStore";
-import {
-	Table,
-	Group,
-	Text,
-	Avatar,
-	Checkbox,
-	Tooltip,
-} from "@mantine/core";
+import { Table, Group, Text, Avatar, Checkbox, Tooltip } from "@mantine/core";
 import LoadingTweet from "../../../Features/LoadingTweet/LoadingTweet";
 import formatTimeStamp from "../../../../Helpers/formatTimeStamp";
 import { useGetNotifications } from "../../../../Hooks/useGetNotifications";
@@ -47,8 +40,8 @@ const Notifications = () => {
 				<Table.Td>
 					<Text>
 						{notification.type === "like" && (
-							<Group justify="center">
-								<Text miw={"30%"}>
+							<Group justify="flex-start">
+								<Text>
 									{capitalizeFirstLetter(
 										notification.type.toString()
 									)}
@@ -56,8 +49,8 @@ const Notifications = () => {
 							</Group>
 						)}
 						{notification.type === "follow" && (
-							<Group justify="center">
-								<Text miw={"30%"}>
+							<Group justify="flex-start">
+								<Text>
 									{capitalizeFirstLetter(
 										notification.type.toString()
 									)}
@@ -65,8 +58,8 @@ const Notifications = () => {
 							</Group>
 						)}
 						{notification.type === "reply" && (
-							<Group justify="center">
-								<Text miw={"30%"}>
+							<Group justify="flex-start">
+								<Text>
 									{capitalizeFirstLetter(
 										notification.type.toString()
 									)}
@@ -149,7 +142,7 @@ const Notifications = () => {
 					highlightOnHoverColor="#9272f411"
 					withTableBorder
 					withColumnBorders
-					stickyHeader
+					borderColor="rgba(150, 117, 250, 0.327)"
 				>
 					<Table.Thead>
 						<Table.Tr>
