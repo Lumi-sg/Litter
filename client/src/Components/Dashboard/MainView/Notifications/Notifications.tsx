@@ -1,6 +1,5 @@
 import { useUserStore } from "../../../../Stores/userStore";
 import {
-	Badge,
 	Table,
 	Group,
 	Text,
@@ -13,7 +12,6 @@ import LoadingTweet from "../../../Features/LoadingTweet/LoadingTweet";
 import formatTimeStamp from "../../../../Helpers/formatTimeStamp";
 import { useGetNotifications } from "../../../../Hooks/useGetNotifications";
 // import { useMarkNotificationsRead } from "../../../../Hooks/useMarkNotificationsRead";
-// import { NotificationType } from "../../../../Types/Notifications";
 import { useMarkSingleNotificationRead } from "../../../../Hooks/useMarkSingleNotificationRead";
 import { Link } from "react-router-dom";
 
@@ -50,7 +48,7 @@ const Notifications = () => {
 				<Table.Td>
 					<Text>
 						{notification.type === "like" && (
-							<Group justify="flex-start">
+							<Group justify="center">
 								<Text miw={"30%"}>
 									{capitalizeFirstLetter(
 										notification.type.toString()
@@ -69,7 +67,7 @@ const Notifications = () => {
 							</Group>
 						)}
 						{notification.type === "follow" && (
-							<Group justify="flex-start">
+							<Group justify="center">
 								<Text miw={"30%"}>
 									{capitalizeFirstLetter(
 										notification.type.toString()
@@ -88,7 +86,7 @@ const Notifications = () => {
 							</Group>
 						)}
 						{notification.type === "reply" && (
-							<Group justify="flex-start">
+							<Group justify="center">
 								<Text miw={"30%"}>
 									{capitalizeFirstLetter(
 										notification.type.toString()

@@ -25,7 +25,6 @@ import { Link } from "react-router-dom";
 import { convertEmailToUsername } from "../../../Helpers/convertEmailToUsername";
 import { useGetNotifications } from "../../../Hooks/useGetNotifications";
 import LoadingTweet from "../../Features/LoadingTweet/LoadingTweet";
-import { useMarkNotificationsRead } from "../../../Hooks/useMarkNotificationsRead";
 import { NotificationType } from "../../../Types/Notifications";
 
 const Sidebar = () => {
@@ -123,13 +122,15 @@ const Sidebar = () => {
 							<Space w="md" />
 							{newNotifcations && newNotifcations.length > 0 ? (
 								<Badge
-									color={"white"}
+									color={"violet"}
 									variant="outline"
+									circle
+									size="md"
 									style={{
 										position: "absolute",
 										top: 5,
 										right: 20,
-										size: "sm",
+										size: "md",
 									}}
 								>
 									{newNotifcations.length}
