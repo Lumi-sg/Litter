@@ -381,7 +381,7 @@ export const markNotificationsRead = asyncHandler(
 	async (req: express.Request, res: express.Response) => {
 		console.log("Marking notifications read...");
 		try {
-			const {notificationIDArray} = req.body;
+			const { notificationIDArray } = req.body;
 			if (notificationIDArray.length === 0) {
 				res.status(404).json({ message: "Notifications not provided" });
 				return;
@@ -389,11 +389,39 @@ export const markNotificationsRead = asyncHandler(
 			const result = await NotificationModel.updateMany(
 				{ _id: { $in: notificationIDArray } },
 				{ $set: { read: true } }
-			  );
-			  console.log("Marked notifications read:", result);
-			  res.status(200).json({ message: "Notifications marked read successfully" });
+			);
+			console.log("Marked notifications read:", result);
+			res.status(200).json({
+				message: "Notifications marked read successfully",
+			});
 		} catch (error: any) {
 			console.log("Error marking notifications read:", error);
+			res.status(500).json({ message: error.message });
+		}
+	}
+);
+
+export const markSingleNotificationRead = asyncHandler(
+	async (req: express.Request, res: express.Response) => {
+		console.log("Marking single notification read...");
+		try {
+			const { notificationID } = req.params;
+			const notifcationToBeMarked = await NotificationModel.findOne({
+				_id: notificationID,
+			})
+			if (!notifcationToBeMarked) {
+				console.log("Notification not found");
+				res.status(404).json({ message: "Notification not found" });
+				return;
+			}
+			notifcationToBeMarked.read = true;
+			await notifcationToBeMarked.save();
+			console.log("Marked notification read:", notificationID);
+			res.status(200).json({
+				message: "Notification marked read successfully",
+			});
+		} catch (error: any) {
+			console.log("Error marking notification read:", error);
 			res.status(500).json({ message: error.message });
 		}
 	}

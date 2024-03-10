@@ -14,8 +14,8 @@ import formatTimeStamp from "../../../../Helpers/formatTimeStamp";
 import { useGetNotifications } from "../../../../Hooks/useGetNotifications";
 import { useMarkNotificationsRead } from "../../../../Hooks/useMarkNotificationsRead";
 import { NotificationType } from "../../../../Types/Notifications";
+import { useMarkSingleNotificationRead } from "../../../../Hooks/useMarkSingleNotificationRead";
 import { Link } from "react-router-dom";
-import { useState } from "react";
 
 const Notifications = () => {
 	const { user } = useUserStore();
@@ -23,10 +23,11 @@ const Notifications = () => {
 		user?.uid as string
 	);
 
-	const [test, setTest] = useState(false);
 	const capitalizeFirstLetter = (str: string) => {
 		return str.charAt(0).toUpperCase() + str.slice(1);
 	};
+
+	const { mutate: markNotificationRead } = useMarkSingleNotificationRead();
 
 	function UsersRolesTable() {
 		const rows = notifications!.map((notification) => (
@@ -128,15 +129,15 @@ const Notifications = () => {
 						c={"white"}
 					>
 						<Checkbox
-						miw={"5rem"}
+							miw={"5rem"}
 							color="violet"
-							checked={test}
+							checked={notification.read}
 							variant="outline"
-							label={test ? "Read" : "Unread"}
-							onChange={(e) => {
-								setTest(e.currentTarget.checked);
-							}}
-							disabled={test}
+							label={notification.read ? "Read" : "Unread"}
+							onChange={() =>
+								markNotificationRead(notification._id)
+							}
+							disabled={notification.read}
 						/>
 					</Tooltip>
 				</Table.Td>

@@ -10,7 +10,16 @@ router.get(
 	verifyFirebaseToken,
 	userController.getThreeRandomUsers
 );
-router.post("/mark-notifications-read", verifyFirebaseToken, userController.markNotificationsRead);
+router.post(
+	"/mark-notifications-read",
+	verifyFirebaseToken,
+	userController.markNotificationsRead
+);
+router.post(
+	"/marknotificationread/:notificationID",
+	verifyFirebaseToken,
+	userController.markSingleNotificationRead
+);
 
 router.post("/register", verifyFirebaseToken, userController.registerUser);
 router.get("/:username", verifyFirebaseToken, userController.getUser);

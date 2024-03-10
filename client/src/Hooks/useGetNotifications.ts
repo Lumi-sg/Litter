@@ -8,7 +8,7 @@ import { NotificationType } from "../Types/Notifications";
 export const useGetNotifications = (username: string) => {
 	const { user } = useUserStore();
 	const firebaseToken = Cookies.get("firebaseToken");
-	console.log("Fetching bookmarks...");
+	console.log("Fetching notifications...");
 	return useQuery({
 		queryKey: ["notifications", user?.uid as string],
 		queryFn: async () => {
@@ -22,7 +22,6 @@ export const useGetNotifications = (username: string) => {
 			);
 			return data.notifications as NotificationType[];
 		},
-		staleTime: 30000,
         refetchInterval: 60000
 	});
 };
