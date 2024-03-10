@@ -9,6 +9,7 @@ import { useUserStore } from "../Stores/userStore";
 export const useMarkSingleNotificationRead = () => {
 	const firebaseToken = Cookies.get("firebaseToken");
 	const { user } = useUserStore();
+	const queryClient = useQueryClient();
 
 	return useMutation({
 		mutationFn: async (notificationID: string) => {
@@ -28,7 +29,7 @@ export const useMarkSingleNotificationRead = () => {
 
 		onSuccess: () => {
 			console.log("Notification marked read successfully");
-			const queryClient = useQueryClient();
+
 			queryClient.invalidateQueries({
 				queryKey: ["notifications", user?.uid as string],
 			});

@@ -12,8 +12,8 @@ import {
 import LoadingTweet from "../../../Features/LoadingTweet/LoadingTweet";
 import formatTimeStamp from "../../../../Helpers/formatTimeStamp";
 import { useGetNotifications } from "../../../../Hooks/useGetNotifications";
-import { useMarkNotificationsRead } from "../../../../Hooks/useMarkNotificationsRead";
-import { NotificationType } from "../../../../Types/Notifications";
+// import { useMarkNotificationsRead } from "../../../../Hooks/useMarkNotificationsRead";
+// import { NotificationType } from "../../../../Types/Notifications";
 import { useMarkSingleNotificationRead } from "../../../../Hooks/useMarkSingleNotificationRead";
 import { Link } from "react-router-dom";
 
@@ -153,6 +153,7 @@ const Notifications = () => {
 					highlightOnHoverColor="#9272f411"
 					withTableBorder
 					withColumnBorders
+					stickyHeader
 				>
 					<Table.Thead>
 						<Table.Tr>

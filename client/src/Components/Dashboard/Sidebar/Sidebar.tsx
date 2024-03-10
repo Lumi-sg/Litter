@@ -67,6 +67,7 @@ const Sidebar = () => {
 		<Flex
 			w={"100%"}
 			h={"100%"}
+			miw={"100%"}
 			direction="column"
 			justify="space-between"
 			align={"flex-end"}
@@ -114,13 +115,23 @@ const Sidebar = () => {
 							color="violet"
 							size="xl"
 							radius="xl"
+							miw={"100%"}
 						>
 							<Bell />
 							<Space w="md" />
 							Notifications
 							<Space w="md" />
 							{newNotifcations && newNotifcations.length > 0 ? (
-								<Badge color={"violet"} variant="outline">
+								<Badge
+									color={"white"}
+									variant="outline"
+									style={{
+										position: "absolute",
+										top: 5,
+										right: 20,
+										size: "sm",
+									}}
+								>
 									{newNotifcations.length}
 								</Badge>
 							) : null}
