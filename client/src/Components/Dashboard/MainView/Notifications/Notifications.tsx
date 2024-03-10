@@ -184,7 +184,7 @@ const Notifications = () => {
 										onClick={() => markNotificationsRead()}
 									>Mark All Read</Button>
 								) : (
-									<Text fw={700}>Mark All Read</Text>
+									<Text fw={700}>Status</Text>
 								)}
 							</Table.Th>
 						</Table.Tr>
