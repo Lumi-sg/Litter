@@ -1,9 +1,21 @@
 import { useUserStore } from "../../../../Stores/userStore";
-import { Badge, Table, Group, Text, Divider } from "@mantine/core";
+import {
+	Badge,
+	Table,
+	Group,
+	Text,
+	Divider,
+	Avatar,
+	Checkbox,
+	Tooltip,
+} from "@mantine/core";
 import LoadingTweet from "../../../Features/LoadingTweet/LoadingTweet";
 import formatTimeStamp from "../../../../Helpers/formatTimeStamp";
 import { useGetNotifications } from "../../../../Hooks/useGetNotifications";
+import { useMarkNotificationsRead } from "../../../../Hooks/useMarkNotificationsRead";
+import { NotificationType } from "../../../../Types/Notifications";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 const Notifications = () => {
 	const { user } = useUserStore();
@@ -11,6 +23,7 @@ const Notifications = () => {
 		user?.uid as string
 	);
 
+	const [test, setTest] = useState(false);
 	const capitalizeFirstLetter = (str: string) => {
 		return str.charAt(0).toUpperCase() + str.slice(1);
 	};
@@ -20,17 +33,16 @@ const Notifications = () => {
 			<Table.Tr key={notification.id}>
 				<Table.Td>
 					<Group gap="sm">
-						<div>
-							<Text
-								fz="sm"
-								fw={700}
-								c={"white"}
-								component={Link}
-								to={`/dashboard/profile/${notification.senderUsername}`}
-							>
-								{notification.senderUsername}
-							</Text>
-						</div>
+						<Avatar src={notification.senderAvatarURL} />
+						<Text
+							fz="sm"
+							fw={700}
+							c={"white"}
+							component={Link}
+							to={`/dashboard/profile/${notification.senderUsername}`}
+						>
+							{notification.senderUsername}
+						</Text>
 					</Group>
 				</Table.Td>
 
@@ -38,7 +50,7 @@ const Notifications = () => {
 					<Text>
 						{notification.type === "like" && (
 							<Group justify="flex-start">
-								<Text miw={"25%"}>
+								<Text miw={"30%"}>
 									{capitalizeFirstLetter(
 										notification.type.toString()
 									)}
@@ -57,7 +69,7 @@ const Notifications = () => {
 						)}
 						{notification.type === "follow" && (
 							<Group justify="flex-start">
-								<Text miw={"25%"}>
+								<Text miw={"30%"}>
 									{capitalizeFirstLetter(
 										notification.type.toString()
 									)}
@@ -76,7 +88,7 @@ const Notifications = () => {
 						)}
 						{notification.type === "reply" && (
 							<Group justify="flex-start">
-								<Text miw={"25%"}>
+								<Text miw={"30%"}>
 									{capitalizeFirstLetter(
 										notification.type.toString()
 									)}
@@ -99,7 +111,7 @@ const Notifications = () => {
 					{formatTimeStamp(notification.timestamp.toString())}
 				</Table.Td>
 				<Table.Td>
-					{notification.read ? (
+					{/* {notification.read ? (
 						<Badge color={"violet"} variant="outline" fullWidth>
 							Read
 						</Badge>
@@ -107,7 +119,26 @@ const Notifications = () => {
 						<Badge color={"violet"} variant="outline" fullWidth>
 							Unread
 						</Badge>
-					)}
+					)} */}
+
+					<Tooltip
+						label="Mark as read"
+						refProp="rootRef"
+						bg={"#202020"}
+						c={"white"}
+					>
+						<Checkbox
+						miw={"5rem"}
+							color="violet"
+							checked={test}
+							variant="outline"
+							label={test ? "Read" : "Unread"}
+							onChange={(e) => {
+								setTest(e.currentTarget.checked);
+							}}
+							disabled={test}
+						/>
+					</Tooltip>
 				</Table.Td>
 			</Table.Tr>
 		));
@@ -120,6 +151,7 @@ const Notifications = () => {
 					highlightOnHover
 					highlightOnHoverColor="#9272f411"
 					withTableBorder
+					withColumnBorders
 				>
 					<Table.Thead>
 						<Table.Tr>
@@ -138,8 +170,10 @@ const Notifications = () => {
 		<>
 			{isLoading ? (
 				<LoadingTweet />
+			) : notifications && notifications.length > 0 ? (
+				<UsersRolesTable />
 			) : (
-				notifications && notifications.length > 0 ? <UsersRolesTable /> : "No Notifications"
+				"No Notifications"
 			)}
 		</>
 	);
