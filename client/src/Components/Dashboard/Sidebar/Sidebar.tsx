@@ -24,7 +24,6 @@ import { useUserStore } from "../../../Stores/userStore";
 import { Link } from "react-router-dom";
 import { convertEmailToUsername } from "../../../Helpers/convertEmailToUsername";
 import { useGetNotifications } from "../../../Hooks/useGetNotifications";
-import LoadingTweet from "../../Features/LoadingTweet/LoadingTweet";
 import { NotificationType } from "../../../Types/Notifications";
 
 const Sidebar = () => {
@@ -60,9 +59,7 @@ const Sidebar = () => {
 		setSelectedComponent("Notifications");
 	};
 
-	return isLoading ? (
-		<LoadingTweet />
-	) : (
+	return (
 		<Flex
 			w={"100%"}
 			h={"100%"}
@@ -114,15 +111,18 @@ const Sidebar = () => {
 							color="violet"
 							size="xl"
 							radius="xl"
-							miw={"100%"}
+							miw="100%"
 						>
 							<Bell />
 							<Space w="md" />
 							Notifications
 							<Space w="md" />
-							{newNotifcations && newNotifcations.length > 0 ? (
+							{isLoading ? (
+								null
+							) : newNotifcations &&
+							  newNotifcations.length > 0 ? (
 								<Badge
-									color={"violet"}
+									color="violet"
 									variant="outline"
 									circle
 									size="md"
@@ -130,7 +130,6 @@ const Sidebar = () => {
 										position: "absolute",
 										top: 5,
 										right: 20,
-										size: "md",
 									}}
 								>
 									{newNotifcations.length}

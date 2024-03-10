@@ -3,7 +3,6 @@ import {
 	Table,
 	Group,
 	Text,
-	Divider,
 	Avatar,
 	Checkbox,
 	Tooltip,
@@ -54,16 +53,6 @@ const Notifications = () => {
 										notification.type.toString()
 									)}
 								</Text>
-								<Divider orientation="vertical" />
-								<Text
-									fz="sm"
-									fw={700}
-									c={"white"}
-									component={Link}
-									to={`/dashboard/tweet/${notification.tweetID}`}
-								>
-									View
-								</Text>
 							</Group>
 						)}
 						{notification.type === "follow" && (
@@ -72,16 +61,6 @@ const Notifications = () => {
 									{capitalizeFirstLetter(
 										notification.type.toString()
 									)}
-								</Text>
-								<Divider orientation="vertical" />
-								<Text
-									fz="sm"
-									fw={700}
-									c={"white"}
-									component={Link}
-									to={`/dashboard/tweet/${notification.senderUsername}`}
-								>
-									View
 								</Text>
 							</Group>
 						)}
@@ -92,34 +71,52 @@ const Notifications = () => {
 										notification.type.toString()
 									)}
 								</Text>
-								<Divider orientation="vertical" />
-								<Text
-									fz="sm"
-									fw={700}
-									c={"white"}
-									component={Link}
-									to={`/dashboard/tweet/${notification.tweetID}`}
-								>
-									View
-								</Text>
 							</Group>
 						)}
 					</Text>
 				</Table.Td>
 				<Table.Td>
+					<Text c={"white"}>
+						{notification.type === "like" && (
+							<Text
+								fz="sm"
+								fw={700}
+								c={"white"}
+								component={Link}
+								to={`/dashboard/tweet/${notification.tweetID}`}
+							>
+								View
+							</Text>
+						)}
+						{notification.type === "reply" && (
+							<Text
+								fz="sm"
+								fw={700}
+								c={"white"}
+								component={Link}
+								to={`/dashboard/tweet/${notification.tweetID}`}
+							>
+								View
+							</Text>
+						)}
+						{notification.type === "follow" && (
+							<Text
+								fz="sm"
+								fw={700}
+								c={"white"}
+								component={Link}
+								to={`/dashboard/profile/${notification.senderUsername}`}
+							>
+								View
+							</Text>
+						)}
+					</Text>
+				</Table.Td>
+
+				<Table.Td>
 					{formatTimeStamp(notification.timestamp.toString())}
 				</Table.Td>
 				<Table.Td>
-					{/* {notification.read ? (
-						<Badge color={"violet"} variant="outline" fullWidth>
-							Read
-						</Badge>
-					) : (
-						<Badge color={"violet"} variant="outline" fullWidth>
-							Unread
-						</Badge>
-					)} */}
-
 					<Tooltip
 						label="Mark as read"
 						refProp="rootRef"
@@ -132,10 +129,11 @@ const Notifications = () => {
 							checked={notification.read}
 							variant="outline"
 							label={notification.read ? "Read" : "Unread"}
-							onChange={() =>
-								markNotificationRead(notification._id)
-							}
-							disabled={notification.read}
+							onChange={() => {
+								if (notification.read === false) {
+									markNotificationRead(notification._id);
+								}
+							}}
 						/>
 					</Tooltip>
 				</Table.Td>
@@ -156,7 +154,8 @@ const Notifications = () => {
 					<Table.Thead>
 						<Table.Tr>
 							<Table.Th>Sender</Table.Th>
-							<Table.Th>Notification Type</Table.Th>
+							<Table.Th>Type</Table.Th>
+							<Table.Th>Link</Table.Th>
 							<Table.Th>Date Sent</Table.Th>
 							<Table.Th>Status</Table.Th>
 						</Table.Tr>

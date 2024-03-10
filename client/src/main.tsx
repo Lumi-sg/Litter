@@ -1,7 +1,7 @@
 import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
 import "@mantine/core/styles.css";
-import { MantineProvider, createTheme } from "@mantine/core";
+import { Checkbox, MantineProvider, createTheme } from "@mantine/core";
 import { initializeApp } from "firebase/app";
 import {
 	getAuth,
@@ -27,6 +27,7 @@ const theme = createTheme({
 		xl: "88em",
 		xxl: "121em",
 	},
+	cursorType: "pointer",
 });
 const queryClient = new QueryClient();
 
