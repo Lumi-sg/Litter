@@ -8,6 +8,7 @@ import { useUserStore } from "../Stores/userStore";
 
 export const useMarkNotificationsRead = (notifications: NotificationType[]) => {
 	const firebaseToken = Cookies.get("firebaseToken");
+	const queryClient = useQueryClient();
 	const { user } = useUserStore();
 
 	return useMutation({
@@ -29,7 +30,6 @@ export const useMarkNotificationsRead = (notifications: NotificationType[]) => {
 		},
 
 		onSuccess: () => {
-			const queryClient = useQueryClient();
 			queryClient.invalidateQueries({
 				queryKey: ["notifications", user?.uid as string],
 			});

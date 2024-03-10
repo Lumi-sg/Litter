@@ -1,10 +1,19 @@
 import { useUserStore } from "../../../../Stores/userStore";
-import { Table, Group, Text, Avatar, Checkbox, Tooltip } from "@mantine/core";
+import {
+	Table,
+	Group,
+	Text,
+	Avatar,
+	Checkbox,
+	Tooltip,
+	Button,
+} from "@mantine/core";
 import LoadingTweet from "../../../Features/LoadingTweet/LoadingTweet";
 import formatTimeStamp from "../../../../Helpers/formatTimeStamp";
 import { useGetNotifications } from "../../../../Hooks/useGetNotifications";
-// import { useMarkNotificationsRead } from "../../../../Hooks/useMarkNotificationsRead";
+import { useMarkNotificationsRead } from "../../../../Hooks/useMarkNotificationsRead";
 import { useMarkSingleNotificationRead } from "../../../../Hooks/useMarkSingleNotificationRead";
+import { NotificationType } from "../../../../Types/Notifications";
 import { Link } from "react-router-dom";
 
 const Notifications = () => {
@@ -13,11 +22,19 @@ const Notifications = () => {
 		user?.uid as string
 	);
 
+	const { mutate: markNotificationsRead } = useMarkNotificationsRead(
+		notifications as NotificationType[]
+	);
+
 	const capitalizeFirstLetter = (str: string) => {
 		return str.charAt(0).toUpperCase() + str.slice(1);
 	};
 
 	const { mutate: markNotificationRead } = useMarkSingleNotificationRead();
+
+	const areAllNotificationsRead = () => {
+		return notifications?.every((notification) => notification.read);
+	};
 
 	function UsersRolesTable() {
 		const rows = notifications!.map((notification) => (
@@ -111,7 +128,7 @@ const Notifications = () => {
 				</Table.Td>
 				<Table.Td>
 					<Tooltip
-						label="Mark as read"
+						label={notification.read ? "Read" : "Mark As Read"}
 						refProp="rootRef"
 						bg={"#202020"}
 						c={"white"}
@@ -150,7 +167,20 @@ const Notifications = () => {
 							<Table.Th>Type</Table.Th>
 							<Table.Th>Link</Table.Th>
 							<Table.Th>Date Sent</Table.Th>
-							<Table.Th>Status</Table.Th>
+							<Table.Th>
+								{!areAllNotificationsRead() ? (
+									<Button
+										variant="outline"
+										color="violet"
+										fullWidth
+										onClick={() => markNotificationsRead()}
+									>
+										Mark All Read
+									</Button>
+								) : (
+									<span>Status</span>
+								)}
+							</Table.Th>
 						</Table.Tr>
 					</Table.Thead>
 					<Table.Tbody>{rows}</Table.Tbody>
