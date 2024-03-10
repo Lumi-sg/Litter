@@ -4,6 +4,7 @@ export enum NotificationTypeEnum {
 	LIKE = "like",
 	REPLY = "reply",
 	FOLLOW = "follow",
+	MESSAGE = "message",
 }
 export type NotificationType = Document & {
 	_id?: Types.ObjectId;
