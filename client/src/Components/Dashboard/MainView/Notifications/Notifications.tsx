@@ -182,7 +182,7 @@ const Notifications = () => {
 										color="violet"
 										fullWidth
 										onClick={() => markNotificationsRead()}
-									></Button>
+									>Mark All Read</Button>
 								) : (
 									<Text fw={700}>Mark All Read</Text>
 								)}
