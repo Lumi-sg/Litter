@@ -1,5 +1,5 @@
 import { useUserStore } from "../../../../Stores/userStore";
-import { Badge, Table, Group, Text } from "@mantine/core";
+import { Badge, Table, Group, Text, Divider } from "@mantine/core";
 import LoadingTweet from "../../../Features/LoadingTweet/LoadingTweet";
 import formatTimeStamp from "../../../../Helpers/formatTimeStamp";
 import { useGetNotifications } from "../../../../Hooks/useGetNotifications";
@@ -37,43 +37,61 @@ const Notifications = () => {
 				<Table.Td>
 					<Text>
 						{notification.type === "like" && (
-							<Text
-								fz="sm"
-								fw={700}
-								c={"white"}
-								component={Link}
-								to={`/dashboard/tweet/${notification.tweetID}`}
-							>
-								{capitalizeFirstLetter(
-									notification.type.toString()
-								)}
-							</Text>
+							<Group justify="flex-start">
+								<Text miw={"25%"}>
+									{capitalizeFirstLetter(
+										notification.type.toString()
+									)}
+								</Text>
+								<Divider orientation="vertical" />
+								<Text
+									fz="sm"
+									fw={700}
+									c={"white"}
+									component={Link}
+									to={`/dashboard/tweet/${notification.tweetID}`}
+								>
+									View
+								</Text>
+							</Group>
 						)}
 						{notification.type === "follow" && (
-							<Text
-								fz="sm"
-								fw={700}
-								c={"white"}
-								component={Link}
-								to={`/dashboard/profile/${notification.senderUsername}`}
-							>
-								{capitalizeFirstLetter(
-									notification.type.toString()
-								)}
-							</Text>
+							<Group justify="flex-start">
+								<Text miw={"25%"}>
+									{capitalizeFirstLetter(
+										notification.type.toString()
+									)}
+								</Text>
+								<Divider orientation="vertical" />
+								<Text
+									fz="sm"
+									fw={700}
+									c={"white"}
+									component={Link}
+									to={`/dashboard/tweet/${notification.senderUsername}`}
+								>
+									View
+								</Text>
+							</Group>
 						)}
 						{notification.type === "reply" && (
-							<Text
-								fz="sm"
-								fw={700}
-								c={"white"}
-								component={Link}
-								to={`/dashboard/tweet/${notification.tweetID}`}
-							>
-								{capitalizeFirstLetter(
-									notification.type.toString()
-								)}
-							</Text>
+							<Group justify="flex-start">
+								<Text miw={"25%"}>
+									{capitalizeFirstLetter(
+										notification.type.toString()
+									)}
+								</Text>
+								<Divider orientation="vertical" />
+								<Text
+									fz="sm"
+									fw={700}
+									c={"white"}
+									component={Link}
+									to={`/dashboard/tweet/${notification.tweetID}`}
+								>
+									View
+								</Text>
+							</Group>
 						)}
 					</Text>
 				</Table.Td>
@@ -101,7 +119,7 @@ const Notifications = () => {
 					striped
 					highlightOnHover
 					highlightOnHoverColor="#9272f411"
-          withTableBorder
+					withTableBorder
 				>
 					<Table.Thead>
 						<Table.Tr>
@@ -116,6 +134,14 @@ const Notifications = () => {
 			</Table.ScrollContainer>
 		);
 	}
-	return <>{isLoading ? <LoadingTweet /> : <UsersRolesTable />}</>;
+	return (
+		<>
+			{isLoading ? (
+				<LoadingTweet />
+			) : (
+				notifications && notifications.length > 0 ? <UsersRolesTable /> : "No Notifications"
+			)}
+		</>
+	);
 };
 export default Notifications;

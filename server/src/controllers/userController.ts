@@ -203,6 +203,7 @@ export const followUser = asyncHandler(
 				recipientUsername: userToBeFollowed.username,
 				sender: currentUser,
 				senderUsername: currentUser.username,
+				senderAvatarURL: currentUser.pictureURL,
 				type: NotificationTypeEnum.FOLLOW,
 				read: false,
 				timestamp: new Date(),

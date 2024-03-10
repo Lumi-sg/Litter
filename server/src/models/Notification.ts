@@ -16,6 +16,7 @@ export type NotificationType = Document & {
 	recipientUsername: string;
 	sender: UserType;
 	senderUsername: string;
+	senderAvatarURL: string;
 	type: NotificationTypeEnum;
 	tweetID?: string;
 	conversationID?: string;
@@ -34,6 +35,7 @@ const notificationSchema = new Schema<NotificationType>({
 		enum: Object.values(NotificationTypeEnum),
 		required: true,
 	},
+	senderAvatarURL: { type: String, required: true },
 	tweetID: { type: String },
 	conversationID: { type: String },
 	read: { type: Boolean, default: false },

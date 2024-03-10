@@ -3,6 +3,8 @@ function formatTimestamp(timestamp: string): string {
 		year: "numeric",
 		month: "short",
 		day: "2-digit",
+		hour: "numeric",
+		minute: "numeric",
 	};
 	const date = new Date(timestamp);
 	return date.toLocaleDateString("en-US", options);

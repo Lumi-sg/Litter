@@ -12,6 +12,7 @@ export type NotificationType = Document & {
 	recipientUsername: string;
 	sender: UserType;
 	senderUsername: string;
+	senderAvatarURL: string;
 	type: NotificationTypeEnum;
 	tweetID?: string;
 	conversationID?: string;

@@ -39,9 +39,9 @@ const Sidebar = () => {
 		user?.uid as string
 	);
 
-	const { mutate: markNotificationsRead } = useMarkNotificationsRead(
-		notifications as NotificationType[]
-	);
+	// const { mutate: markNotificationsRead } = useMarkNotificationsRead(
+	// 	notifications as NotificationType[]
+	// );
 
 	const newNotifcations = notifications?.filter(
 		(notification: NotificationType) => notification.read === false
@@ -58,8 +58,7 @@ const Sidebar = () => {
 	};
 
 	const handleNotifcationsClick = () => {
-		setSelectedComponent("Notifications")
-		markNotificationsRead();
+		setSelectedComponent("Notifications");
 	};
 
 	return isLoading ? (
@@ -110,11 +109,7 @@ const Sidebar = () => {
 					</Link>
 					<Link to="/dashboard/notifications">
 						<Button
-							onClick={
-								handleNotifcationsClick
-							}
-	
-							
+							onClick={handleNotifcationsClick}
 							variant="subtle"
 							color="violet"
 							size="xl"
