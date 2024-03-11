@@ -43,6 +43,9 @@ export const useLikeTweet = (tweet: TweetType) => {
 			queryClient.invalidateQueries({
 				queryKey:["tweets", tweet.parent]
 			})
+			queryClient.invalidateQueries({
+				queryKey: ["homefeed", user?.uid],
+			})
 			displayNotification(
 				"Like",
 				"liked",

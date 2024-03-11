@@ -43,6 +43,9 @@ export const useBookmarkTweet = (tweet: TweetType) => {
 			queryClient.invalidateQueries({
 				queryKey: ["tweets", tweet.parent],
 			});
+			queryClient.invalidateQueries({
+				queryKey: ["homefeed", user?.uid],
+			})
 			displayNotification(
 				"Bookmark",
 				"bookmarked",
