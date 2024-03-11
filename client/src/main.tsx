@@ -8,15 +8,18 @@ import {
 	GoogleAuthProvider,
 	signInWithPopup,
 	browserSessionPersistence,
+	onIdTokenChanged,
+	getIdToken,
 } from "firebase/auth";
 import { Notifications } from "@mantine/notifications";
 import "@mantine/notifications/styles.css";
 import { ModalsProvider } from "@mantine/modals";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { useUserStore } from "./Stores/userStore.ts";
-import { onAuthStateChanged } from "firebase/auth";
+// import { useUserStore } from "./Stores/userStore.ts";
+// import { onAuthStateChanged } from "firebase/auth";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import React from "react";
+import { useUserStore } from "./Stores/userStore.ts";
 
 const theme = createTheme({
 	breakpoints: {
@@ -73,16 +76,27 @@ const firebaseConfig = {
 const litterApp = initializeApp(firebaseConfig);
 const auth = getAuth(litterApp);
 
-auth.setPersistence(browserSessionPersistence);
+await auth.setPersistence(browserSessionPersistence);
 
 const provider = new GoogleAuthProvider();
 export { auth, provider, signInWithPopup };
-onAuthStateChanged(auth, (user) => {
+onIdTokenChanged(auth, async (user) => {
 	if (user) {
-		// User is signed in
+		// Token is automatically refreshed when needed
+		const token = await getIdToken(user);
+		console.log("Refreshed token:", token);
 		useUserStore.setState({ user, isLoggedIn: true });
 	} else {
-		// User is signed out
 		useUserStore.setState({ user: null, isLoggedIn: false });
 	}
 });
+// onAuthStateChanged(auth, (user) => {
+// 	if (user) {
+// 		// User is signed in
+// 		useUserStore.setState({ user, isLoggedIn: true });
+// 	} else {
+// 		// User is signed out
+// 		useUserStore.setState({ user: null, isLoggedIn: false });
+// 	}
+// });
+
