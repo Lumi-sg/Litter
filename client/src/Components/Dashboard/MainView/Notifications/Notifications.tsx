@@ -40,87 +40,82 @@ const Notifications = () => {
 		const rows = notifications!.map((notification) => (
 			<Table.Tr key={notification.id}>
 				<Table.Td>
-					<Group gap="sm">
-						<Avatar src={notification.senderAvatarURL} />
-						<Text
-							fz="sm"
-							fw={700}
-							c={"white"}
+					<Group>
+						<Avatar
+							src={notification.senderAvatarURL}
 							component={Link}
 							to={`/dashboard/profile/${notification.senderUsername}`}
-						>
-							{notification.senderUsername}
-						</Text>
+						/>
+						{notification.type === "like" && (
+							<>
+								<Text
+									fz="md"
+									fw={700}
+									c={"white"}
+									component={Link}
+									to={`/dashboard/profile/${notification.senderUsername}`}
+									ml={-10}
+								>
+									{notification.senderUsername}
+								</Text>
+								<Text fz="md" ml={-10} c={"white"}>
+									liked your{" "}
+									<Text
+										c={"white"}
+										fz="md"
+										fw={700}
+										component={Link}
+										to={`/dashboard/tweet/${notification.tweetID}`}
+									>
+										Tweet
+									</Text>
+								</Text>
+							</>
+						)}
+						{notification.type === "reply" && (
+							<>
+								<Text
+									fz="md"
+									fw={700}
+									c={"white"}
+									component={Link}
+									to={`/dashboard/profile/${notification.senderUsername}`}
+									ml={-10}
+								>
+									{notification.senderUsername}
+								</Text>
+								<Text fz="md" ml={-10}>
+									replied to your{" "}
+									<Text
+										c={"white"}
+										fz="md"
+										fw={700}
+										component={Link}
+										to={`/dashboard/tweet/${notification.tweetID}`}
+									>
+										Tweet
+									</Text>
+								</Text>
+							</>
+						)}
+						{notification.type === "follow" && (
+							<>
+								<Text
+									fz="md"
+									fw={700}
+									c={"white"}
+									component={Link}
+									to={`/dashboard/profile/${notification.senderUsername}`}
+									ml={-10}
+								>
+									{notification.senderUsername}
+								</Text>
+								<Text fz="md" ml={-10}>
+									followed you
+								</Text>
+							</>
+						)}
 					</Group>
-				</Table.Td>
-
-				<Table.Td>
-					<Text>
-						{notification.type === "like" && (
-							<Group justify="flex-start">
-								<Text>
-									{capitalizeFirstLetter(
-										notification.type.toString()
-									)}
-								</Text>
-							</Group>
-						)}
-						{notification.type === "follow" && (
-							<Group justify="flex-start">
-								<Text>
-									{capitalizeFirstLetter(
-										notification.type.toString()
-									)}
-								</Text>
-							</Group>
-						)}
-						{notification.type === "reply" && (
-							<Group justify="flex-start">
-								<Text>
-									{capitalizeFirstLetter(
-										notification.type.toString()
-									)}
-								</Text>
-							</Group>
-						)}
-					</Text>
-				</Table.Td>
-				<Table.Td>
-					<Text c={"white"}>
-						{notification.type === "like" && (
-							<Text
-								fz="sm"
-								fw={700}
-								c={"white"}
-								component={Link}
-								to={`/dashboard/tweet/${notification.tweetID}`}
-							>
-								View
-							</Text>
-						)}
-						{notification.type === "reply" && (
-							<Text
-								fz="sm"
-								fw={700}
-								c={"white"}
-								component={Link}
-								to={`/dashboard/tweet/${notification.tweetID}`}
-							>
-								View
-							</Text>
-						)}
-						{notification.type === "follow" && (
-							<Text
-								fz="sm"
-								fw={700}
-								c={"white"}
-								component={Link}
-								to={`/dashboard/profile/${notification.senderUsername}`}
-							>
-								View
-							</Text>
-						)}
-					</Text>
 				</Table.Td>
 
 				<Table.Td>
@@ -164,14 +159,9 @@ const Notifications = () => {
 					<Table.Thead>
 						<Table.Tr>
 							<Table.Th>
-								<Text fw={700}>Sender</Text>
+								<Text fw={700}>Notification</Text>
 							</Table.Th>
-							<Table.Th>
-								<Text fw={700}>Type</Text>
-							</Table.Th>
-							<Table.Th>
-								<Text fw={700}>Link</Text>
-							</Table.Th>
+
 							<Table.Th>
 								<Text fw={700}>Date Sent</Text>
 							</Table.Th>
@@ -182,7 +172,9 @@ const Notifications = () => {
 										color="violet"
 										fullWidth
 										onClick={() => markNotificationsRead()}
-									>Mark All Read</Button>
+									>
+										Mark All Read
+									</Button>
 								) : (
 									<Text fw={700}>Status</Text>
 								)}

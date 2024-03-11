@@ -84,6 +84,7 @@ onIdTokenChanged(auth, async (user) => {
 	if (user) {
 		// Token is automatically refreshed when needed
 		const token = await getIdToken(user);
+
 		console.log("Refreshed token:", token);
 		useUserStore.setState({ user, isLoggedIn: true });
 	} else {
@@ -99,4 +100,3 @@ onIdTokenChanged(auth, async (user) => {
 // 		useUserStore.setState({ user: null, isLoggedIn: false });
 // 	}
 // });
-
