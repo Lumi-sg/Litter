@@ -54,11 +54,11 @@ const Notifications = () => {
 									c={"white"}
 									component={Link}
 									to={`/dashboard/profile/${notification.senderUsername}`}
-									ml={-10}
+									ml={-14}
 								>
 									{notification.senderUsername}
 								</Text>
-								<Text fz="md" ml={-10} c={"white"}>
+								<Text fz="md" ml={-10}>
 									liked your{" "}
 									<Text
 										c={"white"}
@@ -80,7 +80,7 @@ const Notifications = () => {
 									c={"white"}
 									component={Link}
 									to={`/dashboard/profile/${notification.senderUsername}`}
-									ml={-10}
+									ml={-14}
 								>
 									{notification.senderUsername}
 								</Text>
@@ -106,7 +106,7 @@ const Notifications = () => {
 									c={"white"}
 									component={Link}
 									to={`/dashboard/profile/${notification.senderUsername}`}
-									ml={-10}
+									ml={-14}
 								>
 									{notification.senderUsername}
 								</Text>
