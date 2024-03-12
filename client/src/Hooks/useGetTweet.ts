@@ -16,6 +16,5 @@ export const getTweet = (tweetID: string) => {
 			});
 			return data as TweetType;
 		},
-		staleTime: 30000,
 	});
 };

@@ -82,11 +82,11 @@ await auth.setPersistence(browserSessionPersistence);
 const provider = new GoogleAuthProvider();
 export { auth, provider, signInWithPopup };
 onIdTokenChanged(auth, async (user) => {
+	console.log("onIdTokenChanged");
+	console.log(new Date().toLocaleString());
 	if (user) {
-		// Token is automatically refreshed when needed
 
-		console.log("Refreshed token:");
-		useUserStore.setState({ user, isLoggedIn: true });
+		console.log("Refreshed token!");
 		Cookies.set("firebaseToken", await user.getIdToken(), { expires: 7 });
 	} else {
 		useUserStore.setState({ user: null, isLoggedIn: false });
