@@ -26,9 +26,9 @@ const Notifications = () => {
 		notifications as NotificationType[]
 	);
 
-	const capitalizeFirstLetter = (str: string) => {
-		return str.charAt(0).toUpperCase() + str.slice(1);
-	};
+	// const capitalizeFirstLetter = (str: string) => {
+	// 	return str.charAt(0).toUpperCase() + str.slice(1);
+	// };
 
 	const { mutate: markNotificationRead } = useMarkSingleNotificationRead();
 
@@ -67,7 +67,7 @@ const Notifications = () => {
 										component={Link}
 										to={`/dashboard/tweet/${notification.tweetID}`}
 									>
-										Tweet
+										tweet
 									</Text>
 								</Text>
 							</>
@@ -84,18 +84,17 @@ const Notifications = () => {
 								>
 									{notification.senderUsername}
 								</Text>
-								<Text fz="md" ml={-10}>
-									replied to your{" "}
-									<Text
-										c={"white"}
-										fz="md"
-										fw={700}
-										component={Link}
-										to={`/dashboard/tweet/${notification.tweetID}`}
-									>
-										Tweet
-									</Text>
+								<Text
+									c={"white"}
+									fz="md"
+									fw={700}
+									component={Link}
+									to={`/dashboard/tweet/${notification.tweetID}`}
+									ml={-10}
+								>
+									replied
 								</Text>
+								<Text fz="md" ml={-10}> to your tweet</Text>
 							</>
 						)}
 						{notification.type === "follow" && (

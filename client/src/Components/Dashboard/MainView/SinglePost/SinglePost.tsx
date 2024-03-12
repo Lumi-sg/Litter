@@ -16,6 +16,7 @@ const SinglePost = () => {
 	);
 
 	const doesTweetHaveParent = tweet?.parent !== null;
+	console.log(doesTweetHaveParent);
 
 	useEffect(() => {
 		const scrollFunction = () => {

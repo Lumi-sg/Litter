@@ -54,6 +54,7 @@ export const useUserStore = create<userStoreType>()(
 							},
 						}
 					);
+
 					if (response.status === 201) {
 						console.log(response.data.message);
 						return true;

@@ -20,6 +20,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import React from "react";
 import { useUserStore } from "./Stores/userStore.ts";
+import Cookies from "js-cookie";
 
 const theme = createTheme({
 	breakpoints: {
@@ -83,12 +84,13 @@ export { auth, provider, signInWithPopup };
 onIdTokenChanged(auth, async (user) => {
 	if (user) {
 		// Token is automatically refreshed when needed
-		const token = await getIdToken(user);
 
-		console.log("Refreshed token:", token);
+		console.log("Refreshed token:");
 		useUserStore.setState({ user, isLoggedIn: true });
+		Cookies.set("firebaseToken", await user.getIdToken(), { expires: 7 });
 	} else {
 		useUserStore.setState({ user: null, isLoggedIn: false });
+		Cookies.remove("firebaseToken");
 	}
 });
 // onAuthStateChanged(auth, (user) => {
