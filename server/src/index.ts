@@ -12,6 +12,7 @@ import { verifyFirebaseToken } from "./middleware/firebaseAuth";
 //routes
 import userRouter from "./routes/userRouter";
 import tweetRouter from "./routes/tweetRouter";
+import conversationRouter from "./routes/conversationRouter";
 
 const app = express();
 dotenv.config();
@@ -59,6 +60,7 @@ app.use(verifyFirebaseToken);
 
 app.use("/user", userRouter);
 app.use("/tweet", tweetRouter);
+app.use("/conversation", conversationRouter);
 
 const server = http.createServer(app);
 const port = 3000;
