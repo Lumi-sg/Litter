@@ -1,8 +1,12 @@
 import { Group, Text } from "@mantine/core";
 import { modals } from "@mantine/modals";
-import {  MessagePlus } from "tabler-icons-react";
+import { MessagePlus } from "tabler-icons-react";
 import styles from "./TopMessageBar.module.css";
 import NewMessageModal from "../../../../../Features/NewMessageModal/NewMessageModal";
+
+import { UserType } from "../../../../../../Types/User";
+
+
 
 const TopMessageBar = () => {
 	const handleNewMessageClick = () => {
@@ -25,13 +29,13 @@ const TopMessageBar = () => {
 			<Text c={"white"} fz={"xl"} fw={700}>
 				Messages
 			</Text>
-			<Group>
-				{/* <Settings className={styles.settingsIcon} /> */}
+			{/* <Group>
+				
 				<MessagePlus
 					className={styles.messageIcon}
 					onClick={handleNewMessageClick}
 				/>
-			</Group>
+			</Group> */}
 		</Group>
 	);
 };

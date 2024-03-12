@@ -17,6 +17,16 @@ const InitialRoute: React.FC = () => {
 	return isLoggedIn ? <Navigate to="/dashboard" /> : <Navigate to="/login" />;
 };
 
+const ProtectedDashboardRoute = () => {
+	const { isLoggedIn } = useUserStore();
+
+	if (!isLoggedIn) {
+		return <Navigate to="/login" />;
+	}
+
+	return <Dashboard />;
+};
+
 const router = createBrowserRouter([
 	{
 		path: "/",
@@ -29,7 +39,7 @@ const router = createBrowserRouter([
 
 	{
 		path: "/dashboard/*",
-		element: <Dashboard />,
+		element: <ProtectedDashboardRoute />,
 	},
 ]);
 
@@ -40,7 +50,7 @@ function App() {
 		// Set up an interval to refresh the token every 45 minutes
 		const refreshTokenInterval = setInterval(
 			refreshFirebaseToken,
-			45 * 60 * 1000
+			55 * 60 * 1000
 		);
 
 		return () => clearInterval(refreshTokenInterval);

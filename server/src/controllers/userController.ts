@@ -408,7 +408,7 @@ export const markSingleNotificationRead = asyncHandler(
 			const { notificationID } = req.params;
 			const notifcationToBeMarked = await NotificationModel.findOne({
 				_id: notificationID,
-			})
+			});
 			if (!notifcationToBeMarked) {
 				console.log("Notification not found");
 				res.status(404).json({ message: "Notification not found" });
@@ -422,6 +422,28 @@ export const markSingleNotificationRead = asyncHandler(
 			});
 		} catch (error: any) {
 			console.log("Error marking notification read:", error);
+			res.status(500).json({ message: error.message });
+		}
+	}
+);
+
+export const getUserFollowedUsers = asyncHandler(
+	async (req: express.Request, res: express.Response) => {
+		console.log("Fetching followed users...");
+		try {
+			const currentUser = await UserModel.findOne({
+				firebaseID: (req as any).currentUser.uid,
+			});
+			if (!currentUser) {
+				res.status(404).json({ message: "User not found" });
+				return;
+			}
+			const followedUsers = await UserModel.find({
+				_id: { $in: currentUser.following },
+			});
+			res.status(200).json( followedUsers );
+		} catch (error: any) {
+			console.log("Error fetching user followers:", error);
 			res.status(500).json({ message: error.message });
 		}
 	}
