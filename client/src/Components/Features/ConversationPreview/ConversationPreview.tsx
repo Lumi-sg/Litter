@@ -14,9 +14,22 @@ import classes from "./ConversationPreview.module.css";
 import { useUserStore } from "../../../Stores/userStore";
 import { convertEmailToUsername } from "../../../Helpers/convertEmailToUsername";
 import { displayNotification } from "../../../Helpers/displayNotification";
+import { ConversationType } from "../../../Types/Conversation";
+import UserType from "../../../Types/User";
 
-const ConversationPreview = () => {
+type ConversationPreviewProps = {
+	conversation: ConversationType;
+};
+
+const ConversationPreview = ({ conversation }: ConversationPreviewProps) => {
 	const { user } = useUserStore();
+
+	const getOtherUser = (conversationUsers: UserType[]) => {
+		return conversationUsers.find(
+			(conversationUser) => conversationUser.firebaseID !== user?.uid
+		);
+	};
+	const otherUser = getOtherUser(conversation.participants);
 
 	const handleMenuClick = (
 		e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
@@ -47,7 +60,7 @@ const ConversationPreview = () => {
 				>
 					<Flex>
 						<Avatar
-							src={user?.photoURL}
+							src={otherUser?.pictureURL}
 							radius="xl"
 							size={45}
 							mr={10}
@@ -56,11 +69,9 @@ const ConversationPreview = () => {
 						<Stack gap={-"50%"}>
 							<Group justify="space-around">
 								<Text size="md" fw={700} c={"white"}>
-									{user?.displayName}
+									{otherUser?.displayName}
 									<Text span c={"dimmed"} size="sm" ml={3}>
-										{convertEmailToUsername(
-											user?.email as string
-										)}
+										{otherUser?.username}
 									</Text>
 								</Text>
 

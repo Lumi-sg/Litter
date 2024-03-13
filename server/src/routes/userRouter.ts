@@ -60,7 +60,7 @@ router.get(
 );
 
 router.get(
-	":username/conversations",
+	"/:username/conversations",
 	verifyFirebaseToken,
 	userController.getUserConversations
 );

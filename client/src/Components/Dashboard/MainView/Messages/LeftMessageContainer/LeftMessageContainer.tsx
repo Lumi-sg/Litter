@@ -4,12 +4,18 @@ import ConversationPreview from "../../../../Features/ConversationPreview/Conver
 import { Divider, Flex, ScrollArea, Space, Stack } from "@mantine/core";
 import styles from "./LeftMessageContainer.module.css";
 import { useGetAllUsers } from "../../../../../Hooks/useGetAllUsers";
+import { useGetUserConversations } from "../../../../../Hooks/useGetUserConversations";
 import LoadingTweet from "../../../../Features/LoadingTweet/LoadingTweet";
+import { useUserStore } from "../../../../../Stores/userStore";
+import { convertEmailToUsername } from "../../../../../Helpers/convertEmailToUsername";
 
 const LeftMessageContainer = () => {
+	const { user } = useUserStore();
 	const { data: allUsers, isLoading } = useGetAllUsers();
+	const { data: conversations, isLoading: isLoadingConversations } =
+		useGetUserConversations(convertEmailToUsername(user!.email as string));
+
 	return (
-		isLoading ? <LoadingTweet/> :
 		<Stack mt={10} h={"90.5vh"} w={"20vw"} ml={10}>
 			<TopMessageBar />
 			<MessageSearchBox allUsers={allUsers} isLoading={isLoading} />
@@ -29,23 +35,18 @@ const LeftMessageContainer = () => {
 					classNames={styles}
 				>
 					<Divider />
-
-					<ConversationPreview />
-					<ConversationPreview />
-					{/* <ConversationPreview />
-					<ConversationPreview />
-					<ConversationPreview />
-					<ConversationPreview />
-					<ConversationPreview />
-					<ConversationPreview />
-					<ConversationPreview />
-					<ConversationPreview />
-					<ConversationPreview />
-					<ConversationPreview />
-					<ConversationPreview />
-					<ConversationPreview />
-					<ConversationPreview />
-					<ConversationPreview /> */}
+					{isLoading ? (
+						<LoadingTweet />
+					) : (
+						<>
+							{conversations?.map((conversation) => (
+								<ConversationPreview
+									key={conversation._id}
+									conversation={conversation}
+								/>
+							))}
+						</>
+					)}
 				</ScrollArea>
 			</Flex>
 		</Stack>
