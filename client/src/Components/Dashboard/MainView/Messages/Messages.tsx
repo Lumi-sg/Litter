@@ -3,6 +3,7 @@ import LeftMessageContainer from "./LeftMessageContainer/LeftMessageContainer";
 import RightMessageContainer from "./RightMessageContainer/RightMessageContainer";
 import { Divider, Group } from "@mantine/core";
 import { useComponentStore } from "../../../../Stores/componentStore";
+import { Route, Routes } from "react-router-dom";
 
 const Messages = () => {
 	const { setSelectedComponent } = useComponentStore();
@@ -15,7 +16,12 @@ const Messages = () => {
 		<Group h={"calc (100vh - 18.85rem)"} miw={"60vw"}>
 			<LeftMessageContainer />
 			<Divider orientation="vertical" />
-			<RightMessageContainer />
+			<Routes>
+				<Route
+					path="/:conversationID"
+					element={<RightMessageContainer />}
+				/>
+			</Routes>
 			<Divider orientation="vertical" />
 		</Group>
 	);

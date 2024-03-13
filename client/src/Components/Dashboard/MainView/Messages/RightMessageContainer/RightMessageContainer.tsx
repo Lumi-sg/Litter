@@ -11,10 +11,12 @@ const RightMessageContainer = () => {
 	const { data: conversation, isLoading } = useGetConversation(
 		conversationID as string
 	);
+	const showConversation = conversationID && !isLoading;
+	console.log(conversationID)
 	return (
 		<Stack h={"calc(100vh - 5.7rem)"} flex={1}>
 			{" "}
-			{!conversationID ? (
+			{!showConversation ? (
 				<Center h={"100%"} w={"100%"}>
 					Start a new conversation!
 				</Center>

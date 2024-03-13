@@ -16,7 +16,7 @@ const LeftMessageContainer = () => {
 		useGetUserConversations(convertEmailToUsername(user!.email as string));
 
 	return (
-		<Stack mt={10} h={"90.5vh"} w={"20vw"} ml={10}>
+		<Stack mt={10} h={"90vh"} w={"20vw"} ml={10}>
 			<TopMessageBar />
 			<MessageSearchBox allUsers={allUsers} isLoading={isLoading} />
 			<Space h={"md"} />
@@ -35,7 +35,7 @@ const LeftMessageContainer = () => {
 					classNames={styles}
 				>
 					<Divider />
-					{isLoading ? (
+					{isLoadingConversations ? (
 						<LoadingTweet />
 					) : (
 						<>

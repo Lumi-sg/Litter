@@ -39,7 +39,7 @@ export function Dashboard() {
 					<Route path="/" element={<Navigate to="home" />} />
 					<Route path="home" element={<Home />} />
 					<Route path="notifications" element={<Notifications />} />
-					<Route path="messages" element={<Messages />} />
+					<Route path="messages/*" element={<Messages />} />
 					<Route path="bookmarks" element={<Bookmarks />} />
 					<Route path="profile/:username" element={<Profile />} />
 					<Route path="tweet/:tweetID" element={<SinglePost />} />
