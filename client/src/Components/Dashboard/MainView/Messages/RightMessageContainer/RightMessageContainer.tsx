@@ -24,7 +24,7 @@ const RightMessageContainer = () => {
 				<LoadingTweet />
 			) : (
 				<>
-					<ConversationHeader />
+					<ConversationHeader otherUserName/>
 					<MainConversation />
 					<ConversationInput />
 				</>

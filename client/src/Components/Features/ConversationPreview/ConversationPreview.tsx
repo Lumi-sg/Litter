@@ -15,9 +15,9 @@ import classes from "./ConversationPreview.module.css";
 import { useUserStore } from "../../../Stores/userStore";
 import { displayNotification } from "../../../Helpers/displayNotification";
 import { ConversationType } from "../../../Types/Conversation";
-import UserType from "../../../Types/User";
 import { Link } from "react-router-dom";
 import formatTimeStamp from "../../../Helpers/formatTimeStamp";
+import { getOtherUserInConversation } from "../../../Helpers/getOtherUserInConversation";
 
 type ConversationPreviewProps = {
 	conversation: ConversationType;
@@ -26,12 +26,7 @@ type ConversationPreviewProps = {
 const ConversationPreview = ({ conversation }: ConversationPreviewProps) => {
 	const { user } = useUserStore();
 
-	const getOtherUser = (conversationUsers: UserType[]) => {
-		return conversationUsers.find(
-			(conversationUser) => conversationUser.firebaseID !== user?.uid
-		);
-	};
-	const otherUser = getOtherUser(conversation.participants);
+	const otherUser = getOtherUserInConversation(conversation.participants);
 	let lastMessage =
 		conversation.messages.length > 0
 			? conversation.messages[conversation.messages.length - 1]
@@ -102,7 +97,7 @@ const ConversationPreview = ({ conversation }: ConversationPreviewProps) => {
 						</Stack>
 					</Group>
 					<Center>
-					<Divider orientation="vertical" h={60}/>
+						<Divider orientation="vertical" h={60} />
 					</Center>
 					<Text c="dimmed" size="xs" ta={"left"} ml={5}>
 						{lastMessage
