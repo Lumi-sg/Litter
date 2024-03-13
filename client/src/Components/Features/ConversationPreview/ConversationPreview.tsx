@@ -7,6 +7,7 @@ import {
 	Menu,
 	Stack,
 	Flex,
+	Center,
 } from "@mantine/core";
 import { IconDots } from "@tabler/icons-react";
 import { Trash } from "tabler-icons-react";
@@ -100,7 +101,9 @@ const ConversationPreview = ({ conversation }: ConversationPreviewProps) => {
 							</Text>
 						</Stack>
 					</Group>
-					<Divider orientation="vertical" />
+					<Center>
+					<Divider orientation="vertical" h={50}/>
+					</Center>
 					<Text c="dimmed" size="xs" ta={"left"} ml={5}>
 						{lastMessage
 							? formatTimeStamp(lastMessage.timestamp.toString())
