@@ -54,8 +54,14 @@ router.get(
 	userController.getUserNotifications
 );
 router.get(
-	"/:username/followedusers/",
+	"/:username/followedusers",
 	verifyFirebaseToken,
 	userController.getUserFollowedUsers
+);
+
+router.get(
+	":username/conversations",
+	verifyFirebaseToken,
+	userController.getUserConversations
 );
 export default router;
