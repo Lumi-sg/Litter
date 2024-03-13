@@ -72,6 +72,7 @@ export const getConversation = asyncHandler(
 				res.status(404).json({ message: "Conversation not found" });
 			}
 			res.status(200).json(conversation);
+			console.log("Conversation fetched: ", conversation?._id);
 		} catch (error) {
 			res.status(500).send(error);
 		}

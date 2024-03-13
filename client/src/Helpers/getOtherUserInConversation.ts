@@ -4,7 +4,7 @@ import { UserType } from "../Types/User";
 const user = useUserStore.getState().user;
 
 export const getOtherUserInConversation = (conversationUsers: UserType[]) => {
-    return conversationUsers.find(
-        (conversationUser) => conversationUser.firebaseID !== user?.uid
-    );
+	return conversationUsers.find(
+		(conversationUser) => conversationUser.firebaseID !== user?.uid
+	);
 };

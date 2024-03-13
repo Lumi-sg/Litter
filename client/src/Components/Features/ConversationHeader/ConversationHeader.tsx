@@ -17,9 +17,20 @@ import {
 import { useUserStore } from "../../../Stores/userStore";
 import { displayNotification } from "../../../Helpers/displayNotification";
 import styles from "./ConversationHeader.module.css";
+import { ConversationType } from "../../../Types/Conversation";
+import { getOtherUserInConversation } from "../../../Helpers/getOtherUserInConversation";
+import { useFollowUser } from "../../../Hooks/useFollowUser";
+import { useUnfollowUser } from "../../../Hooks/useUnfollowUser";
 
-const ConversationHeader = () => {
+type ConversationHeaderProps ={
+	conversation: ConversationType 
+}
+
+const ConversationHeader = ({ conversation }: ConversationHeaderProps ) => {
 	const { user } = useUserStore();
+
+	const otherUser = getOtherUserInConversation(conversation.participants);
+
 
 	const handleOptionsClick = (
 		e: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -88,9 +99,9 @@ const ConversationHeader = () => {
 		<>
 			<Group justify="space-between">
 				<Group>
-					<Avatar src={user?.photoURL} size={40} radius="xl" />
+					<Avatar src={otherUser?.pictureURL} size={40} radius="xl" />
 					<Text c={"white"} size="md" fw={700}>
-						{user?.displayName}
+						{otherUser?.displayName}
 					</Text>
 				</Group>
 

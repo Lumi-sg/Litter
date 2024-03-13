@@ -5,6 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { ConversationType } from "../Types/Conversation";
 
 export const useGetConversation = (conversationID: string) => {
+	console.log(conversationID)
 	const firebaseToken = Cookies.get("firebaseToken");
 	console.log("Fetching conversation...");
 	return useQuery({
@@ -18,8 +19,7 @@ export const useGetConversation = (conversationID: string) => {
 					},
 				}
 			);
-			console.table(data.conversation);
-			return data.conversation as ConversationType;
+			return data as ConversationType;
 		},
 	});
 };
