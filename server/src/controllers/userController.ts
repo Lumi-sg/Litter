@@ -9,6 +9,7 @@ import {
 	NotificationModel,
 	NotificationTypeEnum,
 } from "../models/Notification";
+import ConversationModel from "../models/Conversation";
 
 export const registerUser = asyncHandler(
 	async (req: express.Request, res: express.Response) => {
@@ -441,10 +442,25 @@ export const getUserFollowedUsers = asyncHandler(
 			const followedUsers = await UserModel.find({
 				_id: { $in: currentUser.following },
 			});
-			res.status(200).json( followedUsers );
+			res.status(200).json(followedUsers);
 		} catch (error: any) {
 			console.log("Error fetching user followers:", error);
 			res.status(500).json({ message: error.message });
 		}
+	}
+);
+
+export const getUserConversations = asyncHandler(
+	async (req: express.Request, res: express.Response) => {
+		const user = await UserModel.findOne({
+			firebaseID: (req as any).currentUser.uid,
+		});
+		if (!user) {
+			res.status(404).json({ message: "User not found" });
+		}
+		const conversations = await ConversationModel.find({
+			participants: { $in: [user] },
+		}).populate("participants");
+		res.status(200).json({ conversations });
 	}
 );

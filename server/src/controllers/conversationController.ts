@@ -22,17 +22,6 @@ export const createConversation = asyncHandler(
 			const receiver = await UserModel.findOne({
 				username: req.body.recipientUsername,
 			});
-			if (!user) {
-				session.abortTransaction();
-				session.endSession();
-				res.status(404).json({ message: "User not found" });
-			}
-
-			if (!receiver) {
-				session.abortTransaction();
-				session.endSession();
-				res.status(404).json({ message: "Target user not found" });
-			}
 
 			if (!user || !receiver) {
 				session.abortTransaction();
@@ -40,6 +29,16 @@ export const createConversation = asyncHandler(
 				res.status(404).json({
 					message: "One or both users not found",
 				});
+			}
+			const existingConversation = await ConversationModel.findOne({
+				participants: { $all: [user!._id, receiver!._id] },
+			});
+
+			if (existingConversation) {
+				session.endSession();
+				console.log("Conversation already exists");
+				res.status(200).json(existingConversation);
+				return;
 			}
 
 			console.log("Creating conversation...");
