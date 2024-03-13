@@ -3,7 +3,7 @@ import { verifyFirebaseToken } from "../middleware/firebaseAuth";
 
 import * as conversationController from "../controllers/conversationController";
 const router: Router = express.Router();
-router.get("")
+router.get("/:conversationID", verifyFirebaseToken, conversationController.getConversation);
 router.post(
 	"/create",
 	verifyFirebaseToken,

@@ -60,3 +60,20 @@ export const createConversation = asyncHandler(
 		}
 	}
 );
+
+export const getConversation = asyncHandler(
+	async (req: express.Request, res: express.Response) => {
+		console.log("Fetching conversation...");
+		try {
+			const conversation = await ConversationModel.findOne({
+				_id: req.params.conversationID,
+			}).populate("participants");
+			if (!conversation) {
+				res.status(404).json({ message: "Conversation not found" });
+			}
+			res.status(200).json(conversation);
+		} catch (error) {
+			res.status(500).send(error);
+		}
+	}
+)
