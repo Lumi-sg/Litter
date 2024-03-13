@@ -6,6 +6,7 @@ import UserType from "../../../Types/User";
 import { useUserStore } from "../../../Stores/userStore";
 import { convertEmailToUsername } from "../../../Helpers/convertEmailToUsername";
 import { useState } from "react";
+import { useCreateConversation } from "../../../Hooks/useCreateConversation";
 
 type MessageSearchBoxProps = {
 	allUsers: UserType[] | undefined;
@@ -19,8 +20,11 @@ export function MessageSearchBox({
 	const { user } = useUserStore();
 	const [selectedUsername, setSelectedUsername] = useState("");
 
+	const createConversation = useCreateConversation();
+
 	const handleNewConversationClick = () => {
 		console.log(selectedUsername);
+		createConversation.mutate(selectedUsername);
 		setSelectedUsername("");
 	};
 	return (

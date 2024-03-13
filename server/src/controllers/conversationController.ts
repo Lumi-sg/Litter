@@ -20,7 +20,7 @@ export const createConversation = asyncHandler(
 				firebaseID: (req as any).currentUser.uid,
 			});
 			const receiver = await UserModel.findOne({
-				username: req.body.username,
+				username: req.body.recipientUsername,
 			});
 			if (!user) {
 				session.abortTransaction();
@@ -32,6 +32,14 @@ export const createConversation = asyncHandler(
 				session.abortTransaction();
 				session.endSession();
 				res.status(404).json({ message: "Target user not found" });
+			}
+
+			if (!user || !receiver) {
+				session.abortTransaction();
+				session.endSession();
+				res.status(404).json({
+					message: "One or both users not found",
+				});
 			}
 
 			console.log("Creating conversation...");
@@ -48,7 +56,7 @@ export const createConversation = asyncHandler(
 		} catch (error) {
 			console.log(error);
 			session.abortTransaction();
-            session.endSession();
+			session.endSession();
 			res.status(500).send(error);
 		}
 	}
