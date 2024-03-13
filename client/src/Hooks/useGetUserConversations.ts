@@ -20,7 +20,6 @@ export const useGetUserConversations = (username: string) => {
                     },
                 }
             );
-            console.table(data.conversations);
             return data.conversations as ConversationType[];
         },
         staleTime: 3000,

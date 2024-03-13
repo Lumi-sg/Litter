@@ -12,10 +12,11 @@ import { IconDots } from "@tabler/icons-react";
 import { Trash } from "tabler-icons-react";
 import classes from "./ConversationPreview.module.css";
 import { useUserStore } from "../../../Stores/userStore";
-import { convertEmailToUsername } from "../../../Helpers/convertEmailToUsername";
 import { displayNotification } from "../../../Helpers/displayNotification";
 import { ConversationType } from "../../../Types/Conversation";
 import UserType from "../../../Types/User";
+import { Link } from "react-router-dom";
+import formatTimeStamp from "../../../Helpers/formatTimeStamp";
 
 type ConversationPreviewProps = {
 	conversation: ConversationType;
@@ -30,6 +31,10 @@ const ConversationPreview = ({ conversation }: ConversationPreviewProps) => {
 		);
 	};
 	const otherUser = getOtherUser(conversation.participants);
+	let lastMessage =
+		conversation.messages.length > 0
+			? conversation.messages[conversation.messages.length - 1]
+			: null;
 
 	const handleMenuClick = (
 		e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
@@ -58,36 +63,45 @@ const ConversationPreview = ({ conversation }: ConversationPreviewProps) => {
 					align={"center"}
 					justify={"space-between"}
 				>
-					<Flex>
+					<Group className="Avatarstuff" miw={150} w={"50%"}>
 						<Avatar
 							src={otherUser?.pictureURL}
 							radius="xl"
 							size={45}
 							mr={10}
+							component={Link}
+							to={`/dashboard/profile/${otherUser?.username}`}
 						/>
 
-						<Stack gap={-"50%"}>
-							<Group justify="space-around">
-								<Text size="md" fw={700} c={"white"}>
-									{otherUser?.displayName}
-									<Text span c={"dimmed"} size="sm" ml={3}>
-										{otherUser?.username}
-									</Text>
+						<Stack gap={-"50%"} ml={-18}>
+							<Text size="md" fw={700} c={"white"}>
+								{otherUser?.displayName}
+								<Text
+									span
+									c={"dimmed"}
+									size="sm"
+									ml={3}
+									component={Link}
+									to={`/dashboard/profile/${otherUser?.username}`}
+								>
+									{otherUser?.username}
 								</Text>
-
-								<Divider orientation="vertical" />
-
-								<Text c="dimmed" size="xs" ta={"left"}>
-									01/01/2022
-								</Text>
-							</Group>
+							</Text>
 							<Text c={"white"} size="md">
-								This is a preview
+								{lastMessage
+									? lastMessage.content.slice(0, 12) + "..."
+									: "No messages yet"}
 							</Text>
 						</Stack>
-					</Flex>
-					<Stack justify="flex-start" mr={10}>
-						<Menu position="left">
+					</Group>
+					<Divider orientation="vertical" />
+					<Text c="dimmed" size="xs" ta={"left"}>
+						{lastMessage
+							? formatTimeStamp(lastMessage.timestamp.toString())
+							: "Mar 10, 2024, 12:14 AM"}
+					</Text>
+					<Group justify="flex-start" mr={10}>
+						<Menu position="right">
 							<Menu.Target>
 								<IconDots
 									className={classes.dotsIcon}
@@ -112,7 +126,7 @@ const ConversationPreview = ({ conversation }: ConversationPreviewProps) => {
 								</Menu.Item>
 							</Menu.Dropdown>
 						</Menu>
-					</Stack>
+					</Group>
 				</Flex>
 			</UnstyledButton>
 			<Divider />

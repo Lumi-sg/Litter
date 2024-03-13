@@ -24,6 +24,9 @@ export function MessageSearchBox({
 
 	const handleNewConversationClick = () => {
 		console.log(selectedUsername);
+		if (!selectedUsername || selectedUsername === "") {
+			return;
+		}
 		createConversation.mutate(selectedUsername);
 		setSelectedUsername("");
 	};
