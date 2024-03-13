@@ -9,9 +9,11 @@ import Bookmarks from "./MainView/Bookmarks/Bookmarks";
 import Profile from "./MainView/Profile/Profile";
 import SinglePost from "./MainView/SinglePost/SinglePost";
 import Infopanel from "./Infopanel/Infopanel";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate,  } from "react-router-dom";
+
 export function Dashboard() {
-	const { selectedComponent } = useComponentStore();
+	const { selectedComponent, } = useComponentStore();
+
 
 	return (
 		<AppShell
@@ -43,7 +45,7 @@ export function Dashboard() {
 					<Route path="tweet/:tweetID" element={<SinglePost />} />
 				</Routes>
 			</AppShell.Main>
-			{selectedComponent === "Messages" ? null : (
+			{selectedComponent ==="Messages" ? null : (
 				<AppShell.Aside p="md">
 					<Infopanel />
 				</AppShell.Aside>
