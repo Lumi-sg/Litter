@@ -55,10 +55,16 @@ const ConversationPreview = ({ conversation }: ConversationPreviewProps) => {
 
 	return (
 		<>
-			<UnstyledButton className={classes.user} h={80}>
+			<UnstyledButton
+				className={classes.user}
+				h={80}
+				component={Link}
+				to={`/dashboard/messages/${conversation._id}`}
+			>
 				<Flex
 					ml={10}
 					w={"100%"}
+					mih={80}
 					gap={0}
 					align={"center"}
 					justify={"space-between"}
@@ -95,7 +101,7 @@ const ConversationPreview = ({ conversation }: ConversationPreviewProps) => {
 						</Stack>
 					</Group>
 					<Divider orientation="vertical" />
-					<Text c="dimmed" size="xs" ta={"left"}>
+					<Text c="dimmed" size="xs" ta={"left"} ml={5}>
 						{lastMessage
 							? formatTimeStamp(lastMessage.timestamp.toString())
 							: "Mar 10, 2024, 12:14 AM"}
@@ -105,7 +111,10 @@ const ConversationPreview = ({ conversation }: ConversationPreviewProps) => {
 							<Menu.Target>
 								<IconDots
 									className={classes.dotsIcon}
-									onClick={(event) => event.stopPropagation()}
+									onClick={(event) => {
+										event.stopPropagation();
+										event.preventDefault();
+									}}
 								/>
 							</Menu.Target>
 							<Menu.Dropdown
