@@ -102,7 +102,7 @@ const ConversationPreview = ({ conversation }: ConversationPreviewProps) => {
 						</Stack>
 					</Group>
 					<Center>
-					<Divider orientation="vertical" h={50}/>
+					<Divider orientation="vertical" h={60}/>
 					</Center>
 					<Text c="dimmed" size="xs" ta={"left"} ml={5}>
 						{lastMessage
