@@ -21,16 +21,28 @@ import { ConversationType } from "../../../Types/Conversation";
 import { getOtherUserInConversation } from "../../../Helpers/getOtherUserInConversation";
 import { useFollowUser } from "../../../Hooks/useFollowUser";
 import { useUnfollowUser } from "../../../Hooks/useUnfollowUser";
+import { useProfileGet } from "../../../Hooks/useProfileGet";
+import { convertEmailToUsername } from "../../../Helpers/convertEmailToUsername";
 
-type ConversationHeaderProps ={
-	conversation: ConversationType 
-}
+type ConversationHeaderProps = {
+	conversation: ConversationType;
+};
 
-const ConversationHeader = ({ conversation }: ConversationHeaderProps ) => {
+const ConversationHeader = ({ conversation }: ConversationHeaderProps) => {
 	const { user } = useUserStore();
+	const { data: loggedInUser } = useProfileGet(
+		convertEmailToUsername(user?.email as string)
+	);
+
+
 
 	const otherUser = getOtherUserInConversation(conversation.participants);
+	const { mutate: followUser } = useFollowUser(otherUser?.username as string);
+	const { mutate: unfollowUser } = useUnfollowUser(otherUser?.username as string);
 
+	const isLoggedInUserFollowingOtherUser = loggedInUser?.following.includes(
+		otherUser?._id
+	);
 
 	const handleOptionsClick = (
 		e: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -119,22 +131,25 @@ const ConversationHeader = ({ conversation }: ConversationHeaderProps ) => {
 						bg={"#242424"}
 						style={{ border: "1px solid #8d7ac8" }}
 					>
-						<Menu.Item
-							onClick={(event) =>
-								handleMenuClick(event, "Follow")
-							}
-							leftSection={<UserPlus color="white" size={20} />}
-						>
-							<Text c={"white"}>Follow</Text>
-						</Menu.Item>
-						<Menu.Item
-							onClick={(event) =>
-								handleMenuClick(event, "Unfollow")
-							}
-							leftSection={<UserMinus color="white" size={20} />}
-						>
-							<Text c={"white"}>Unfollow</Text>
-						</Menu.Item>
+						{!isLoggedInUserFollowingOtherUser ? (
+							<Menu.Item
+								onClick={() => followUser()}
+								leftSection={
+									<UserPlus color="white" size={20} />
+								}
+							>
+								<Text c={"white"}>Follow</Text>
+							</Menu.Item>
+						) : (
+							<Menu.Item
+							onClick={() => unfollowUser()}
+								leftSection={
+									<UserMinus color="white" size={20} />
+								}
+							>
+								<Text c={"white"}>Unfollow</Text>
+							</Menu.Item>
+						)}
 
 						<Menu.Item
 							onClick={(event) => handleMenuClick(event, "Leave")}
