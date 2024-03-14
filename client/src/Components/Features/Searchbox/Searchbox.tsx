@@ -1,7 +1,7 @@
 import { ActionIcon, rem, Autocomplete } from "@mantine/core";
 import { IconSearch, IconArrowRight } from "@tabler/icons-react";
 import styles from "./Searchbox.module.css";
-import { useGetAllUsers } from "../../../Hooks/useGetAllUsers";
+import { useGetAllUsers } from "../../../Hooks/User Hooks/useGetAllUsers";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
 

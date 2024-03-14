@@ -1,5 +1,5 @@
 import Cookies from "js-cookie";
-import { baseURL } from "../constants/baseURL";
+import { baseURL } from "../../constants/baseURL";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 

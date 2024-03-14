@@ -1,22 +1,22 @@
 import Cookies from "js-cookie";
-import { baseURL } from "../constants/baseURL";
+import { baseURL } from "../../constants/baseURL";
 import axios from "axios";
 import { useMutation } from "@tanstack/react-query";
-import { displayNotification } from "../Helpers/displayNotification";
-import { TweetType } from "../Types/Tweet";
+import { displayNotification } from "../../Helpers/displayNotification";
+import { TweetType } from "../../Types/Tweet";
 import { useQueryClient } from "@tanstack/react-query";
-import { useUserStore } from "../Stores/userStore";
+import { useUserStore } from "../../Stores/userStore";
 
-export const useBookmarkTweet = (tweet: TweetType) => {
-	const firebaseToken = Cookies.get("firebaseToken");
+export const useLikeTweet = (tweet: TweetType) => {
 	const { user } = useUserStore();
+	const firebaseToken = Cookies.get("firebaseToken");
 
 	const queryClient = useQueryClient();
 	return useMutation({
 		mutationFn: async () => {
-			console.log("Bookmarking tweet...");
+			console.log("Liking tweet...");
 			const { data } = await axios.post(
-				`${baseURL}/tweet/${tweet._id}/bookmark`,
+				`${baseURL}/tweet/${tweet._id}/like`,
 				null,
 				{
 					headers: {
@@ -45,10 +45,10 @@ export const useBookmarkTweet = (tweet: TweetType) => {
 			});
 			queryClient.invalidateQueries({
 				queryKey: ["homefeed", user?.uid],
-			})
+			});
 			displayNotification(
-				"Bookmark",
-				"bookmarked",
+				"Like",
+				"liked",
 				"#3cc94d",
 				`${tweet.authorDisplayName}'s`,
 				"tweet"
@@ -57,7 +57,7 @@ export const useBookmarkTweet = (tweet: TweetType) => {
 		onError: () => {
 			displayNotification(
 				"Error",
-				"Failed to bookmark tweet",
+				"Failed to like tweet",
 				"#f87171",
 				"",
 				""

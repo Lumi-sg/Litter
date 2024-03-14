@@ -23,7 +23,7 @@ import TweetComposeModal from "../../Features/TweetComposeModal/TweetComposeModa
 import { useUserStore } from "../../../Stores/userStore";
 import { Link } from "react-router-dom";
 import { convertEmailToUsername } from "../../../Helpers/convertEmailToUsername";
-import { useGetNotifications } from "../../../Hooks/useGetNotifications";
+import { useGetNotifications } from "../../../Hooks/Notification Hooks/useGetNotifications";
 import { NotificationType } from "../../../Types/Notifications";
 
 const Sidebar = () => {
@@ -117,9 +117,7 @@ const Sidebar = () => {
 							<Space w="md" />
 							Notifications
 							<Space w="md" />
-							{isLoading ? (
-								null
-							) : newNotifcations &&
+							{isLoading ? null : newNotifcations &&
 							  newNotifcations.length > 0 ? (
 								<Badge
 									color="violet"

@@ -1,10 +1,10 @@
 import Cookies from "js-cookie";
-import { baseURL } from "../constants/baseURL";
+import { baseURL } from "../../constants/baseURL";
 import axios from "axios";
 import { useMutation } from "@tanstack/react-query";
 import { useQueryClient } from "@tanstack/react-query";
-import { NotificationType } from "../Types/Notifications";
-import { useUserStore } from "../Stores/userStore";
+import { NotificationType } from "../../Types/Notifications";
+import { useUserStore } from "../../Stores/userStore";
 
 export const useMarkNotificationsRead = (notifications: NotificationType[]) => {
 	const firebaseToken = Cookies.get("firebaseToken");

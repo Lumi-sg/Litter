@@ -1,11 +1,11 @@
 import Cookies from "js-cookie";
-import { baseURL } from "../constants/baseURL";
+import { baseURL } from "../../constants/baseURL";
 import axios from "axios";
 import { useMutation } from "@tanstack/react-query";
-import { displayNotification } from "../Helpers/displayNotification";
-import { TweetType } from "../Types/Tweet";
+import { displayNotification } from "../../Helpers/displayNotification";
+import { TweetType } from "../../Types/Tweet";
 import { useQueryClient } from "@tanstack/react-query";
-import { useUserStore } from "../Stores/userStore";
+import { useUserStore } from "../../Stores/userStore";
 
 export const useUnlikeTweet = (tweet: TweetType) => {
 	const { user } = useUserStore();
@@ -32,19 +32,19 @@ export const useUnlikeTweet = (tweet: TweetType) => {
 			});
 			queryClient.invalidateQueries({
 				queryKey: ["likes", user!.uid],
-			})
+			});
 			queryClient.invalidateQueries({
-                queryKey: ["tweets", tweet.authorUsername],
-            });
+				queryKey: ["tweets", tweet.authorUsername],
+			});
 			queryClient.invalidateQueries({
 				queryKey: ["tweets", tweet._id],
-			})
+			});
 			queryClient.invalidateQueries({
-				queryKey:["tweets", tweet.parent]
-			})
+				queryKey: ["tweets", tweet.parent],
+			});
 			queryClient.invalidateQueries({
 				queryKey: ["homefeed", user?.uid],
-			})
+			});
 			displayNotification(
 				"Unlike",
 				"unliked",

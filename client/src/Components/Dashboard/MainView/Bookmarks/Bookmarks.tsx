@@ -1,6 +1,6 @@
 import { TweetComponent } from "../../../Features/TweetComponent/TweetComponent";
 import { TweetVariant } from "../../../../constants/TweetVariant";
-import { useGetUserBookmarks } from "../../../../Hooks/useGetUserBookmarks";
+import { useGetUserBookmarks } from "../../../../Hooks/Bookmark Hooks/useGetUserBookmarks";
 import { useUserStore } from "../../../../Stores/userStore";
 import { convertEmailToUsername } from "../../../../Helpers/convertEmailToUsername";
 import LoadingTweet from "../../../Features/LoadingTweet/LoadingTweet";

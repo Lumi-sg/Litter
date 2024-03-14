@@ -3,7 +3,7 @@ import MainConversation from "../../../../Features/MainConversation/MainConversa
 import ConversationInput from "../../../../Features/ConversationInput/ConversationInput";
 import { Center, Stack } from "@mantine/core";
 import { useParams } from "react-router-dom";
-import { useGetConversation } from "../../../../../Hooks/useGetConversation";
+import { useGetConversation } from "../../../../../Hooks/Conversation Hooks/useGetConversation";
 import LoadingTweet from "../../../../Features/LoadingTweet/LoadingTweet";
 import { ConversationType } from "../../../../../Types/Conversation";
 

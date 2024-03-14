@@ -5,7 +5,7 @@ import { useState } from "react";
 import Posts from "./Posts/Posts";
 import Likes from "./Likes/Likes";
 import { useParams } from "react-router-dom";
-import { useProfileGet } from "../../../../Hooks/useProfileGet";
+import { useProfileGet } from "../../../../Hooks/User Hooks/useProfileGet";
 import { useUserStore } from "../../../../Stores/userStore";
 import { convertEmailToUsername } from "../../../../Helpers/convertEmailToUsername";
 

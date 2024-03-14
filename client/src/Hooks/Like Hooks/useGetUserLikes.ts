@@ -1,16 +1,19 @@
 import Cookies from "js-cookie";
-import { baseURL } from "../constants/baseURL";
+import { baseURL } from "../../constants/baseURL";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
-import { TweetType } from "../Types/Tweet";
+import { TweetType } from "../../Types/Tweet";
+import { useUserStore } from "../../Stores/userStore";
 
-export const useGetUserTweets = (username: string) => {
+export const useGetUserLikes = (username: string) => {
+	const { user } = useUserStore();
 	const firebaseToken = Cookies.get("firebaseToken");
+
 	return useQuery({
-		queryKey: ["tweets", username],
+		queryKey: ["likes", user?.uid],
 		queryFn: async () => {
 			const { data } = await axios.get(
-				`${baseURL}/user/${username}/tweets`,
+				`${baseURL}/user/${username}/likes`,
 				{
 					headers: {
 						Authorization: `Bearer ${firebaseToken}`,
@@ -19,6 +22,6 @@ export const useGetUserTweets = (username: string) => {
 			);
 			return data.tweets as TweetType[];
 		},
-		staleTime: 60000,
+		staleTime: 3000,
 	});
 };

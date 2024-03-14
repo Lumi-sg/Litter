@@ -1,10 +1,10 @@
 import { Avatar, Text, Group, Button } from "@mantine/core";
 import classes from "./UserInfoIcons.module.css";
 import { useUserStore } from "../../../../Stores/userStore";
-import { useFollowUser } from "../../../../Hooks/useFollowUser";
-import { useUnfollowUser } from "../../../../Hooks/useUnfollowUser";
+import { useFollowUser } from "../../../../Hooks/Follow Hooks/useFollowUser";
+import { useUnfollowUser } from "../../../../Hooks/Follow Hooks/useUnfollowUser";
 import FirebaseUserType from "../../../../Types/User";
-import { useProfileGet } from "../../../../Hooks/useProfileGet";
+import { useProfileGet } from "../../../../Hooks/User Hooks/useProfileGet";
 import { Link } from "react-router-dom";
 
 type UserInfoIconsProps = {

@@ -4,8 +4,8 @@ import classes from "./UserCardImage.module.css";
 import { UserInfoIcons } from "./UserInfoIcon";
 import UserType from "../../../../../Types/User";
 import { useUserStore } from "../../../../../Stores/userStore";
-import { useFollowUser } from "../../../../../Hooks/useFollowUser";
-import { useUnfollowUser } from "../../../../../Hooks/useUnfollowUser.ts";
+import { useFollowUser } from "../../../../../Hooks/Follow Hooks/useFollowUser.ts";
+import { useUnfollowUser } from "../../../../../Hooks/Follow Hooks/useUnfollowUser.ts";
 import LoadingTweet from "../../../../Features/LoadingTweet/LoadingTweet.tsx";
 
 type UserCardImageProps = {

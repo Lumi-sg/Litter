@@ -1,11 +1,11 @@
 import Cookies from "js-cookie";
-import { baseURL } from "../constants/baseURL";
+import { baseURL } from "../../constants/baseURL";
 import axios from "axios";
 import { useMutation } from "@tanstack/react-query";
-import { displayNotification } from "../Helpers/displayNotification";
+import { displayNotification } from "../../Helpers/displayNotification";
 import { useQueryClient } from "@tanstack/react-query";
-import { useUserStore } from "../Stores/userStore";
-import { convertEmailToUsername } from "../Helpers/convertEmailToUsername";
+import { useUserStore } from "../../Stores/userStore";
+import { convertEmailToUsername } from "../../Helpers/convertEmailToUsername";
 
 export const useUnfollowUser = (usernameToUnfollow: string) => {
 	const firebaseToken = Cookies.get("firebaseToken");

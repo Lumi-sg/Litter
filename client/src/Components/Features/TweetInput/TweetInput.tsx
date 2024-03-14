@@ -14,8 +14,8 @@ import "./test.css";
 import { useEffect, useState } from "react";
 import { convertEmailToUsername } from "../../../Helpers/convertEmailToUsername";
 import { modals } from "@mantine/modals";
-import { useTweetPost } from "../../../Hooks/useTweetPost";
-import { useTweetReply } from "../../../Hooks/useTweetReply";
+import { useTweetPost } from "../../../Hooks/Tweet Hooks/useTweetPost";
+import { useTweetReply } from "../../../Hooks/Tweet Hooks/useTweetReply";
 import { TweetType } from "../../../Types/Tweet";
 type TweetInputProps = {
 	placeholderMessage: string;

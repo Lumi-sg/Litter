@@ -3,8 +3,8 @@ import { MessageSearchBox } from "../../../../Features/MessageSearchBox/MessageS
 import ConversationPreview from "../../../../Features/ConversationPreview/ConversationPreview";
 import { Divider, Flex, ScrollArea, Space, Stack } from "@mantine/core";
 import styles from "./LeftMessageContainer.module.css";
-import { useGetAllUsers } from "../../../../../Hooks/useGetAllUsers";
-import { useGetUserConversations } from "../../../../../Hooks/useGetUserConversations";
+import { useGetAllUsers } from "../../../../../Hooks/User Hooks/useGetAllUsers";
+import { useGetUserConversations } from "../../../../../Hooks/Conversation Hooks/useGetUserConversations";
 import LoadingTweet from "../../../../Features/LoadingTweet/LoadingTweet";
 import { useUserStore } from "../../../../../Stores/userStore";
 import { convertEmailToUsername } from "../../../../../Helpers/convertEmailToUsername";

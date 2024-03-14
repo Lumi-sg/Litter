@@ -1,11 +1,10 @@
 import { SingleAccountComponent } from "./SingleAccountComponent/SingleAccountComponent";
 import { Text } from "@mantine/core";
-import { useGetTheeRandomUsers } from "../../../Hooks/useGetTheeRandomUsers";
-import { useProfileGet } from "../../../Hooks/useProfileGet";
+import { useGetTheeRandomUsers } from "../../../Hooks/User Hooks/useGetTheeRandomUsers";
+import { useProfileGet } from "../../../Hooks/User Hooks/useProfileGet";
 import LoadingTweet from "../LoadingTweet/LoadingTweet";
 import { useUserStore } from "../../../Stores/userStore";
 import { convertEmailToUsername } from "../../../Helpers/convertEmailToUsername";
-
 
 const AccountsShowcase = () => {
 	const { user } = useUserStore();
@@ -16,7 +15,7 @@ const AccountsShowcase = () => {
 
 	return (
 		<>
-			{isLoading  && !users ? (
+			{isLoading && !users ? (
 				<LoadingTweet />
 			) : (
 				<>

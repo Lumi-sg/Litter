@@ -6,7 +6,7 @@ import UserType from "../../../Types/User";
 import { useUserStore } from "../../../Stores/userStore";
 import { convertEmailToUsername } from "../../../Helpers/convertEmailToUsername";
 import { useState } from "react";
-import { useCreateConversation } from "../../../Hooks/useCreateConversation";
+import { useCreateConversation } from "../../../Hooks/Conversation Hooks/useCreateConversation";
 
 type MessageSearchBoxProps = {
 	allUsers: UserType[] | undefined;

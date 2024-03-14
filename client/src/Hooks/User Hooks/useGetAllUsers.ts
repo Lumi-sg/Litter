@@ -1,8 +1,8 @@
 import Cookies from "js-cookie";
-import { baseURL } from "../constants/baseURL";
+import { baseURL } from "../../constants/baseURL";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
-import { UserType } from "../Types/User";
+import { UserType } from "../../Types/User";
 
 export const useGetAllUsers = () => {
 	const firebaseToken = Cookies.get("firebaseToken");

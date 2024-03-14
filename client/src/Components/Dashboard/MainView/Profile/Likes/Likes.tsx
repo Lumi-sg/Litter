@@ -1,6 +1,6 @@
 import { TweetComponent } from "../../../../Features/TweetComponent/TweetComponent";
 import { TweetVariant } from "../../../../../constants/TweetVariant";
-import { useGetUserLikes } from "../../../../../Hooks/useGetUserLikes";
+import { useGetUserLikes } from "../../../../../Hooks/Like Hooks/useGetUserLikes";
 import { useParams } from "react-router-dom";
 import LoadingTweet from "../../../../Features/LoadingTweet/LoadingTweet";
 import { Alert, Center } from "@mantine/core";

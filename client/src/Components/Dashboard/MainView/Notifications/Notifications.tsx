@@ -10,9 +10,9 @@ import {
 } from "@mantine/core";
 import LoadingTweet from "../../../Features/LoadingTweet/LoadingTweet";
 import formatTimeStamp from "../../../../Helpers/formatTimeStamp";
-import { useGetNotifications } from "../../../../Hooks/useGetNotifications";
-import { useMarkNotificationsRead } from "../../../../Hooks/useMarkNotificationsRead";
-import { useMarkSingleNotificationRead } from "../../../../Hooks/useMarkSingleNotificationRead";
+import { useGetNotifications } from "../../../../Hooks/Notification Hooks/useGetNotifications";
+import { useMarkNotificationsRead } from "../../../../Hooks/Notification Hooks/useMarkNotificationsRead";
+import { useMarkSingleNotificationRead } from "../../../../Hooks/Notification Hooks/useMarkSingleNotificationRead";
 import { NotificationType } from "../../../../Types/Notifications";
 import { Link } from "react-router-dom";
 
@@ -94,7 +94,10 @@ const Notifications = () => {
 								>
 									replied
 								</Text>
-								<Text fz="md" ml={-10}> to your tweet</Text>
+								<Text fz="md" ml={-10}>
+									{" "}
+									to your tweet
+								</Text>
 							</>
 						)}
 						{notification.type === "follow" && (

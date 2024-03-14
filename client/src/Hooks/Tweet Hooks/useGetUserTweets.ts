@@ -1,19 +1,16 @@
 import Cookies from "js-cookie";
-import { baseURL } from "../constants/baseURL";
+import { baseURL } from "../../constants/baseURL";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
-import { TweetType } from "../Types/Tweet";
-import { useUserStore } from "../Stores/userStore";
+import { TweetType } from "../../Types/Tweet";
 
-export const useGetUserBookmarks = (username: string) => {
-	const { user } = useUserStore();
+export const useGetUserTweets = (username: string) => {
 	const firebaseToken = Cookies.get("firebaseToken");
-	console.log("Fetching bookmarks...");
 	return useQuery({
-		queryKey: ["bookmarks", user?.uid],
+		queryKey: ["tweets", username],
 		queryFn: async () => {
 			const { data } = await axios.get(
-				`${baseURL}/user/${username}/bookmarks`,
+				`${baseURL}/user/${username}/tweets`,
 				{
 					headers: {
 						Authorization: `Bearer ${firebaseToken}`,
@@ -22,6 +19,6 @@ export const useGetUserBookmarks = (username: string) => {
 			);
 			return data.tweets as TweetType[];
 		},
-		staleTime: 3000,
+		staleTime: 60000,
 	});
 };

@@ -1,22 +1,23 @@
 import Cookies from "js-cookie";
-import { baseURL } from "../constants/baseURL";
+import { baseURL } from "../../constants/baseURL";
 import axios from "axios";
 import { useMutation } from "@tanstack/react-query";
-import { displayNotification } from "../Helpers/displayNotification";
+import { displayNotification } from "../../Helpers/displayNotification";
 import { modals } from "@mantine/modals";
 import { useQueryClient } from "@tanstack/react-query";
+import { useUserStore } from "../../Stores/userStore";
 
-export const useTweetPost = (tweetContent: string, tweetAuthor: string) => {
+export const useCreateConversation = () => {
 	const firebaseToken = Cookies.get("firebaseToken");
 	const queryClient = useQueryClient();
-
+	const { user } = useUserStore();
 	return useMutation({
-		mutationFn: async () => {
-			console.log("Creating tweet...");
+		mutationFn: async (recipientUsername: string) => {
+			console.log("Creating conversation...");
 			const { data } = await axios.post(
-				`${baseURL}/tweet/create`,
+				`${baseURL}/conversation/create`,
 				{
-					tweetContent,
+					recipientUsername,
 				},
 				{
 					headers: {
@@ -27,18 +28,14 @@ export const useTweetPost = (tweetContent: string, tweetAuthor: string) => {
 
 			return data;
 		},
-
 		onSuccess: () => {
 			queryClient.invalidateQueries({
-				queryKey: ["tweets", tweetAuthor],
+				queryKey: ["conversations", user?.uid as string],
 			});
-			queryClient.invalidateQueries({
-				queryKey: ["profile", tweetAuthor],
-			})
 
 			displayNotification(
-				"Tweet",
-				"have successfully tweeted",
+				"Conversation",
+				`have successfully created a conversation.`,
 				"#4db5e5",
 				``,
 				""
@@ -47,9 +44,13 @@ export const useTweetPost = (tweetContent: string, tweetAuthor: string) => {
 		},
 
 		onError: () => {
-			displayNotification("Error", "Failed to tweet", "#f87171", "", "");
+			displayNotification(
+				"Error",
+				"Failed to create conversation",
+				"#f87171",
+				"",
+				""
+			);
 		},
-
-		retry: 1,
 	});
 };

@@ -2,7 +2,7 @@ import { TweetComponent } from "../../../Features/TweetComponent/TweetComponent"
 import { TweetVariant } from "../../../../constants/TweetVariant";
 import TweetInput from "../../../Features/TweetInput/TweetInput";
 import { useEffect } from "react";
-import { getTweet } from "../../../../Hooks/useGetTweet";
+import { getTweet } from "../../../../Hooks/Tweet Hooks/useGetTweet";
 import { useParams } from "react-router-dom";
 import TopOfSinglePost from "../../../Features/TopOfSinglePost/TopOfSinglePost";
 import LoadingTweet from "../../../Features/LoadingTweet/LoadingTweet";

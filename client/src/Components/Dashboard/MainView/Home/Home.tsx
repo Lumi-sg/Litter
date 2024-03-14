@@ -1,10 +1,8 @@
 import { TweetComponent } from "../../../Features/TweetComponent/TweetComponent";
 import TweetInput from "../../../Features/TweetInput/TweetInput";
 import { TweetVariant } from "../../../../constants/TweetVariant";
-import useGetHomeFeed from "../../../../Hooks/useGetHomeFeed";
+import useGetHomeFeed from "../../../../Hooks/Tweet Hooks/useGetHomeFeed";
 import LoadingTweet from "../../../Features/LoadingTweet/LoadingTweet";
-
-
 
 const Home = () => {
 	const { data: homeFeedTweets, isLoading } = useGetHomeFeed();

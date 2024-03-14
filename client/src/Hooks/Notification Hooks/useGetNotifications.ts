@@ -1,9 +1,9 @@
 import Cookies from "js-cookie";
-import { baseURL } from "../constants/baseURL";
+import { baseURL } from "../../constants/baseURL";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
-import { useUserStore } from "../Stores/userStore";
-import { NotificationType } from "../Types/Notifications";
+import { useUserStore } from "../../Stores/userStore";
+import { NotificationType } from "../../Types/Notifications";
 
 export const useGetNotifications = (username: string) => {
 	const { user } = useUserStore();
@@ -22,6 +22,6 @@ export const useGetNotifications = (username: string) => {
 			);
 			return data.notifications as NotificationType[];
 		},
-        refetchInterval: 60000
+		refetchInterval: 60000,
 	});
 };

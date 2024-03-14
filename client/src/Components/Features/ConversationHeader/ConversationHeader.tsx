@@ -19,9 +19,9 @@ import { displayNotification } from "../../../Helpers/displayNotification";
 import styles from "./ConversationHeader.module.css";
 import { ConversationType } from "../../../Types/Conversation";
 import { getOtherUserInConversation } from "../../../Helpers/getOtherUserInConversation";
-import { useFollowUser } from "../../../Hooks/useFollowUser";
-import { useUnfollowUser } from "../../../Hooks/useUnfollowUser";
-import { useProfileGet } from "../../../Hooks/useProfileGet";
+import { useFollowUser } from "../../../Hooks/Follow Hooks/useFollowUser";
+import { useUnfollowUser } from "../../../Hooks/Follow Hooks/useUnfollowUser";
+import { useProfileGet } from "../../../Hooks/User Hooks/useProfileGet";
 import { convertEmailToUsername } from "../../../Helpers/convertEmailToUsername";
 
 type ConversationHeaderProps = {
