@@ -1,10 +1,17 @@
-import { Flex, ScrollArea, Stack } from "@mantine/core";
+import { Center, Flex, ScrollArea, Stack } from "@mantine/core";
 import MessageCard from "../MessageCard/MessageCard";
 import { useRef, useEffect } from "react";
 import styles from "./MainConversation.module.css";
+import { ConversationType } from "../../../Types/Conversation";
+import { useUserStore } from "../../../Stores/userStore";
 
-const MainConversation = () => {
+type MainConversationProps = {
+	conversation: ConversationType;
+};
+
+const MainConversation = ({ conversation }: MainConversationProps) => {
 	const scrollHere = useRef<HTMLDivElement>(null);
+	const { user } = useUserStore();
 
 	const handleScroll = () => {
 		if (scrollHere.current) {
@@ -23,69 +30,30 @@ const MainConversation = () => {
 				mah={"calc(100vh - 13.25rem)"}
 				classNames={styles}
 			>
-				<Stack align="flex-end" mr={10}>
-					<MessageCard userMessage={false} />
-				</Stack>
-				<Stack align="flex-start" mr={10}>
-					<MessageCard userMessage={true} />
-				</Stack>{" "}
-				<Stack align="flex-end" mr={10}>
-					<MessageCard userMessage={false} />
-				</Stack>
-				<Stack align="flex-start" mr={10}>
-					<MessageCard userMessage={true} />
-				</Stack>{" "}
-				<Stack align="flex-end" mr={10}>
-					<MessageCard userMessage={false} />
-				</Stack>
-				<Stack align="flex-start" mr={10}>
-					<MessageCard userMessage={true} />
-				</Stack>{" "}
-				<Stack align="flex-end" mr={10}>
-					<MessageCard userMessage={false} />
-				</Stack>
-				<Stack align="flex-start" mr={10}>
-					<MessageCard userMessage={true} />
-				</Stack>{" "}
-				<Stack align="flex-end" mr={10}>
-					<MessageCard userMessage={false} />
-				</Stack>
-				<Stack align="flex-start" mr={10}>
-					<MessageCard userMessage={true} />
-				</Stack>{" "}
-				<Stack align="flex-end" mr={10}>
-					<MessageCard userMessage={false} />
-				</Stack>
-				<Stack align="flex-start" mr={10}>
-					<MessageCard userMessage={true} />
-				</Stack>{" "}
-				<Stack align="flex-end" mr={10}>
-					<MessageCard userMessage={false} />
-				</Stack>
-				<Stack align="flex-start" mr={10}>
-					<MessageCard userMessage={true} />
-				</Stack>{" "}
-				<Stack align="flex-end" mr={10}>
-					<MessageCard userMessage={false} />
-				</Stack>
-				<Stack align="flex-start" mr={10}>
-					<MessageCard userMessage={true} />
-				</Stack>{" "}
-				<Stack align="flex-end" mr={10}>
-					<MessageCard userMessage={false} />
-				</Stack>
-				<Stack align="flex-start" mr={10}>
-					<MessageCard userMessage={true} />
-				</Stack>{" "}
-				<Stack align="flex-end" mr={10}>
-					<MessageCard userMessage={false} />
-				</Stack>
-				<Stack align="flex-start" mr={10}>
-					<MessageCard userMessage={true} />
-				</Stack>{" "}
-				<Stack align="flex-end" mr={10}>
-					<MessageCard userMessage={false} />
-				</Stack>
+				{conversation.messages.length === 0 && (
+					<Center h={"100%"} w={"100%"}>
+						Start your conversation!
+					</Center>
+				)}
+				{conversation.messages.map((message) => (
+					<Stack
+						align={
+							message.senderFirebaseID === user?.uid
+								? "flex-end"
+								: "flex-start"
+						}
+						mr={10}
+					>
+						<MessageCard
+							key={message._id}
+							message={message}
+							isLoggedInUserMessage={
+								message.senderFirebaseID === user?.uid
+							}
+						/>
+					</Stack>
+				))}
+
 				<div ref={scrollHere}></div>
 			</ScrollArea>
 		</Flex>

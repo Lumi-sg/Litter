@@ -9,24 +9,29 @@ import { ConversationType } from "../../../../../Types/Conversation";
 
 const RightMessageContainer = () => {
 	const { conversationID } = useParams();
-	const { data: conversation, isLoading:isConversationLoading } = useGetConversation(
-		conversationID as string
-	);
+	const { data: conversation, isLoading: isConversationLoading } =
+		useGetConversation(conversationID as string);
 	const showConversation = conversationID && !isConversationLoading;
 
 	return (
 		<Stack h={"calc(100vh - 5.7rem)"} flex={1}>
 			{" "}
-			{!showConversation ? (
+			{!showConversation && !isConversationLoading ? (
 				<Center h={"100%"} w={"100%"}>
 					Start a new conversation!
 				</Center>
 			) : isConversationLoading ? (
-				<LoadingTweet />
+				<Center>
+					<LoadingTweet />
+				</Center>
 			) : (
 				<>
-					<ConversationHeader conversation={conversation as ConversationType} />
-					<MainConversation />
+					<ConversationHeader
+						conversation={conversation as ConversationType}
+					/>
+					<MainConversation
+						conversation={conversation as ConversationType}
+					/>
 					<ConversationInput />
 				</>
 			)}
