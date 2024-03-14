@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import LeftMessageContainer from "./LeftMessageContainer/LeftMessageContainer";
 import RightMessageContainer from "./RightMessageContainer/RightMessageContainer";
-import { Center, Divider, Flex, Group, Stack } from "@mantine/core";
+import { Center, Divider, Flex, Group } from "@mantine/core";
 import { useComponentStore } from "../../../../Stores/componentStore";
 import { Route, Routes } from "react-router-dom";
 

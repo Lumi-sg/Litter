@@ -10,12 +10,9 @@ import {
 	Menu as MenuIcon,
 	UserPlus,
 	UserMinus,
-	Ban,
-	Checkbox,
 	Trash,
 } from "tabler-icons-react";
 import { useUserStore } from "../../../Stores/userStore";
-import { displayNotification } from "../../../Helpers/displayNotification";
 import styles from "./ConversationHeader.module.css";
 import { ConversationType } from "../../../Types/Conversation";
 import { getOtherUserInConversation } from "../../../Helpers/getOtherUserInConversation";
@@ -23,6 +20,7 @@ import { useFollowUser } from "../../../Hooks/Follow Hooks/useFollowUser";
 import { useUnfollowUser } from "../../../Hooks/Follow Hooks/useUnfollowUser";
 import { useProfileGet } from "../../../Hooks/User Hooks/useProfileGet";
 import { convertEmailToUsername } from "../../../Helpers/convertEmailToUsername";
+import { Link } from "react-router-dom";
 
 type ConversationHeaderProps = {
 	conversation: ConversationType;
@@ -48,7 +46,13 @@ const ConversationHeader = ({ conversation }: ConversationHeaderProps) => {
 		<>
 			<Group justify="space-between">
 				<Group>
-					<Avatar src={otherUser?.pictureURL} size={40} radius="xl" />
+					<Avatar
+						src={otherUser?.pictureURL}
+						size={40}
+						radius="xl"
+						component={Link}
+						to={`/dashboard/profile/${otherUser?.username}`}
+					/>
 					<Text c={"white"} size="md" fw={700}>
 						{otherUser?.displayName}
 					</Text>
