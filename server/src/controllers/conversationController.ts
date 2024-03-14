@@ -80,7 +80,7 @@ export const getConversation = asyncHandler(
 );
 
 export const createNewMessage = [
-	body("content")
+	body("messageContent")
 		.trim()
 		.notEmpty()
 		.withMessage("Please enter a message")
@@ -105,7 +105,7 @@ export const createNewMessage = [
 				firebaseID: (req as any).currentUser.uid,
 			});
 			const receiver = await UserModel.findOne({
-				recipientUsername: req.body.recipientUsername,
+				username: req.body.recipientUsername,
 			});
 			if (!user || !receiver) {
 				session.abortTransaction();

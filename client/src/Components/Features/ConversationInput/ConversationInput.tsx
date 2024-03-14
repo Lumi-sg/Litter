@@ -2,12 +2,28 @@ import { ActionIcon, TextInput, rem } from "@mantine/core";
 import { IconArrowRight } from "@tabler/icons-react";
 import styles from "./ConversationInput.module.css";
 import { useState } from "react";
+import { ConversationType } from "../../../Types/Conversation";
+import { useCreateNewMessage } from "../../../Hooks/Conversation Hooks/useCreateNewMessage";
+import { getOtherUserInConversation } from "../../../Helpers/getOtherUserInConversation";
 
-const ConversationInput = () => {
+type ConversationInputProps = {
+	conversation: ConversationType;
+};
+
+const ConversationInput = ({ conversation }: ConversationInputProps) => {
+	const otherUser = getOtherUserInConversation(conversation.participants);
 	const [message, setMessage] = useState("");
 
-	const handleSubmit = () => {
+	const useCreateNewMessageMutation = useCreateNewMessage(
+		conversation._id,
+		message,
+		otherUser?.username as string
+	);
+
+	const handleSubmit = async () => {
+		await useCreateNewMessageMutation.mutate();
 		setMessage("");
+		
 	};
 	return (
 		<>

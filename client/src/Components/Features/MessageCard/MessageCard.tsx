@@ -10,11 +10,11 @@ const MessageCard = ({ message, isLoggedInUserMessage }: MessageCardProps) => {
 	return (
 		<>
 			<Box
-				bg={isLoggedInUserMessage ? "#2e2e2e" : "#2C2A32"}
+				bg={!isLoggedInUserMessage ? "#2e2e2e" : "#2C2A32"}
 				p={20}
 				style={{
 					borderRadius: 10,
-					border: isLoggedInUserMessage
+					border: !isLoggedInUserMessage
 						? "1px solid #424242"
 						: "1px solid #8d7ac8",
 				}}

@@ -32,7 +32,7 @@ const RightMessageContainer = () => {
 					<MainConversation
 						conversation={conversation as ConversationType}
 					/>
-					<ConversationInput />
+					<ConversationInput conversation={conversation as ConversationType}/>
 				</>
 			)}
 		</Stack>
