@@ -31,11 +31,7 @@ const MessageCard = ({ message, isLoggedInUserMessage }: MessageCardProps) => {
 				maw={"50%"}
 			>
 				<Center>
-					<Text
-						size="md"
-						c={"white"}
-						ta="left"
-					>
+					<Text size="md" c={"white"} ta="left">
 						{message.content}
 					</Text>
 				</Center>

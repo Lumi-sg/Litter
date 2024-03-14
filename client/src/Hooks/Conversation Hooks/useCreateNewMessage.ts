@@ -3,8 +3,6 @@ import { baseURL } from "../../constants/baseURL";
 import axios from "axios";
 import { useMutation } from "@tanstack/react-query";
 import { useQueryClient } from "@tanstack/react-query";
-import { displayNotification } from "../../Helpers/displayNotification";
-import { modals } from "@mantine/modals";
 
 export const useCreateNewMessage = (
 	conversationID: string,
