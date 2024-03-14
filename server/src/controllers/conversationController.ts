@@ -93,6 +93,7 @@ export const createNewMessage = [
 		const session = await ConversationModel.startSession();
 		session.startTransaction();
 		try {
+			console.log("Creating message...");
 			const errors = validationResult(req);
 			if (!errors.isEmpty()) {
 				session.abortTransaction();
@@ -104,7 +105,7 @@ export const createNewMessage = [
 				firebaseID: (req as any).currentUser.uid,
 			});
 			const receiver = await UserModel.findOne({
-				username: req.body.recipientUsername,
+				recipientUsername: req.body.recipientUsername,
 			});
 			if (!user || !receiver) {
 				session.abortTransaction();
@@ -126,7 +127,7 @@ export const createNewMessage = [
 			}
 
 			const newMessage = {
-				content: req.body.content,
+				content: req.body.messageContent,
 				sender: user,
 				senderFirebaseID: (req as any).currentUser.uid,
 				receiver: receiver,
