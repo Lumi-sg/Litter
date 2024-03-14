@@ -460,7 +460,10 @@ export const getUserConversations = asyncHandler(
 		}
 		const conversations = await ConversationModel.find({
 			participants: { $in: [user] },
-		}).populate("participants");
+		})
+			.populate("participants")
+			.sort("-messages.timestamp");
+
 		res.status(200).json({ conversations });
 	}
 );

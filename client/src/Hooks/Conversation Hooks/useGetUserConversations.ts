@@ -23,5 +23,6 @@ export const useGetUserConversations = (username: string) => {
 			return data.conversations as ConversationType[];
 		},
 		staleTime: 3000,
+		refetchInterval: 60000,
 	});
 };
