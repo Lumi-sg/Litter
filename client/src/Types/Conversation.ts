@@ -6,4 +6,6 @@ export type ConversationType = Document & {
 	_id?: Types.ObjectId;
 	participants: UserType[];
 	messages: MessageType[];
+	createdAt: Date;
+	updatedAt: Date;
 };

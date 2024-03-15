@@ -76,16 +76,15 @@ const ConversationPreview = ({ conversation }: ConversationPreviewProps) => {
 						/>
 
 						<Stack gap={-"50%"} ml={-18}>
-							<Text size="md" fw={700} c={"white"}>
+							<Text
+								size="md"
+								fw={700}
+								c={"white"}
+								component={Link}
+								to={`/dashboard/profile/${otherUser?.username}`}
+							>
 								{otherUser?.displayName}
-								<Text
-									span
-									c={"dimmed"}
-									size="sm"
-									ml={3}
-									component={Link}
-									to={`/dashboard/profile/${otherUser?.username}`}
-								>
+								<Text span c={"dimmed"} size="sm" ml={3}>
 									{otherUser?.username}
 								</Text>
 							</Text>
@@ -102,7 +101,9 @@ const ConversationPreview = ({ conversation }: ConversationPreviewProps) => {
 					<Text c="dimmed" size="xs" ta={"left"} ml={5}>
 						{lastMessage
 							? formatTimeStamp(lastMessage.timestamp.toString())
-							: "Mar 10, 2024, 12:14 AM"}
+							: formatTimeStamp(
+									conversation.createdAt.toString()
+							  )}
 					</Text>
 					<Group justify="flex-start" mr={10}>
 						<Menu position="right">

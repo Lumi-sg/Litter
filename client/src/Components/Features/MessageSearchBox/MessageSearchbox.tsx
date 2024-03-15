@@ -70,6 +70,7 @@ export function MessageSearchBox({ allUsers }: MessageSearchBoxProps) {
 					radius="xl"
 					color={"#8d7ac8"}
 					variant="filled"
+					disabled={!selectedUsername || selectedUsername === ""}
 				>
 					<MessagePlus
 						style={{ width: rem(26), height: rem(26) }}
