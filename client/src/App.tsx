@@ -9,6 +9,7 @@ import { useUserStore } from "./Stores/userStore";
 import "@mantine/notifications/styles.css";
 import refreshFirebaseToken from "./Helpers/refreshFirebaseToken";
 import { useEffect } from "react";
+import { ErrorPage } from "./Components/Dashboard/ErrorPage/ErrorPage";
 
 const InitialRoute: React.FC = () => {
 	const { isLoggedIn } = useUserStore();
@@ -40,6 +41,15 @@ const router = createBrowserRouter([
 	{
 		path: "/dashboard/*",
 		element: <ProtectedDashboardRoute />,
+	},
+
+	{
+		path: "/error",
+		element: <ErrorPage />,
+	},
+	{
+		path: "*",
+		element: <Navigate to="/error" />,
 	},
 ]);
 

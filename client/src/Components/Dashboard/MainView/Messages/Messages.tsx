@@ -4,6 +4,7 @@ import RightMessageContainer from "./RightMessageContainer/RightMessageContainer
 import { Center, Divider, Flex, Group } from "@mantine/core";
 import { useComponentStore } from "../../../../Stores/componentStore";
 import { Route, Routes } from "react-router-dom";
+import { ErrorPage } from "../../ErrorPage/ErrorPage";
 
 const Messages = () => {
 	const { setSelectedComponent } = useComponentStore();
@@ -43,6 +44,7 @@ const Messages = () => {
 				<Route
 					path="/:conversationID"
 					element={<RightMessageContainer />}
+					errorElement={<ErrorPage />}
 				/>
 			</Routes>
 			<Divider orientation="vertical" />

@@ -8,6 +8,8 @@ import { useParams } from "react-router-dom";
 import { useProfileGet } from "../../../../Hooks/User Hooks/useProfileGet";
 import { useUserStore } from "../../../../Stores/userStore";
 import { convertEmailToUsername } from "../../../../Helpers/convertEmailToUsername";
+import { ErrorPage } from "../../ErrorPage/ErrorPage";
+import LoadingTweet from "../../../Features/LoadingTweet/LoadingTweet";
 
 export type ProfileViewType = "posts" | "likes";
 
@@ -16,7 +18,7 @@ const Profile = () => {
 	const { user } = useUserStore();
 	const [profileView, setProfileView] = useState<ProfileViewType>("posts");
 
-	const { data: profileUserData, isLoading } = useProfileGet(
+	const { data: profileUserData, isLoading, error } = useProfileGet(
 		username as string
 	);
 	const { data: currentUserData } = useProfileGet(
@@ -35,8 +37,13 @@ const Profile = () => {
 				return <Likes />;
 		}
 	};
+	if (error) {
+		return <ErrorPage errorMessage={error.message} />;
+	}
 
-	return isLoading ? null : (
+	return isLoading ? (
+		<LoadingTweet />
+	) : (
 		<div>
 			<Flex h={"100%"} w={"100%"} direction="column">
 				<UserCardImage

@@ -18,5 +18,6 @@ export const useProfileGet = (username: string) => {
 			return data.user as UserType;
 		},
 		staleTime: 3000,
+
 	});
 };
