@@ -462,7 +462,8 @@ export const getUserConversations = asyncHandler(
 			participants: { $in: [user] },
 		})
 			.populate("participants")
-			.sort("-messages.timestamp");
+			// .sort("-messages.timestamp");
+			.sort({ updatedAt: -1 });
 
 		res.status(200).json({ conversations });
 	}

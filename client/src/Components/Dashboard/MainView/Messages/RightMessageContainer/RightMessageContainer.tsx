@@ -20,7 +20,7 @@ const RightMessageContainer = () => {
 				<Center h={"100%"} w={"100%"}>
 					Start a new conversation!
 				</Center>
-			) : isConversationLoading ? (
+			) : isConversationLoading ?  (
 				<Center>
 					<LoadingTweet />
 				</Center>
