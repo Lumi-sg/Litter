@@ -7,10 +7,11 @@ import { useParams } from "react-router-dom";
 import TopOfSinglePost from "../../../Features/TopOfSinglePost/TopOfSinglePost";
 import LoadingTweet from "../../../Features/LoadingTweet/LoadingTweet";
 import { Space } from "@mantine/core";
+import { ErrorPage } from "../../ErrorPage/ErrorPage";
 
 const SinglePost = () => {
 	const { tweetID } = useParams();
-	const { data: tweet, isLoading } = getTweet(tweetID as string);
+	const { data: tweet, isLoading, error } = getTweet(tweetID as string);
 	const { data: parentTweet, isLoading: parentTweetIsLoading } = getTweet(
 		tweet?.parent?.toString() as string
 	);
@@ -37,6 +38,9 @@ const SinglePost = () => {
 
 	if (isLoading || parentTweetIsLoading) {
 		return <LoadingTweet />;
+	}
+	if (error) {
+		return <ErrorPage errorMessage={error.message} />;
 	}
 
 	return (

@@ -10,12 +10,18 @@ import {
 import { Illustration } from "./Illustration";
 import classes from "./ErrorPage.module.css";
 import { Link } from "react-router-dom";
+import { useComponentStore } from "../../../Stores/componentStore";
 
 type errorProps = {
 	errorMessage?: string;
 };
 
 export function ErrorPage(props: errorProps) {
+	const { setSelectedComponent } = useComponentStore();
+
+	const handleHomeClick = () => {
+		setSelectedComponent("Home");
+	};
 	return (
 		<Container className={classes.root}>
 			<div className={classes.inner}>
@@ -29,6 +35,7 @@ export function ErrorPage(props: errorProps) {
 								size="lg"
 								ta="center"
 								className={classes.description}
+								m={30}
 							>
 								Page you are trying to open does not exist. You
 								may have mistyped the address, or the page has
@@ -36,9 +43,9 @@ export function ErrorPage(props: errorProps) {
 								an error contact support.
 							</Text>
 						</Center>
-            <Center>
-						<Text>Error: {props.errorMessage}</Text>
-            </Center>
+						<Center>
+							<Text>Error: {props.errorMessage}</Text>
+						</Center>
 					</Stack>
 					<Group justify="center" mt={30}>
 						<Button
@@ -46,8 +53,9 @@ export function ErrorPage(props: errorProps) {
 							variant="outline"
 							color="violet"
 							radius={"xl"}
-              component={Link}
-              to="/dashboard/home"
+							component={Link}
+							to="/dashboard/home"
+							onClick={handleHomeClick}
 						>
 							Take me back to home page
 						</Button>

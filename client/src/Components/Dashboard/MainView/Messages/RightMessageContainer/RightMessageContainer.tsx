@@ -6,12 +6,17 @@ import { useParams } from "react-router-dom";
 import { useGetConversation } from "../../../../../Hooks/Conversation Hooks/useGetConversation";
 import LoadingTweet from "../../../../Features/LoadingTweet/LoadingTweet";
 import { ConversationType } from "../../../../../Types/Conversation";
+import { ErrorPage } from "../../../ErrorPage/ErrorPage";
 
 const RightMessageContainer = () => {
 	const { conversationID } = useParams();
-	const { data: conversation, isLoading: isConversationLoading } =
+	const { data: conversation, isLoading: isConversationLoading, error } =
 		useGetConversation(conversationID as string);
 	const showConversation = conversationID && !isConversationLoading;
+
+	if (error) {
+		return <ErrorPage errorMessage={error.message} />;
+	}
 
 	return (
 		<Stack h={"calc(100vh - 5.7rem)"} flex={1}>
