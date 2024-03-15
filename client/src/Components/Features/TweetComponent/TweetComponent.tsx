@@ -17,8 +17,6 @@ import {
 	Dots,
 	UserPlus,
 	UserMinus,
-	Ban,
-	Checkbox,
 } from "tabler-icons-react";
 import { useComponentStore } from "../../../Stores/componentStore";
 import { useParentTweetStoreAuthor } from "../../../Stores/parentTweetStoreAuthor";
@@ -134,24 +132,7 @@ export function TweetComponent({
 			case "Unfollow":
 				mutateUnfollowUser();
 				return;
-			// case "Block":
-			// 	displayNotification(
-			// 		action,
-			// 		"blocked",
-			// 		"red",
-			// 		user?.displayName as string,
-			// 		"account"
-			// 	);
-			// 	return;
-			// case "Unblock":
-			// 	displayNotification(
-			// 		action,
-			// 		"unblocked",
-			// 		"green",
-			// 		user?.displayName as string,
-			// 		"account"
-			// 	);
-			// 	return;
+
 			default:
 				return;
 		}
@@ -257,31 +238,6 @@ export function TweetComponent({
 										</Text>
 									</Menu.Item>
 								)}
-
-								{/* <Menu.Item
-									onClick={(event) =>
-										handleMenuClick(event, "Block")
-									}
-									leftSection={
-										<Ban color="white" size={20} />
-									}
-								>
-									<Text c={"white"}>
-										Block {tweet.authorUsername}
-									</Text>
-								</Menu.Item>
-								<Menu.Item
-									onClick={(event) =>
-										handleMenuClick(event, "Unblock")
-									}
-									leftSection={
-										<Checkbox color="white" size={20} />
-									}
-								>
-									<Text c={"white"}>
-										Unblock {tweet.authorUsername}
-									</Text>
-								</Menu.Item> */}
 							</Menu.Dropdown>
 						</Menu>
 					)}

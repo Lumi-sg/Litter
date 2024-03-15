@@ -7,12 +7,13 @@ import { modals } from "@mantine/modals";
 import { useQueryClient } from "@tanstack/react-query";
 import { useUserStore } from "../../Stores/userStore";
 
-export const useCreateConversation = () => {
+export const useCreateConversation = (recipientUsername: string) => {
+	console.log(recipientUsername);
 	const firebaseToken = Cookies.get("firebaseToken");
 	const queryClient = useQueryClient();
 	const { user } = useUserStore();
 	return useMutation({
-		mutationFn: async (recipientUsername: string) => {
+		mutationFn: async () => {
 			const { data } = await axios.post(
 				`${baseURL}/conversation/create`,
 				{

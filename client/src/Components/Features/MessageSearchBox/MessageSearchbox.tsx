@@ -5,7 +5,7 @@ import { MessagePlus } from "tabler-icons-react";
 import UserType from "../../../Types/User";
 import { useUserStore } from "../../../Stores/userStore";
 import { convertEmailToUsername } from "../../../Helpers/convertEmailToUsername";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useCreateConversation } from "../../../Hooks/Conversation Hooks/useCreateConversation";
 
 type MessageSearchBoxProps = {
@@ -17,15 +17,26 @@ export function MessageSearchBox({ allUsers }: MessageSearchBoxProps) {
 	const { user } = useUserStore();
 	const [selectedUsername, setSelectedUsername] = useState("");
 
-	const createConversation = useCreateConversation();
+	// const createConversation = useCreateConversation();
+
+	const {
+		mutate: createConversation,
+		isPending,
+		isSuccess,
+	} = useCreateConversation(selectedUsername);
 
 	const handleNewConversationClick = () => {
 		if (!selectedUsername || selectedUsername === "") {
 			return;
 		}
-		createConversation.mutate(selectedUsername);
-		setSelectedUsername("");
+		createConversation();
 	};
+
+	useEffect(() => {
+		if (isSuccess) {
+			setSelectedUsername("");
+		}
+	}, [isSuccess]);
 	return (
 		<Autocomplete
 			radius="xl"
@@ -70,7 +81,13 @@ export function MessageSearchBox({ allUsers }: MessageSearchBoxProps) {
 					radius="xl"
 					color={"#8d7ac8"}
 					variant="filled"
-					disabled={!selectedUsername || selectedUsername === ""}
+					disabled={
+						!selectedUsername ||
+						selectedUsername === "" ||
+						isPending
+					}
+					loading={isPending}
+					loaderProps={{ color: "#242424" }}
 				>
 					<MessagePlus
 						style={{ width: rem(26), height: rem(26) }}

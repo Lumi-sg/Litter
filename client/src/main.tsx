@@ -48,10 +48,10 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
 					/>
 
 					<App />
-					<ReactQueryDevtools
+					{/* <ReactQueryDevtools
 						initialIsOpen={false}
 						client={queryClient}
-					/>
+					/> */}
 				</ModalsProvider>
 			</MantineProvider>
 		</QueryClientProvider>
