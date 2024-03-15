@@ -13,7 +13,6 @@ export const useCreateConversation = () => {
 	const { user } = useUserStore();
 	return useMutation({
 		mutationFn: async (recipientUsername: string) => {
-			console.log("Creating conversation...");
 			const { data } = await axios.post(
 				`${baseURL}/conversation/create`,
 				{

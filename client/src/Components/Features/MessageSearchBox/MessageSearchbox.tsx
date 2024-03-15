@@ -1,5 +1,5 @@
 import { ActionIcon, rem, Autocomplete } from "@mantine/core";
-import { IconSearch, IconArrowRight } from "@tabler/icons-react";
+import { IconSearch } from "@tabler/icons-react";
 import styles from "./MessageSearchbox.module.css";
 import { MessagePlus } from "tabler-icons-react";
 import UserType from "../../../Types/User";
@@ -13,17 +13,13 @@ type MessageSearchBoxProps = {
 	isLoading: boolean;
 };
 
-export function MessageSearchBox({
-	allUsers,
-	isLoading,
-}: MessageSearchBoxProps) {
+export function MessageSearchBox({ allUsers }: MessageSearchBoxProps) {
 	const { user } = useUserStore();
 	const [selectedUsername, setSelectedUsername] = useState("");
 
 	const createConversation = useCreateConversation();
 
 	const handleNewConversationClick = () => {
-		console.log(selectedUsername);
 		if (!selectedUsername || selectedUsername === "") {
 			return;
 		}

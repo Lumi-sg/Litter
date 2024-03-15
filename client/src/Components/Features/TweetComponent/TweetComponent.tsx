@@ -89,7 +89,6 @@ export function TweetComponent({
 
 		switch (action) {
 			case "Reply":
-				console.log("Replying...");
 				modals.open({
 					children: <TweetReplyModal tweet={tweet} />,
 					size: 700,

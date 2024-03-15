@@ -14,7 +14,6 @@ export const useLikeTweet = (tweet: TweetType) => {
 	const queryClient = useQueryClient();
 	return useMutation({
 		mutationFn: async () => {
-			console.log("Liking tweet...");
 			const { data } = await axios.post(
 				`${baseURL}/tweet/${tweet._id}/like`,
 				null,

@@ -13,7 +13,6 @@ export const useUnfollowUser = (usernameToUnfollow: string) => {
 	const queryClient = useQueryClient();
 	return useMutation({
 		mutationFn: async () => {
-			console.log("Following user...");
 			const { data } = await axios.post(
 				`${baseURL}/user/${usernameToUnfollow}/unfollow`,
 				{},

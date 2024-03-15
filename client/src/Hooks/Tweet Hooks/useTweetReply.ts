@@ -15,7 +15,6 @@ export const useTweetReply = (
 	const queryClient = useQueryClient();
 	return useMutation({
 		mutationFn: async () => {
-			console.log("Creating reply...");
 			const { data } = await axios.post(
 				`${baseURL}/tweet/${parentTweetID}/reply`,
 				{

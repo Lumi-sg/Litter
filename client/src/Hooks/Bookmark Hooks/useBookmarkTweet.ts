@@ -14,7 +14,6 @@ export const useBookmarkTweet = (tweet: TweetType) => {
 	const queryClient = useQueryClient();
 	return useMutation({
 		mutationFn: async () => {
-			console.log("Bookmarking tweet...");
 			const { data } = await axios.post(
 				`${baseURL}/tweet/${tweet._id}/bookmark`,
 				null,

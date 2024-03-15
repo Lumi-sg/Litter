@@ -13,7 +13,6 @@ export const useUnlikeTweet = (tweet: TweetType) => {
 	const queryClient = useQueryClient();
 	return useMutation({
 		mutationFn: async () => {
-			console.log("Unliking tweet...");
 			const { data } = await axios.post(
 				`${baseURL}/tweet/${tweet._id}/unlike`,
 				null,

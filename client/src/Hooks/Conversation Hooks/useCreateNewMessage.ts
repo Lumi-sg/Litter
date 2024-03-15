@@ -3,6 +3,7 @@ import { baseURL } from "../../constants/baseURL";
 import axios from "axios";
 import { useMutation } from "@tanstack/react-query";
 import { useQueryClient } from "@tanstack/react-query";
+import { displayNotification } from "../../Helpers/displayNotification";
 
 export const useCreateNewMessage = (
 	conversationID: string,
@@ -13,8 +14,6 @@ export const useCreateNewMessage = (
 	const queryClient = useQueryClient();
 	return useMutation({
 		mutationFn: async () => {
-			console.log("Creating message...");
-			console.log(messageContent, recipientUsername, conversationID);
 			const { data } = await axios.post(
 				`${baseURL}/conversation/newmessage/${conversationID}`,
 				{
@@ -35,7 +34,13 @@ export const useCreateNewMessage = (
 			});
 		},
 		onError: () => {
-			console.log("Failed to create message");
+			displayNotification(
+				"Error",
+				"Failed to send message",
+				"#f87171",
+				"",
+				""
+			);
 		},
 	});
 };

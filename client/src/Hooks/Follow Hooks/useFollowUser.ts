@@ -13,7 +13,6 @@ export const useFollowUser = (usernameToFollow: string) => {
 	const queryClient = useQueryClient();
 	return useMutation({
 		mutationFn: async () => {
-			console.log("Following user...");
 			const { data } = await axios.post(
 				`${baseURL}/user/${usernameToFollow}/follow`,
 				{},
@@ -26,7 +25,6 @@ export const useFollowUser = (usernameToFollow: string) => {
 			return data;
 		},
 		onSuccess: async () => {
-			console.log(`invalidating queries... ${usernameToFollow}`);
 			queryClient.invalidateQueries({
 				queryKey: ["profile", usernameToFollow],
 			});

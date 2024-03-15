@@ -15,9 +15,11 @@ import { useMarkNotificationsRead } from "../../../../Hooks/Notification Hooks/u
 import { useMarkSingleNotificationRead } from "../../../../Hooks/Notification Hooks/useMarkSingleNotificationRead";
 import { NotificationType } from "../../../../Types/Notifications";
 import { Link } from "react-router-dom";
+import { useEffect, useRef } from "react";
 
 const Notifications = () => {
 	const { user } = useUserStore();
+	const scrollHere = useRef<HTMLDivElement>(null);
 	const { data: notifications, isLoading } = useGetNotifications(
 		user?.uid as string
 	);
@@ -25,10 +27,15 @@ const Notifications = () => {
 	const { mutate: markNotificationsRead } = useMarkNotificationsRead(
 		notifications as NotificationType[]
 	);
+	const handleScroll = () => {
+		if (scrollHere.current) {
+			scrollHere.current.scrollIntoView({ behavior: "smooth" });
+		}
+	};
 
-	// const capitalizeFirstLetter = (str: string) => {
-	// 	return str.charAt(0).toUpperCase() + str.slice(1);
-	// };
+	useEffect(() => {
+		handleScroll();
+	}, []);
 
 	const { mutate: markNotificationRead } = useMarkSingleNotificationRead();
 
@@ -193,7 +200,10 @@ const Notifications = () => {
 			{isLoading ? (
 				<LoadingTweet />
 			) : notifications && notifications.length > 0 ? (
-				<UsersRolesTable />
+				<>
+					<div ref={scrollHere}></div>
+					<UsersRolesTable />
+				</>
 			) : (
 				"No Notifications"
 			)}
@@ -201,3 +211,4 @@ const Notifications = () => {
 	);
 };
 export default Notifications;
+

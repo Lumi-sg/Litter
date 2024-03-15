@@ -12,7 +12,6 @@ export const useTweetPost = (tweetContent: string, tweetAuthor: string) => {
 
 	return useMutation({
 		mutationFn: async () => {
-			console.log("Creating tweet...");
 			const { data } = await axios.post(
 				`${baseURL}/tweet/create`,
 				{

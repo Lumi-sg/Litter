@@ -1,7 +1,7 @@
 import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
 import "@mantine/core/styles.css";
-import { Checkbox, MantineProvider, createTheme } from "@mantine/core";
+import { MantineProvider, createTheme } from "@mantine/core";
 import { initializeApp } from "firebase/app";
 import {
 	getAuth,
@@ -9,7 +9,6 @@ import {
 	signInWithPopup,
 	browserSessionPersistence,
 	onIdTokenChanged,
-	getIdToken,
 } from "firebase/auth";
 import { Notifications } from "@mantine/notifications";
 import "@mantine/notifications/styles.css";
@@ -82,23 +81,10 @@ await auth.setPersistence(browserSessionPersistence);
 const provider = new GoogleAuthProvider();
 export { auth, provider, signInWithPopup };
 onIdTokenChanged(auth, async (user) => {
-	console.log("onIdTokenChanged");
-	console.log(new Date().toLocaleString());
 	if (user) {
-
-		console.log("Refreshed token!");
 		Cookies.set("firebaseToken", await user.getIdToken(), { expires: 7 });
 	} else {
 		useUserStore.setState({ user: null, isLoggedIn: false });
 		Cookies.remove("firebaseToken");
 	}
 });
-// onAuthStateChanged(auth, (user) => {
-// 	if (user) {
-// 		// User is signed in
-// 		useUserStore.setState({ user, isLoggedIn: true });
-// 	} else {
-// 		// User is signed out
-// 		useUserStore.setState({ user: null, isLoggedIn: false });
-// 	}
-// });

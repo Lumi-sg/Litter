@@ -63,7 +63,6 @@ export const useUserStore = create<userStoreType>()(
 					return false;
 				} catch (error) {
 					console.error("Login error:", error);
-					// Handle the error (e.g., display a user-friendly error message)
 					return false;
 				}
 			},

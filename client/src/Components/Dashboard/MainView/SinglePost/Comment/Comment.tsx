@@ -19,11 +19,9 @@ const Comment = () => {
 
 	const handleDotsClick = (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.stopPropagation();
-		console.log("dots clicked");
 	};
 	const handleActionClick = (e: React.MouseEvent<HTMLDivElement>) => {
 		e.stopPropagation();
-		console.log("action clicked");
 	};
 	return (
 		<Paper

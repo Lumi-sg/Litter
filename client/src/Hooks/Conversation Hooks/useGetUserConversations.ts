@@ -8,7 +8,6 @@ import { useUserStore } from "../../Stores/userStore";
 export const useGetUserConversations = (username: string) => {
 	const { user } = useUserStore();
 	const firebaseToken = Cookies.get("firebaseToken");
-	console.log("Fetching conversations...");
 	return useQuery({
 		queryKey: ["conversations", user?.uid as string],
 		queryFn: async () => {

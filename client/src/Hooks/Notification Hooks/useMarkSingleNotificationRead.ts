@@ -13,7 +13,6 @@ export const useMarkSingleNotificationRead = () => {
 
 	return useMutation({
 		mutationFn: async (notificationID: string) => {
-			console.log("notificationID", notificationID);
 
 			const { data } = await axios.post(
 				`${baseURL}/user/marknotificationread/${notificationID}`,
@@ -28,7 +27,6 @@ export const useMarkSingleNotificationRead = () => {
 		},
 
 		onSuccess: () => {
-			console.log("Notification marked read successfully");
 
 			queryClient.invalidateQueries({
 				queryKey: ["notifications", user?.uid as string],
