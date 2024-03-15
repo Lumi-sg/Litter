@@ -30,16 +30,16 @@ export const createConversation = asyncHandler(
 					message: "One or both users not found",
 				});
 			}
-			const existingConversation = await ConversationModel.findOne({
-				participants: { $all: [user!._id, receiver!._id] },
-			});
+			// const existingConversation = await ConversationModel.findOne({
+			// 	participants: { $all: [user!._id, receiver!._id] },
+			// });
 
-			if (existingConversation) {
-				session.endSession();
-				console.log("Conversation already exists");
-				res.status(200).json(existingConversation);
-				return;
-			}
+			// if (existingConversation) {
+			// 	session.endSession();
+			// 	console.log("Conversation already exists");
+			// 	res.status(200).json(existingConversation);
+			// 	return;
+			// }
 
 			console.log("Creating conversation...");
 
