@@ -25,7 +25,7 @@ const MainConversation = ({ conversation }: MainConversationProps) => {
 
 	useEffect(() => {
 		handleScroll();
-	},[conversation])
+	}, [conversation]);
 	return (
 		<Flex mr={5} gap={20} direction="column-reverse" h={"100%"} c={"white"}>
 			<ScrollArea
@@ -41,6 +41,7 @@ const MainConversation = ({ conversation }: MainConversationProps) => {
 				)}
 				{conversation.messages.map((message) => (
 					<Stack
+						key={message._id}
 						align={
 							message.senderFirebaseID === user?.uid
 								? "flex-end"
@@ -49,7 +50,6 @@ const MainConversation = ({ conversation }: MainConversationProps) => {
 						mr={10}
 					>
 						<MessageCard
-							key={message._id}
 							message={message}
 							isLoggedInUserMessage={
 								message.senderFirebaseID === user?.uid
