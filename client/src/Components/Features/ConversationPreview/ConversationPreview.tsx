@@ -90,7 +90,7 @@ const ConversationPreview = ({ conversation }: ConversationPreviewProps) => {
 							</Text>
 							<Text c={"white"} size="md">
 								{lastMessage
-									? lastMessage.content.slice(0, 12) + "..."
+									? lastMessage.content.slice(0, 12) + " ..."
 									: ""}
 							</Text>
 						</Stack>
