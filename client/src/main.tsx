@@ -16,7 +16,7 @@ import { ModalsProvider } from "@mantine/modals";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 // import { useUserStore } from "./Stores/userStore.ts";
 // import { onAuthStateChanged } from "firebase/auth";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+// import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import React from "react";
 import { useUserStore } from "./Stores/userStore.ts";
 import Cookies from "js-cookie";
