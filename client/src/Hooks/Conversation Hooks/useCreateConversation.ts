@@ -6,10 +6,8 @@ import { displayNotification } from "../../Helpers/displayNotification";
 import { modals } from "@mantine/modals";
 import { useQueryClient } from "@tanstack/react-query";
 import { useUserStore } from "../../Stores/userStore";
-import { useNavigate } from "react-router-dom";
 
 export const useCreateConversation = (recipientUsername: string) => {
-	const navigate = useNavigate();
 	const firebaseToken = Cookies.get("firebaseToken");
 	const queryClient = useQueryClient();
 	const { user } = useUserStore();
