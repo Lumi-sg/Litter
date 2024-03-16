@@ -7,6 +7,8 @@ import { useUserStore } from "../../../Stores/userStore";
 import { convertEmailToUsername } from "../../../Helpers/convertEmailToUsername";
 import { useEffect, useState } from "react";
 import { useCreateConversation } from "../../../Hooks/Conversation Hooks/useCreateConversation";
+import { useSelectedConversationStore } from "../../../Stores/selectedConversationStore";
+import { useNavigate } from "react-router-dom";
 
 type MessageSearchBoxProps = {
 	allUsers: UserType[] | undefined;
@@ -16,6 +18,9 @@ type MessageSearchBoxProps = {
 export function MessageSearchBox({ allUsers }: MessageSearchBoxProps) {
 	const { user } = useUserStore();
 	const [selectedUsername, setSelectedUsername] = useState("");
+	const { setSelectedConversationID } = useSelectedConversationStore();
+
+	const navigate = useNavigate();
 
 	// const createConversation = useCreateConversation();
 
@@ -23,6 +28,7 @@ export function MessageSearchBox({ allUsers }: MessageSearchBoxProps) {
 		mutate: createConversation,
 		isPending,
 		isSuccess,
+		data,
 	} = useCreateConversation(selectedUsername);
 
 	const handleNewConversationClick = () => {
@@ -35,6 +41,8 @@ export function MessageSearchBox({ allUsers }: MessageSearchBoxProps) {
 	useEffect(() => {
 		if (isSuccess) {
 			setSelectedUsername("");
+			setSelectedConversationID(data._id);
+			navigate(`/dashboard/messages/${data._id}`);
 		}
 	}, [isSuccess]);
 	return (
