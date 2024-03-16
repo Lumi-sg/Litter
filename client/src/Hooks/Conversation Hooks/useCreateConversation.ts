@@ -6,11 +6,16 @@ import { displayNotification } from "../../Helpers/displayNotification";
 import { modals } from "@mantine/modals";
 import { useQueryClient } from "@tanstack/react-query";
 import { useUserStore } from "../../Stores/userStore";
+import { useNavigate } from "react-router-dom";
+import { useSelectedConversationStore } from "../../Stores/selectedConversationStore";
 
 export const useCreateConversation = (recipientUsername: string) => {
 	const firebaseToken = Cookies.get("firebaseToken");
 	const queryClient = useQueryClient();
 	const { user } = useUserStore();
+	const navigate = useNavigate();
+	const { selectedConversationID, setSelectedConversationID } =
+		useSelectedConversationStore();
 	return useMutation({
 		mutationFn: async () => {
 			const { data } = await axios.post(
@@ -24,6 +29,7 @@ export const useCreateConversation = (recipientUsername: string) => {
 					},
 				}
 			);
+			setSelectedConversationID(data._id);
 
 			return data;
 		},
@@ -31,6 +37,8 @@ export const useCreateConversation = (recipientUsername: string) => {
 			queryClient.invalidateQueries({
 				queryKey: ["conversations", user?.uid as string],
 			});
+
+			navigate(`/dashboard/messages/${selectedConversationID}`);
 
 			displayNotification(
 				"Conversation",

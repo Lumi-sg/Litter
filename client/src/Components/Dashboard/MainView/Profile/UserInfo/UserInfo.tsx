@@ -7,7 +7,7 @@ import { useUserStore } from "../../../../../Stores/userStore";
 import { useFollowUser } from "../../../../../Hooks/Follow Hooks/useFollowUser.ts";
 import { useUnfollowUser } from "../../../../../Hooks/Follow Hooks/useUnfollowUser.ts";
 import LoadingTweet from "../../../../Features/LoadingTweet/LoadingTweet.tsx";
-
+import { useCreateConversation } from "../../../../../Hooks/Conversation Hooks/useCreateConversation.ts";
 type UserCardImageProps = {
 	profileUserData: UserType | undefined;
 	currentUserData: UserType | undefined;
@@ -38,7 +38,11 @@ export function UserCardImage({
 	const { mutate: followUser } = useFollowUser(
 		profileUserData?.username as string
 	);
-	const { mutate: unfollowUser } = useUnfollowUser(
+	const { mutate: unfollowUser, isPending } = useUnfollowUser(
+		profileUserData?.username as string
+	);
+
+	const { mutate: createConversation } = useCreateConversation(
 		profileUserData?.username as string
 	);
 
@@ -105,8 +109,10 @@ export function UserCardImage({
 					size="md"
 					variant="outline"
 					color="violet"
+					disabled={isLoggedInUserOwnerOfProfile}
+					onClick={() => createConversation()}
 				>
-					Message
+					{isPending ? <LoadingTweet /> : "Message"}
 				</Button>
 			</Group>
 		</Card>

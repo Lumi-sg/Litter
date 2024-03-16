@@ -4,7 +4,7 @@ import ContentButtons from "./ContentButtons/ContentButtons";
 import { useState } from "react";
 import Posts from "./Posts/Posts";
 import Likes from "./Likes/Likes";
-import { useParams } from "react-router-dom";
+import { useParams,  } from "react-router-dom";
 import { useProfileGet } from "../../../../Hooks/User Hooks/useProfileGet";
 import { useUserStore } from "../../../../Stores/userStore";
 import { convertEmailToUsername } from "../../../../Helpers/convertEmailToUsername";
@@ -16,6 +16,7 @@ export type ProfileViewType = "posts" | "likes";
 const Profile = () => {
 	const { username } = useParams();
 	const { user } = useUserStore();
+
 	const [profileView, setProfileView] = useState<ProfileViewType>("posts");
 
 	const {
