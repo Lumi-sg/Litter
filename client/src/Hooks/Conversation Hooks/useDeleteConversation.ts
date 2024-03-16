@@ -7,9 +7,11 @@ import { modals } from "@mantine/modals";
 import { useQueryClient } from "@tanstack/react-query";
 import { useUserStore } from "../../Stores/userStore";
 import { useNavigate } from "react-router-dom";
+import { useSelectedConversationStore } from "../../Stores/selectedConversationStore";
 
 export const useDeleteConversation = (conversationID: string) => {
 	const firebaseToken = Cookies.get("firebaseToken");
+    const { setSelectedConversationID } = useSelectedConversationStore();
 	const queryClient = useQueryClient();
     const navigate = useNavigate();
 	const { user } = useUserStore();
@@ -37,6 +39,7 @@ export const useDeleteConversation = (conversationID: string) => {
 				""
 			);
 			modals.closeAll();
+            setSelectedConversationID("")
             navigate("/dashboard/messages")
             
 		},

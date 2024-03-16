@@ -7,9 +7,12 @@ import { useGetConversation } from "../../../../../Hooks/Conversation Hooks/useG
 import LoadingTweet from "../../../../Features/LoadingTweet/LoadingTweet";
 import { ConversationType } from "../../../../../Types/Conversation";
 import { ErrorPage } from "../../../../Features/ErrorPage/ErrorPage";
+import { useEffect } from "react";
+import {useSelectedConversationStore} from "../../../../../Stores/selectedConversationStore"
 
 const RightMessageContainer = () => {
 	const { conversationID } = useParams();
+	const { setSelectedConversationID } = useSelectedConversationStore();
 	const {
 		data: conversation,
 		isLoading: isConversationLoading,
@@ -20,6 +23,12 @@ const RightMessageContainer = () => {
 	if (error) {
 		return <ErrorPage errorMessage={error.message} />;
 	}
+
+	useEffect(() => {
+		if (conversationID){
+			setSelectedConversationID(conversationID);
+		}	
+	},[])
 
 	return (
 		<Stack h={"calc(100vh - 5.7rem)"} flex={1}>

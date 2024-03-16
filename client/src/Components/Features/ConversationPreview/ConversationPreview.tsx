@@ -17,6 +17,7 @@ import { Link, useNavigate } from "react-router-dom";
 import formatTimeStamp from "../../../Helpers/formatTimeStamp";
 import { getOtherUserInConversation } from "../../../Helpers/getOtherUserInConversation";
 import { useDeleteConversation } from "../../../Hooks/Conversation Hooks/useDeleteConversation";
+import { useSelectedConversationStore } from "../../../Stores/selectedConversationStore";
 
 type ConversationPreviewProps = {
 	conversation: ConversationType;
@@ -24,10 +25,10 @@ type ConversationPreviewProps = {
 
 const ConversationPreview = ({ conversation }: ConversationPreviewProps) => {
 	const navigate = useNavigate();
+	const { selectedConversationID, setSelectedConversationID } = useSelectedConversationStore();
 	const { mutate: deleteConversation } = useDeleteConversation(
 		conversation._id
 	);
-
 	const otherUser = getOtherUserInConversation(conversation.participants);
 	let lastMessage =
 		conversation.messages.length > 0
@@ -43,9 +44,14 @@ const ConversationPreview = ({ conversation }: ConversationPreviewProps) => {
 	return (
 		<>
 			<UnstyledButton
-				className={classes.user}
+				className={
+					selectedConversationID === conversation._id
+						? classes.highlightUser
+						: classes.user
+				}
 				h={80}
 				onClick={() => {
+					setSelectedConversationID(conversation._id);
 					navigate(`/dashboard/messages/${conversation._id}`);
 				}}
 			>
