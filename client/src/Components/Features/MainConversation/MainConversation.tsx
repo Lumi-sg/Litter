@@ -41,7 +41,7 @@ const MainConversation = ({ conversation }: MainConversationProps) => {
 				)}
 				{conversation.messages.map((message) => (
 					<Stack
-						key={message._id}
+						key={message.timestamp.toString()}
 						align={
 							message.senderFirebaseID === user?.uid
 								? "flex-end"

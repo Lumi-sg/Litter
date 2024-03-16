@@ -13,7 +13,7 @@ import { IconDots } from "@tabler/icons-react";
 import { Trash } from "tabler-icons-react";
 import classes from "./ConversationPreview.module.css";
 import { ConversationType } from "../../../Types/Conversation";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import formatTimeStamp from "../../../Helpers/formatTimeStamp";
 import { getOtherUserInConversation } from "../../../Helpers/getOtherUserInConversation";
 import { useDeleteConversation } from "../../../Hooks/Conversation Hooks/useDeleteConversation";
@@ -23,6 +23,7 @@ type ConversationPreviewProps = {
 };
 
 const ConversationPreview = ({ conversation }: ConversationPreviewProps) => {
+	const navigate = useNavigate();
 	const { mutate: deleteConversation } = useDeleteConversation(
 		conversation._id
 	);
@@ -44,8 +45,9 @@ const ConversationPreview = ({ conversation }: ConversationPreviewProps) => {
 			<UnstyledButton
 				className={classes.user}
 				h={80}
-				component={Link}
-				to={`/dashboard/messages/${conversation._id}`}
+				onClick={() => {
+					navigate(`/dashboard/messages/${conversation._id}`);
+				}}
 			>
 				<Flex
 					ml={10}
@@ -70,8 +72,8 @@ const ConversationPreview = ({ conversation }: ConversationPreviewProps) => {
 								size="md"
 								fw={700}
 								c={"white"}
-								// component={Link}
-								// to={`/dashboard/profile/${otherUser?.username}`}
+								component={Link}
+								to={`/dashboard/profile/${otherUser?.username}`}
 							>
 								{otherUser?.displayName}
 								<Text span c={"dimmed"} size="sm" ml={3}>
