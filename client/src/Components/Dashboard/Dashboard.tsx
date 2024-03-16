@@ -10,7 +10,7 @@ import Profile from "./MainView/Profile/Profile";
 import SinglePost from "./MainView/SinglePost/SinglePost";
 import Infopanel from "./Infopanel/Infopanel";
 import { Routes, Route, Navigate } from "react-router-dom";
-import { ErrorPage } from "./ErrorPage/ErrorPage";
+import { ErrorPage } from "../Features/ErrorPage/ErrorPage";
 
 export function Dashboard() {
 	const { selectedComponent } = useComponentStore();

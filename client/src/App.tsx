@@ -9,7 +9,7 @@ import { useUserStore } from "./Stores/userStore";
 import "@mantine/notifications/styles.css";
 import refreshFirebaseToken from "./Helpers/refreshFirebaseToken";
 import { useEffect } from "react";
-import { ErrorPage } from "./Components/Dashboard/ErrorPage/ErrorPage";
+import { ErrorPage } from "./Components/Features/ErrorPage/ErrorPage";
 
 const InitialRoute: React.FC = () => {
 	const { isLoggedIn } = useUserStore();

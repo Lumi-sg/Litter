@@ -7,35 +7,30 @@ import { modals } from "@mantine/modals";
 import { useQueryClient } from "@tanstack/react-query";
 import { useUserStore } from "../../Stores/userStore";
 
-export const useCreateConversation = (recipientUsername: string) => {
+export const useDeleteConversation = (conversationID: string) => {
 	const firebaseToken = Cookies.get("firebaseToken");
 	const queryClient = useQueryClient();
 	const { user } = useUserStore();
 	return useMutation({
 		mutationFn: async () => {
-			const { data } = await axios.post(
-				`${baseURL}/conversation/create`,
-				{
-					recipientUsername,
-				},
+			const { data } = await axios.delete(
+				`${baseURL}/conversation/delete/${conversationID}`,
 				{
 					headers: {
 						Authorization: `Bearer ${firebaseToken}`,
 					},
 				}
 			);
-
 			return data;
 		},
 		onSuccess: () => {
 			queryClient.invalidateQueries({
 				queryKey: ["conversations", user?.uid as string],
 			});
-
 			displayNotification(
 				"Conversation",
-				`have successfully created a conversation with ${recipientUsername}.`,
-				"#4db5e5",
+				`have successfully deleted the conversation.`,
+				"red",
 				``,
 				""
 			);
@@ -45,7 +40,7 @@ export const useCreateConversation = (recipientUsername: string) => {
 		onError: () => {
 			displayNotification(
 				"Error",
-				"Failed to create conversation",
+				"Failed to delete conversation",
 				"#f87171",
 				"",
 				""

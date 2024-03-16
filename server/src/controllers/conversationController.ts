@@ -148,3 +148,23 @@ export const createNewMessage = [
 		}
 	}),
 ];
+
+export const deleteConversation = asyncHandler(
+	async (req: express.Request, res: express.Response) => {
+		console.log("Deleting conversation...");
+		try {
+			const conversation = await ConversationModel.findOne({
+				_id: req.params.conversationID,
+			});
+			if (!conversation) {
+				res.status(404).json({ message: "Conversation not found" });
+				return;
+			}
+			await conversation.deleteOne();
+			res.status(200).json({ message: "Conversation deleted" });
+			console.log("Conversation deleted: ", conversation._id);
+		} catch (error) {
+			res.status(500).send(error);
+		}
+	}
+);

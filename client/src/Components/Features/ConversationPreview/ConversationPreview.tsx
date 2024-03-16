@@ -12,19 +12,20 @@ import {
 import { IconDots } from "@tabler/icons-react";
 import { Trash } from "tabler-icons-react";
 import classes from "./ConversationPreview.module.css";
-import { useUserStore } from "../../../Stores/userStore";
-import { displayNotification } from "../../../Helpers/displayNotification";
 import { ConversationType } from "../../../Types/Conversation";
 import { Link } from "react-router-dom";
 import formatTimeStamp from "../../../Helpers/formatTimeStamp";
 import { getOtherUserInConversation } from "../../../Helpers/getOtherUserInConversation";
+import { useDeleteConversation } from "../../../Hooks/Conversation Hooks/useDeleteConversation";
 
 type ConversationPreviewProps = {
 	conversation: ConversationType;
 };
 
 const ConversationPreview = ({ conversation }: ConversationPreviewProps) => {
-	const { user } = useUserStore();
+	const { mutate: deleteConversation } = useDeleteConversation(
+		conversation._id
+	);
 
 	const otherUser = getOtherUserInConversation(conversation.participants);
 	let lastMessage =
@@ -32,21 +33,10 @@ const ConversationPreview = ({ conversation }: ConversationPreviewProps) => {
 			? conversation.messages[conversation.messages.length - 1]
 			: null;
 
-	const handleMenuClick = (
-		e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-		action: string
-	) => {
+	const handleMenuClick = (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.stopPropagation();
-		switch (action) {
-			case "Leave":
-				displayNotification(
-					action,
-					"left conversation with",
-					"red",
-					user?.displayName as string,
-					""
-				);
-		}
+		e.preventDefault();
+		deleteConversation();
 	};
 
 	return (
@@ -121,9 +111,7 @@ const ConversationPreview = ({ conversation }: ConversationPreviewProps) => {
 								style={{ border: "1px solid #8d7ac8" }}
 							>
 								<Menu.Item
-									onClick={(event) =>
-										handleMenuClick(event, "Leave")
-									}
+									onClick={(event) => handleMenuClick(event)}
 									leftSection={
 										<Trash color="red" size={20} />
 									}

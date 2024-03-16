@@ -8,7 +8,7 @@ import { useParams } from "react-router-dom";
 import { useProfileGet } from "../../../../Hooks/User Hooks/useProfileGet";
 import { useUserStore } from "../../../../Stores/userStore";
 import { convertEmailToUsername } from "../../../../Helpers/convertEmailToUsername";
-import { ErrorPage } from "../../ErrorPage/ErrorPage";
+import { ErrorPage } from "../../../Features/ErrorPage/ErrorPage";
 import LoadingTweet from "../../../Features/LoadingTweet/LoadingTweet";
 
 export type ProfileViewType = "posts" | "likes";
@@ -18,9 +18,11 @@ const Profile = () => {
 	const { user } = useUserStore();
 	const [profileView, setProfileView] = useState<ProfileViewType>("posts");
 
-	const { data: profileUserData, isLoading, error } = useProfileGet(
-		username as string
-	);
+	const {
+		data: profileUserData,
+		isLoading,
+		error,
+	} = useProfileGet(username as string);
 	const { data: currentUserData } = useProfileGet(
 		convertEmailToUsername(user?.email as string) as string
 	);

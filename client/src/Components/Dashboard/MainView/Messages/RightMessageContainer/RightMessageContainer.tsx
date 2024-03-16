@@ -6,12 +6,15 @@ import { useParams } from "react-router-dom";
 import { useGetConversation } from "../../../../../Hooks/Conversation Hooks/useGetConversation";
 import LoadingTweet from "../../../../Features/LoadingTweet/LoadingTweet";
 import { ConversationType } from "../../../../../Types/Conversation";
-import { ErrorPage } from "../../../ErrorPage/ErrorPage";
+import { ErrorPage } from "../../../../Features/ErrorPage/ErrorPage";
 
 const RightMessageContainer = () => {
 	const { conversationID } = useParams();
-	const { data: conversation, isLoading: isConversationLoading, error } =
-		useGetConversation(conversationID as string);
+	const {
+		data: conversation,
+		isLoading: isConversationLoading,
+		error,
+	} = useGetConversation(conversationID as string);
 	const showConversation = conversationID && !isConversationLoading;
 
 	if (error) {
@@ -25,7 +28,7 @@ const RightMessageContainer = () => {
 				<Center h={"100%"} w={"100%"}>
 					Start a new conversation!
 				</Center>
-			) : isConversationLoading ?  (
+			) : isConversationLoading ? (
 				<Center>
 					<LoadingTweet />
 				</Center>
@@ -37,7 +40,9 @@ const RightMessageContainer = () => {
 					<MainConversation
 						conversation={conversation as ConversationType}
 					/>
-					<ConversationInput conversation={conversation as ConversationType}/>
+					<ConversationInput
+						conversation={conversation as ConversationType}
+					/>
 				</>
 			)}
 		</Stack>

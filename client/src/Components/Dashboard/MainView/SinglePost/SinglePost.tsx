@@ -7,7 +7,7 @@ import { useParams } from "react-router-dom";
 import TopOfSinglePost from "../../../Features/TopOfSinglePost/TopOfSinglePost";
 import LoadingTweet from "../../../Features/LoadingTweet/LoadingTweet";
 import { Space } from "@mantine/core";
-import { ErrorPage } from "../../ErrorPage/ErrorPage";
+import { ErrorPage } from "../../../Features/ErrorPage/ErrorPage";
 
 const SinglePost = () => {
 	const { tweetID } = useParams();
