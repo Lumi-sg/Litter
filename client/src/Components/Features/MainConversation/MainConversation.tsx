@@ -50,12 +50,13 @@ const MainConversation = ({ conversation }: MainConversationProps) => {
 						mr={10}
 					>
 						<MessageCard
+						key={message._id}
 							message={message}
 							isLoggedInUserMessage={
 								message.senderFirebaseID === user?.uid
 							}
 						/>
-					</Stack>
+					</Stack >
 				))}
 
 				<div ref={scrollHere}></div>

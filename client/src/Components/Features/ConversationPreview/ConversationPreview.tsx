@@ -80,8 +80,8 @@ const ConversationPreview = ({ conversation }: ConversationPreviewProps) => {
 								size="md"
 								fw={700}
 								c={"white"}
-								component={Link}
-								to={`/dashboard/profile/${otherUser?.username}`}
+								// component={Link}
+								// to={`/dashboard/profile/${otherUser?.username}`}
 							>
 								{otherUser?.displayName}
 								<Text span c={"dimmed"} size="sm" ml={3}>

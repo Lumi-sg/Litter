@@ -53,7 +53,13 @@ const ConversationHeader = ({ conversation }: ConversationHeaderProps) => {
 						component={Link}
 						to={`/dashboard/profile/${otherUser?.username}`}
 					/>
-					<Text c={"white"} size="md" fw={700}>
+					<Text
+						c={"white"}
+						size="md"
+						fw={700}
+						component={Link}
+						to={`/dashboard/profile/${otherUser?.username}`}
+					>
 						{otherUser?.displayName}
 					</Text>
 				</Group>
