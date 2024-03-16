@@ -20,6 +20,7 @@ import { useFollowUser } from "../../../Hooks/Follow Hooks/useFollowUser";
 import { useUnfollowUser } from "../../../Hooks/Follow Hooks/useUnfollowUser";
 import { useProfileGet } from "../../../Hooks/User Hooks/useProfileGet";
 import { convertEmailToUsername } from "../../../Helpers/convertEmailToUsername";
+import { useDeleteConversation } from "../../../Hooks/Conversation Hooks/useDeleteConversation";
 import { Link } from "react-router-dom";
 
 type ConversationHeaderProps = {
@@ -31,6 +32,9 @@ const ConversationHeader = ({ conversation }: ConversationHeaderProps) => {
 	const { data: loggedInUser } = useProfileGet(
 		convertEmailToUsername(user?.email as string)
 	);
+	const { mutate: deleteConversation } = useDeleteConversation(
+		conversation._id
+	);
 
 	const otherUser = getOtherUserInConversation(conversation.participants);
 	const { mutate: followUser } = useFollowUser(otherUser?.username as string);
@@ -41,6 +45,12 @@ const ConversationHeader = ({ conversation }: ConversationHeaderProps) => {
 	const isLoggedInUserFollowingOtherUser = loggedInUser?.following.includes(
 		otherUser?._id
 	);
+
+	const handleDeletionClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+		e.stopPropagation();
+		e.preventDefault();
+		deleteConversation();
+	};
 
 	return (
 		<>
@@ -104,6 +114,9 @@ const ConversationHeader = ({ conversation }: ConversationHeaderProps) => {
 
 						<Menu.Item
 							leftSection={<Trash color="red" size={20} />}
+							onClick={(e) => {
+								handleDeletionClick(e);
+							}}
 						>
 							<Text c={"#eb0303"}>Delete Conversation</Text>
 						</Menu.Item>

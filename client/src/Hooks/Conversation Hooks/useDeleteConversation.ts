@@ -6,10 +6,12 @@ import { displayNotification } from "../../Helpers/displayNotification";
 import { modals } from "@mantine/modals";
 import { useQueryClient } from "@tanstack/react-query";
 import { useUserStore } from "../../Stores/userStore";
+import { useNavigate } from "react-router-dom";
 
 export const useDeleteConversation = (conversationID: string) => {
 	const firebaseToken = Cookies.get("firebaseToken");
 	const queryClient = useQueryClient();
+    const navigate = useNavigate();
 	const { user } = useUserStore();
 	return useMutation({
 		mutationFn: async () => {
@@ -35,6 +37,8 @@ export const useDeleteConversation = (conversationID: string) => {
 				""
 			);
 			modals.closeAll();
+            navigate("/dashboard/messages")
+            
 		},
 
 		onError: () => {
