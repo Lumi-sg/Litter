@@ -25,7 +25,8 @@ type ConversationPreviewProps = {
 
 const ConversationPreview = ({ conversation }: ConversationPreviewProps) => {
 	const navigate = useNavigate();
-	const { selectedConversationID, setSelectedConversationID } = useSelectedConversationStore();
+	const { selectedConversationID, setSelectedConversationID } =
+		useSelectedConversationStore();
 	const { mutate: deleteConversation } = useDeleteConversation(
 		conversation._id
 	);
@@ -88,7 +89,7 @@ const ConversationPreview = ({ conversation }: ConversationPreviewProps) => {
 							</Text>
 							<Text c={"white"} size="md">
 								{lastMessage
-									? lastMessage.content.slice(0, 12) + " ..."
+									? lastMessage.content.slice(0, 15)
 									: ""}
 							</Text>
 						</Stack>
