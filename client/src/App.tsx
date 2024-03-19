@@ -54,17 +54,17 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-	useEffect(() => {
-		refreshFirebaseToken();
+	// useEffect(() => {
+	// 	refreshFirebaseToken();
 
-		// Set up an interval to refresh the token every 45 minutes
-		const refreshTokenInterval = setInterval(
-			refreshFirebaseToken,
-			55 * 60 * 1000
-		);
+	// 	// Set up an interval to refresh the token every 45 minutes
+	// 	const refreshTokenInterval = setInterval(
+	// 		refreshFirebaseToken,
+	// 		55 * 60 * 1000
+	// 	);
 
-		return () => clearInterval(refreshTokenInterval);
-	}, []);
+	// 	return () => clearInterval(refreshTokenInterval);
+	// }, []);
 	return (
 		<RouterProvider router={router} future={{ v7_startTransition: true }} />
 	);

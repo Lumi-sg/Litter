@@ -57,6 +57,13 @@ export const useUserStore = create<userStoreType>()(
 
 					if (response.status === 201) {
 						console.log(response.data.message);
+						if (!response.data.token) {
+							return false;
+						}
+						Cookies.set("firebaseToken", response.data.token, {
+							expires: 7,
+						});
+						console.log("Login successful, token saved.");
 						return true;
 					}
 					console.log(response.data.message);

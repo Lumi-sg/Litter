@@ -18,7 +18,7 @@ export const verifyFirebaseToken = async (
 	}
 
 	try {
-		const decodedToken = await admin.auth().verifyIdToken(firebaseToken);
+		const decodedToken = await admin.auth().verifyIdToken(firebaseToken, true);
 		(req as any).currentUser = decodedToken;
 		next();
 	} catch (error) {
