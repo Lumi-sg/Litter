@@ -36,7 +36,7 @@ export const useUserStore = create<userStoreType>()(
 						false,
 						"login"
 					);
-					console.log(credentials.user.refreshToken);
+					const userRefreshToken = credentials.user.refreshToken;
 
 					// Save the Firebase ID token to a cookie
 					const firebaseToken = await credentials.user.getIdToken();
@@ -48,7 +48,9 @@ export const useUserStore = create<userStoreType>()(
 
 					const response = await axios.post(
 						`${baseURL}/user/register`,
-						null,
+						{
+							refreshToken: userRefreshToken,
+						},
 						{
 							headers: {
 								Authorization: `Bearer ${firebaseToken}`,
