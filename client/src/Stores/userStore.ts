@@ -9,7 +9,10 @@ import axios from "axios";
 
 type userStoreType = {
 	user: FirebaseUser | null;
+
 	setUser: (user: FirebaseUser | null) => void;
+	userIDToken: string | null;
+	setUserIDToken: (userIDToken: string | null) => void;
 	isLoggedIn: boolean;
 	setIsLoggedIn: (isLoggedIn: boolean) => void;
 	login: () => Promise<boolean>;
@@ -21,6 +24,9 @@ export const useUserStore = create<userStoreType>()(
 		devtools((set) => ({
 			user: null,
 			setUser: (user) => set({ user }, false, "setUser"),
+			userIDToken: null,
+			setUserIDToken: (userIDToken) =>
+				set({ userIDToken }, false, "setUserIDToken"),
 			isLoggedIn: false,
 			setIsLoggedIn: (isLoggedIn) => set({ isLoggedIn }),
 			login: async () => {
@@ -45,6 +51,11 @@ export const useUserStore = create<userStoreType>()(
 						await credentials.user.getIdToken(),
 						{ expires: 7 }
 					);
+					set(
+						{ userIDToken: firebaseToken },
+						false,
+						"setUserIDToken"
+					);
 
 					const response = await axios.post(
 						`${baseURL}/user/register`,
@@ -60,9 +71,6 @@ export const useUserStore = create<userStoreType>()(
 
 					if (response.status === 201) {
 						console.log(response.data.message);
-						if (!response.data.token) {
-							return false;
-						}
 
 						return true;
 					}
