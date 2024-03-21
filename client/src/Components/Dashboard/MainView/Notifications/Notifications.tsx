@@ -7,6 +7,8 @@ import {
 	Checkbox,
 	Tooltip,
 	Button,
+	Switch,
+	Center
 } from "@mantine/core";
 import LoadingTweet from "../../../Features/LoadingTweet/LoadingTweet";
 import formatTimeStamp from "../../../../Helpers/formatTimeStamp";
@@ -137,7 +139,8 @@ const Notifications = () => {
 						bg={"#202020"}
 						c={"white"}
 					>
-						<Checkbox
+						<Center>
+						<Switch
 							miw={"5rem"}
 							color="violet"
 							checked={notification.read}
@@ -149,6 +152,7 @@ const Notifications = () => {
 								}
 							}}
 						/>
+						</Center>
 					</Tooltip>
 				</Table.Td>
 			</Table.Tr>
