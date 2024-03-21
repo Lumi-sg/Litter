@@ -151,6 +151,7 @@ const Notifications = () => {
 									markNotificationRead(notification._id);
 								}
 							}}
+							disabled={notification.read === true}
 						/>
 						</Center>
 					</Tooltip>
