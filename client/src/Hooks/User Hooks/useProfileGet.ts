@@ -10,17 +10,12 @@ export const useProfileGet = (username: string) => {
 	return useQuery({
 		queryKey: ["profile", username],
 		queryFn: async () => {
-			try {
-				const { data } = await axios.get(
-					`${baseURL}/user/${username}`,
-					{
-						headers: {
-							Authorization: `Bearer ${firebaseToken}`,
-						},
-					}
-				);
-				return data.user as UserType;
-			} catch (error: any) {}
+			const { data } = await axios.get(`${baseURL}/user/${username}`, {
+				headers: {
+					Authorization: `Bearer ${firebaseToken}`,
+				},
+			});
+			return data.user as UserType;
 		},
 		staleTime: 30000,
 	});
