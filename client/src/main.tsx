@@ -82,7 +82,8 @@ const provider = new GoogleAuthProvider();
 export { auth, provider, signInWithPopup };
 onIdTokenChanged(auth, async (user) => {
 	if (user) {
-		Cookies.set("firebaseToken", await user.getIdToken(), { expires: 7 });
+		const newToken = await user.getIdToken(true);
+		Cookies.set("firebaseToken", newToken);
 	} else {
 		useUserStore.setState({ user: null, isLoggedIn: false });
 		Cookies.remove("firebaseToken");
