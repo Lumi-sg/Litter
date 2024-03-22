@@ -13,13 +13,18 @@ import {
 import { Notifications } from "@mantine/notifications";
 import "@mantine/notifications/styles.css";
 import { ModalsProvider } from "@mantine/modals";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import {
+	QueryCache,
+	QueryClient,
+	QueryClientProvider,
+} from "@tanstack/react-query";
 // import { useUserStore } from "./Stores/userStore.ts";
 // import { onAuthStateChanged } from "firebase/auth";
 // import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import React from "react";
 import { useUserStore } from "./Stores/userStore.ts";
 import Cookies from "js-cookie";
+import { refreshUserToken } from "./Helpers/refreshUserToken.ts";
 
 const theme = createTheme({
 	breakpoints: {
@@ -32,7 +37,16 @@ const theme = createTheme({
 	},
 	cursorType: "pointer",
 });
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+	queryCache: new QueryCache({
+		onError: async (error) => {
+			if (error.message.includes("401")) {
+				console.log("refreshing token...");
+				await refreshUserToken();
+			}
+		},
+	}),
+});
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
 	<React.StrictMode>
@@ -80,11 +94,12 @@ await auth.setPersistence(browserSessionPersistence);
 
 const provider = new GoogleAuthProvider();
 export { auth, provider, signInWithPopup };
-onIdTokenChanged(auth, async (user) => {
-	if (user) {
-		Cookies.set("firebaseToken", await user.getIdToken(), { expires: 7 });
-	} else {
-		useUserStore.setState({ user: null, isLoggedIn: false });
-		Cookies.remove("firebaseToken");
-	}
-});
+// onIdTokenChanged(auth, async (user) => {
+// 	if (user) {
+// 		const newToken = await user.getIdToken(true);
+// 		Cookies.set("firebaseToken", newToken);
+// 	} else {
+// 		useUserStore.setState({ user: null, isLoggedIn: false });
+// 		Cookies.remove("firebaseToken");
+// 	}
+// });

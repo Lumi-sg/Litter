@@ -140,19 +140,19 @@ const Notifications = () => {
 						c={"white"}
 					>
 						<Center>
-						<Switch
-							miw={"5rem"}
-							color="violet"
-							checked={notification.read}
-							variant="outline"
-							label={notification.read ? "Read" : "Unread"}
-							onChange={() => {
-								if (notification.read === false) {
-									markNotificationRead(notification._id);
-								}
-							}}
-							disabled={notification.read === true}
-						/>
+							<Switch
+								miw={"5rem"}
+								color="violet"
+								checked={notification.read}
+								variant="outline"
+								label={notification.read ? "Read" : "Unread"}
+								onChange={() => {
+									if (notification.read === false) {
+										markNotificationRead(notification._id);
+									}
+								}}
+								disabled={notification.read === true}
+							/>
 						</Center>
 					</Tooltip>
 				</Table.Td>
@@ -216,4 +216,3 @@ const Notifications = () => {
 	);
 };
 export default Notifications;
-

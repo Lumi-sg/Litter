@@ -10,7 +10,6 @@ import {
 	NotificationTypeEnum,
 } from "../models/Notification";
 import ConversationModel from "../models/Conversation";
-import admin from "firebase-admin";
 
 export const registerUser = asyncHandler(
 	async (req: express.Request, res: express.Response) => {
@@ -18,15 +17,12 @@ export const registerUser = asyncHandler(
 		try {
 			const { uid, email, name, picture } = (req as any).currentUser;
 
-			const firebaseToken = await admin.auth().createCustomToken(uid);
-
 			const existingAccount = await UserModel.findOne({ email });
 			if (existingAccount) {
 				console.log("Account already exists.");
 				res.status(201).json({
 					message: "Account already exists.",
 					account: existingAccount,
-					token: firebaseToken,
 				});
 				return;
 			}
@@ -42,12 +38,13 @@ export const registerUser = asyncHandler(
 			});
 			const user = await newUser.save();
 			console.log("Registered user:", user.username);
+
 			res.status(201).json({
 				message: "User registration successful",
 				user: user,
-				token: firebaseToken,
 			});
 		} catch (error: any) {
+			console.log(error);
 			res.status(400).json({
 				message: error.message,
 			});
