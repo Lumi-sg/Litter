@@ -94,12 +94,12 @@ await auth.setPersistence(browserSessionPersistence);
 
 const provider = new GoogleAuthProvider();
 export { auth, provider, signInWithPopup };
-onIdTokenChanged(auth, async (user) => {
-	if (user) {
-		const newToken = await user.getIdToken(true);
-		Cookies.set("firebaseToken", newToken);
-	} else {
-		useUserStore.setState({ user: null, isLoggedIn: false });
-		Cookies.remove("firebaseToken");
-	}
-});
+// onIdTokenChanged(auth, async (user) => {
+// 	if (user) {
+// 		const newToken = await user.getIdToken(true);
+// 		Cookies.set("firebaseToken", newToken);
+// 	} else {
+// 		useUserStore.setState({ user: null, isLoggedIn: false });
+// 		Cookies.remove("firebaseToken");
+// 	}
+// });
