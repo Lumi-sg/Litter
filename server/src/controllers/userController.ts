@@ -10,20 +10,12 @@ import {
 	NotificationTypeEnum,
 } from "../models/Notification";
 import ConversationModel from "../models/Conversation";
-import TokenModel from "../models/Token";
-import admin from "firebase-admin";
 
 export const registerUser = asyncHandler(
 	async (req: express.Request, res: express.Response) => {
 		console.log("Registering user...");
-		const session = await UserModel.startSession();
-		session.startTransaction();
 		try {
 			const { uid, email, name, picture } = (req as any).currentUser;
-
-			const refreshToken = req.body.refreshToken;
-
-			const firebaseToken = await admin.auth().createCustomToken(uid);
 
 			const existingAccount = await UserModel.findOne({ email });
 			if (existingAccount) {
@@ -31,7 +23,6 @@ export const registerUser = asyncHandler(
 				res.status(201).json({
 					message: "Account already exists.",
 					account: existingAccount,
-					// token: firebaseToken,
 				});
 				return;
 			}
@@ -47,23 +38,13 @@ export const registerUser = asyncHandler(
 			});
 			const user = await newUser.save();
 			console.log("Registered user:", user.username);
-			const newTokenObject = new TokenModel({
-				user: user._id,
-				refreshToken: refreshToken,
-			});
-			await newTokenObject.save();
-			console.log(`Saved token for user ${user.username}`);
-			await session.commitTransaction();
-			session.endSession();
+
 			res.status(201).json({
 				message: "User registration successful",
 				user: user,
-				token: firebaseToken,
 			});
 		} catch (error: any) {
 			console.log(error);
-			await session.abortTransaction();
-			session.endSession();
 			res.status(400).json({
 				message: error.message,
 			});
