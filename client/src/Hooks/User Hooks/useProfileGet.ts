@@ -3,7 +3,6 @@ import { baseURL } from "../../constants/baseURL";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import { UserType } from "../../Types/User";
-import { refreshUserToken } from "../../Helpers/refreshUserToken";
 
 export const useProfileGet = (username: string) => {
 	const firebaseToken = Cookies.get("firebaseToken");
@@ -21,12 +20,7 @@ export const useProfileGet = (username: string) => {
 					}
 				);
 				return data.user as UserType;
-			} catch (error: any) {
-				if (error.response.status === 401) {
-					await refreshUserToken();
-
-				}
-			}
+			} catch (error: any) {}
 		},
 		staleTime: 30000,
 	});
