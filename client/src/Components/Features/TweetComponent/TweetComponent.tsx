@@ -151,6 +151,8 @@ export function TweetComponent({
 				style={{ ...passedInStyles }}
 				component={Link}
 				to={`/dashboard/tweet/${tweet._id}`}
+				mt={5}
+				mb={5}
 			>
 				<Group justify="space-between">
 					<Group>
