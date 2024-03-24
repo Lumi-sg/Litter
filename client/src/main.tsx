@@ -8,7 +8,6 @@ import {
 	GoogleAuthProvider,
 	signInWithPopup,
 	browserSessionPersistence,
-	onIdTokenChanged,
 } from "firebase/auth";
 import { Notifications } from "@mantine/notifications";
 import "@mantine/notifications/styles.css";
@@ -22,8 +21,6 @@ import {
 // import { onAuthStateChanged } from "firebase/auth";
 // import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import React from "react";
-import { useUserStore } from "./Stores/userStore.ts";
-import Cookies from "js-cookie";
 import { refreshUserToken } from "./Helpers/refreshUserToken.ts";
 
 const theme = createTheme({
@@ -94,12 +91,3 @@ await auth.setPersistence(browserSessionPersistence);
 
 const provider = new GoogleAuthProvider();
 export { auth, provider, signInWithPopup };
-// onIdTokenChanged(auth, async (user) => {
-// 	if (user) {
-// 		const newToken = await user.getIdToken(true);
-// 		Cookies.set("firebaseToken", newToken);
-// 	} else {
-// 		useUserStore.setState({ user: null, isLoggedIn: false });
-// 		Cookies.remove("firebaseToken");
-// 	}
-// });
