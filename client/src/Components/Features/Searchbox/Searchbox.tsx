@@ -1,12 +1,23 @@
-import { ActionIcon, rem, Autocomplete } from "@mantine/core";
+import {
+	ActionIcon,
+	rem,
+	Autocomplete,
+	ComboboxStringItem,
+	AutocompleteProps,
+	Avatar,
+	Group,
+	Text
+} from "@mantine/core";
 import { IconSearch, IconArrowRight } from "@tabler/icons-react";
 import styles from "./Searchbox.module.css";
 import { useGetAllUsers } from "../../../Hooks/User Hooks/useGetAllUsers";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
+import { useUserStore } from "../../../Stores/userStore";
 
 export function Searchbox() {
-	const { data: allUsers } = useGetAllUsers();
+	const { user } = useUserStore();
+	const { data: allUsers, isLoading } = useGetAllUsers();
 	const navigate = useNavigate();
 	const [searchInputText, setSearchInputText] = useState("");
 
@@ -22,7 +33,44 @@ export function Searchbox() {
 			setIsSearchedUserClicked(false);
 		}
 	}, [isSearchedUserClicked]);
+	const options = isLoading
+		? []
+		: allUsers
+				?.filter((userFromData) => userFromData.email !== user?.email)
+				.map((user) => ({
+					value: user.username,
+					label: user.username,
+					email: user.email,
+					pictureURL: user.pictureURL,
+					displayName: user.displayName,
+					username: user.username,
+				}));
 
+	interface CustomAutocompleteOption extends ComboboxStringItem {
+		pictureURL: string;
+		displayName: string;
+		username: string;
+	}
+
+	const renderAutocompleteOption: AutocompleteProps["renderOption"] = ({
+		option,
+	}) => (
+		<Group gap="sm">
+			<Avatar
+				src={(option as CustomAutocompleteOption).pictureURL}
+				size={36}
+				radius="xl"
+			/>
+			<div>
+				<Text size="md">
+					{(option as CustomAutocompleteOption).username}
+				</Text>
+				<Text size="sm" opacity={0.5}>
+					{(option as CustomAutocompleteOption).displayName}
+				</Text>
+			</div>
+		</Group>
+	);
 	return (
 		<Autocomplete
 			radius="xl"
@@ -37,7 +85,8 @@ export function Searchbox() {
 			}}
 			ref={inputRef}
 			limit={5}
-			data={allUsers?.map((user) => user.username)}
+			data={options}
+			renderOption={renderAutocompleteOption}
 			onChange={setSearchInputText}
 			onOptionSubmit={() => setIsSearchedUserClicked(true)}
 			value={searchInputText}
