@@ -16,5 +16,6 @@ export const getTweet = (tweetID: string) => {
 			});
 			return data as TweetType;
 		},
+		retry: false,
 	});
 };
