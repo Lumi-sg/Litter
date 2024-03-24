@@ -1,6 +1,6 @@
 import { Card, Text, Group, Button, Center } from "@mantine/core";
 import classes from "./UserCardImage.module.css";
-
+import { Loader } from "@mantine/core";
 import { UserInfoIcons } from "./UserInfoIcon";
 import UserType from "../../../../../Types/User";
 import { useUserStore } from "../../../../../Stores/userStore";
@@ -38,11 +38,11 @@ export function UserCardImage({
 	const { mutate: followUser } = useFollowUser(
 		profileUserData?.username as string
 	);
-	const { mutate: unfollowUser, isPending } = useUnfollowUser(
+	const { mutate: unfollowUser } = useUnfollowUser(
 		profileUserData?.username as string
 	);
 
-	const { mutate: createConversation } = useCreateConversation(
+	const { mutate: createConversation, isPending } = useCreateConversation(
 		profileUserData?.username as string
 	);
 
@@ -112,7 +112,7 @@ export function UserCardImage({
 					disabled={isLoggedInUserOwnerOfProfile}
 					onClick={() => createConversation()}
 				>
-					{isPending ? <LoadingTweet /> : "Message"}
+					{isPending ? <Loader color="violet" /> : "Message"}
 				</Button>
 			</Group>
 		</Card>
