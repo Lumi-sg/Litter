@@ -1,5 +1,6 @@
 import { auth } from "../main";
 import Cookies from "js-cookie";
+import { useUserStore } from "../Stores/userStore";
 
 export const refreshUserToken = async () => {
 	const currentUser = auth.currentUser;
@@ -10,5 +11,6 @@ export const refreshUserToken = async () => {
 		return;
 	}
 	console.log("No current user");
+	useUserStore.getState().logout();
 	return;
 };
