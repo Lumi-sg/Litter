@@ -1,10 +1,18 @@
-import { ActionIcon, rem, Autocomplete } from "@mantine/core";
+import {
+	ActionIcon,
+	rem,
+	Autocomplete,
+	AutocompleteProps,
+	Avatar,
+	Group,
+	Text,
+	ComboboxStringItem,
+} from "@mantine/core";
 import { IconSearch } from "@tabler/icons-react";
 import styles from "./MessageSearchbox.module.css";
 import { MessagePlus } from "tabler-icons-react";
 import UserType from "../../../Types/User";
 import { useUserStore } from "../../../Stores/userStore";
-import { convertEmailToUsername } from "../../../Helpers/convertEmailToUsername";
 import { useEffect, useState } from "react";
 import { useCreateConversation } from "../../../Hooks/Conversation Hooks/useCreateConversation";
 import { useSelectedConversationStore } from "../../../Stores/selectedConversationStore";
@@ -15,7 +23,10 @@ type MessageSearchBoxProps = {
 	isLoading: boolean;
 };
 
-export function MessageSearchBox({ allUsers }: MessageSearchBoxProps) {
+export function MessageSearchBox({
+	allUsers,
+	isLoading,
+}: MessageSearchBoxProps) {
 	const { user } = useUserStore();
 	const [selectedUsername, setSelectedUsername] = useState("");
 	const { setSelectedConversationID } = useSelectedConversationStore();
@@ -45,31 +56,65 @@ export function MessageSearchBox({ allUsers }: MessageSearchBoxProps) {
 			navigate(`/dashboard/messages/${data._id}`);
 		}
 	}, [isSuccess]);
-	return (
+
+	const options = isLoading
+		? []
+		: allUsers
+				?.filter((userFromData) => userFromData.email !== user?.email)
+				.map((user) => ({
+					value: user.username,
+					label: user.username,
+					email: user.email,
+					pictureURL: user.pictureURL,
+					displayName: user.displayName,
+					username: user.username,
+				}));
+
+	interface CustomAutocompleteOption extends ComboboxStringItem {
+		pictureURL: string;
+		displayName: string;
+		username: string;
+	}
+
+	const renderAutocompleteOption: AutocompleteProps["renderOption"] = ({
+		option,
+	}) => (
+		<Group gap="sm">
+			<Avatar
+				src={(option as CustomAutocompleteOption).pictureURL}
+				size={36}
+				radius="xl"
+			/>
+			<div>
+				<Text size="md">
+					{(option as CustomAutocompleteOption).username}
+				</Text>
+				<Text size="sm" opacity={0.5}>
+					{(option as CustomAutocompleteOption).displayName}
+				</Text>
+			</div>
+		</Group>
+	);
+
+	return isLoading ? null : (
 		<Autocomplete
 			radius="xl"
 			w={"100%"}
 			size="md"
 			placeholder="Search Users"
-			onOptionSubmit={(username) => setSelectedUsername(username)}
+			onOptionSubmit={(username: string) => setSelectedUsername(username)}
 			value={selectedUsername}
-			onChange={(username) => setSelectedUsername(username)}
+			onChange={(username: string) => setSelectedUsername(username)}
 			rightSectionWidth={42}
 			styles={{
 				input: {
 					color: "white",
 				},
 			}}
-			data={allUsers
-				?.filter(
-					(userFromData) =>
-						userFromData.username !==
-						convertEmailToUsername(user?.email as string)
-				)
-				.map((userFromData) => ({
-					value: userFromData.username,
-					label: userFromData.username,
-				}))}
+			comboboxProps={{ transitionProps: { transition: 'pop', duration: 200 } }}
+			maxDropdownHeight={500}
+			renderOption={renderAutocompleteOption}
+			data={options}
 			classNames={{
 				input: styles.input,
 				options: styles.options,
