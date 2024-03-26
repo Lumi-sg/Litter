@@ -1,6 +1,7 @@
 import { auth } from "../main";
 import Cookies from "js-cookie";
 import { useUserStore } from "../Stores/userStore";
+import { signInWithCustomToken } from "firebase/auth";
 
 export const refreshUserToken = async () => {
 	const currentUser = auth.currentUser;
@@ -10,7 +11,16 @@ export const refreshUserToken = async () => {
 		console.log("Token refresh via function");
 		return;
 	}
-	console.log("No current user");
-	useUserStore.getState().logout();
-	return;
+	const firebaseToken = Cookies.get("firebaseToken");
+	signInWithCustomToken(auth, firebaseToken as string)
+		.then((userCredential) => {
+			const user = userCredential.user;
+			useUserStore.getState().setUser(user);
+			console.log("Token refresh via cookie");
+			console.log(user);
+		})
+		.catch((error) => {
+			console.log(error);
+			useUserStore.getState().logout();
+		});
 };
