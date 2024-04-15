@@ -5,11 +5,15 @@ import { Center, Divider, Flex, Group } from "@mantine/core";
 import { useComponentStore } from "../../../../Stores/componentStore";
 import { Route, Routes } from "react-router-dom";
 import { ErrorPage } from "../../../Features/ErrorPage/ErrorPage";
-import {io} from "socket.io-client";
+import { io } from "socket.io-client";
 import { baseURL } from "../../../../constants/baseURL";
+import { useUserStore } from "../../../../Stores/userStore";
+import { useSocketStore } from "../../../../Stores/socketStore";
 
 const Messages = () => {
+	const { user } = useUserStore();
 	const { setSelectedComponent } = useComponentStore();
+	const { socket, setSocket } = useSocketStore();
 
 	useEffect(() => {
 		setSelectedComponent("Messages");
@@ -17,15 +21,21 @@ const Messages = () => {
 
 	//setup socket
 	useEffect(() => {
-		const socket = io("http://localhost:3000");
+		const newSocket = io(baseURL);
+		setSocket(newSocket);
+	}, []);
+
+	useEffect(() => {
+		if (!socket) return;
 		socket.on("connect", () => {
-			console.log(socket.id);
-			console.log("Client connected to server");
+			socket.emit("userConnect", user);
+			console.log(`${user?.displayName} connected to server socket.`);
 		});
+
 		return () => {
 			socket.disconnect();
 		};
-	}, []);
+	}, [socket]);
 
 	return (
 		<Group h={"calc (100vh - 18.85rem)"} miw={"60vw"}>
