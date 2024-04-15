@@ -5,12 +5,26 @@ import { Center, Divider, Flex, Group } from "@mantine/core";
 import { useComponentStore } from "../../../../Stores/componentStore";
 import { Route, Routes } from "react-router-dom";
 import { ErrorPage } from "../../../Features/ErrorPage/ErrorPage";
+import {io} from "socket.io-client";
+import { baseURL } from "../../../../constants/baseURL";
 
 const Messages = () => {
 	const { setSelectedComponent } = useComponentStore();
 
 	useEffect(() => {
 		setSelectedComponent("Messages");
+	}, []);
+
+	//setup socket
+	useEffect(() => {
+		const socket = io("http://localhost:3000");
+		socket.on("connect", () => {
+			console.log(socket.id);
+			console.log("Client connected to server");
+		});
+		return () => {
+			socket.disconnect();
+		};
 	}, []);
 
 	return (
