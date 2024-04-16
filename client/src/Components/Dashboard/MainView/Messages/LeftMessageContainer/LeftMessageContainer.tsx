@@ -34,6 +34,7 @@ const LeftMessageContainer = () => {
 			setSelectedConversationID("");
 			navigate("/dashboard/messages");
 			refetchConversations();
+			if (otherUser.email === user?.email) return;
 			notifications.show({
 				title: "Conversation Deleted",
 				message: `${convertEmailToUsername(
