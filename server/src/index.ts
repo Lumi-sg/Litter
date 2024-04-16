@@ -95,7 +95,7 @@ io.on("connection", (socket) => {
 	});
 
 	socket.on("deleteConversation", (conversationID, user) => {
-		io.to(conversationID).emit("conversationDeleted");
+		io.to(conversationID).emit("conversationDeleted", user);
 		socket.leave(conversationID);
 		console.log(`${user.email} left ${conversationID}`);
 	});

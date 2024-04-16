@@ -12,6 +12,7 @@ import { useSocketStore } from "../../../../../Stores/socketStore";
 import { useEffect } from "react";
 import { useSelectedConversationStore } from "../../../../../Stores/selectedConversationStore";
 import { useNavigate } from "react-router-dom";
+import { notifications } from "@mantine/notifications";
 const LeftMessageContainer = () => {
 	const { user } = useUserStore();
 	const { data: allUsers, isLoading } = useGetAllUsers();
@@ -29,10 +30,18 @@ const LeftMessageContainer = () => {
 		conversations?.forEach((conversation) => {
 			socket.emit("joinConversation", conversation._id, user);
 		});
-		socket.on("conversationDeleted", () => {
+		socket.on("conversationDeleted", (otherUser) => {
 			setSelectedConversationID("");
 			navigate("/dashboard/messages");
 			refetchConversations();
+			notifications.show({
+				title: "Conversation Deleted",
+				message: `${convertEmailToUsername(
+					otherUser.email
+				)} has left the conversation.`,
+				color: "red",
+				autoClose: false,
+			});
 			console.log("conversation deleted via socket (refetch)");
 		});
 	}, [conversations, socket]);
