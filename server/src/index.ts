@@ -87,4 +87,8 @@ io.on("connection", (socket) => {
 	socket.on("userConnect", (user) => {
 		console.log(`${user.displayName} connected to socket`);
 	});
+	socket.on("joinConversation", (conversationID, user) => {
+		socket.join(conversationID);
+		console.log(`${user.displayName} joined ${conversationID}`);
+	});
 });

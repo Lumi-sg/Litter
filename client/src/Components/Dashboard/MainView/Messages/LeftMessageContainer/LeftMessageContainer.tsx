@@ -8,6 +8,8 @@ import { useGetUserConversations } from "../../../../../Hooks/Conversation Hooks
 import LoadingTweet from "../../../../Features/LoadingTweet/LoadingTweet";
 import { useUserStore } from "../../../../../Stores/userStore";
 import { convertEmailToUsername } from "../../../../../Helpers/convertEmailToUsername";
+import { useSocketStore } from "../../../../../Stores/socketStore";
+import { useEffect } from "react";
 
 const LeftMessageContainer = () => {
 	const { user } = useUserStore();
@@ -15,6 +17,14 @@ const LeftMessageContainer = () => {
 	const { data: conversations, isLoading: isLoadingConversations } =
 		useGetUserConversations(convertEmailToUsername(user!.email as string));
 
+	const { socket } = useSocketStore();
+
+	useEffect(() => {
+		if (!socket || isLoadingConversations) return;
+		conversations?.forEach((conversation) => {
+			socket.emit("joinConversation", conversation._id, user);
+		});
+	}, [conversations]);
 	return (
 		<Stack mt={10} h={"90vh"} w={"20vw"} ml={10}>
 			<TopMessageBar />

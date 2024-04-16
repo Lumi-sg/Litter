@@ -22,6 +22,7 @@ import { useProfileGet } from "../../../Hooks/User Hooks/useProfileGet";
 import { convertEmailToUsername } from "../../../Helpers/convertEmailToUsername";
 import { useDeleteConversation } from "../../../Hooks/Conversation Hooks/useDeleteConversation";
 import { Link } from "react-router-dom";
+import { useComponentStore } from "../../../Stores/componentStore";
 
 type ConversationHeaderProps = {
 	conversation: ConversationType;
@@ -35,6 +36,7 @@ const ConversationHeader = ({ conversation }: ConversationHeaderProps) => {
 	const { mutate: deleteConversation } = useDeleteConversation(
 		conversation._id
 	);
+	const { setSelectedComponent } = useComponentStore();
 
 	const otherUser = getOtherUserInConversation(conversation.participants);
 	const { mutate: followUser } = useFollowUser(otherUser?.username as string);
@@ -62,6 +64,7 @@ const ConversationHeader = ({ conversation }: ConversationHeaderProps) => {
 						radius="xl"
 						component={Link}
 						to={`/dashboard/profile/${otherUser?.username}`}
+						onClick={() => setSelectedComponent("Profile")}
 					/>
 					<Text
 						c={"white"}
@@ -69,6 +72,7 @@ const ConversationHeader = ({ conversation }: ConversationHeaderProps) => {
 						fw={700}
 						component={Link}
 						to={`/dashboard/profile/${otherUser?.username}`}
+						onClick={() => setSelectedComponent("Profile")}
 					>
 						{otherUser?.displayName}
 					</Text>
