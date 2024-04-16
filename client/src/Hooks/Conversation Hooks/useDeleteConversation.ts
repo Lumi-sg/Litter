@@ -8,6 +8,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useUserStore } from "../../Stores/userStore";
 import { useNavigate } from "react-router-dom";
 import { useSelectedConversationStore } from "../../Stores/selectedConversationStore";
+import { useSocketStore } from "../../Stores/socketStore";
 
 export const useDeleteConversation = (conversationID: string) => {
 	const firebaseToken = Cookies.get("firebaseToken");
@@ -15,6 +16,7 @@ export const useDeleteConversation = (conversationID: string) => {
 	const queryClient = useQueryClient();
     const navigate = useNavigate();
 	const { user } = useUserStore();
+	const { socket } = useSocketStore();
 	return useMutation({
 		mutationFn: async () => {
 			const { data } = await axios.delete(
@@ -40,6 +42,8 @@ export const useDeleteConversation = (conversationID: string) => {
 			);
 			modals.closeAll();
             setSelectedConversationID("")
+			console.log(user?.displayName)
+			socket?.emit("deleteConversation", conversationID, user)
             navigate("/dashboard/messages")
             
 		},

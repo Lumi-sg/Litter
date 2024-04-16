@@ -84,11 +84,19 @@ io.on("connection", (socket) => {
 	socket.on("disconnect", () => {
 		console.log("user disconnected");
 	});
+
 	socket.on("userConnect", (user) => {
-		console.log(`${user.displayName} connected to socket`);
+		console.log(`${user.email} connected to socket`);
 	});
+
 	socket.on("joinConversation", (conversationID, user) => {
 		socket.join(conversationID);
-		console.log(`${user.displayName} joined ${conversationID}`);
+		console.log(`${user.email} joined ${conversationID}`);
+	});
+
+	socket.on("deleteConversation", (conversationID, user) => {
+		io.to(conversationID).emit("conversationDeleted");
+		socket.leave(conversationID);
+		console.log(`${user.email} left ${conversationID}`);
 	});
 });

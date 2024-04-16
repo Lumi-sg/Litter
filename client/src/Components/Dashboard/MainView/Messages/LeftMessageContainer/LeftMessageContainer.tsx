@@ -10,21 +10,32 @@ import { useUserStore } from "../../../../../Stores/userStore";
 import { convertEmailToUsername } from "../../../../../Helpers/convertEmailToUsername";
 import { useSocketStore } from "../../../../../Stores/socketStore";
 import { useEffect } from "react";
-
+import { useSelectedConversationStore } from "../../../../../Stores/selectedConversationStore";
+import { useNavigate } from "react-router-dom";
 const LeftMessageContainer = () => {
 	const { user } = useUserStore();
 	const { data: allUsers, isLoading } = useGetAllUsers();
-	const { data: conversations, isLoading: isLoadingConversations } =
-		useGetUserConversations(convertEmailToUsername(user!.email as string));
-
+	const {
+		data: conversations,
+		isLoading: isLoadingConversations,
+		refetch: refetchConversations,
+	} = useGetUserConversations(convertEmailToUsername(user!.email as string));
+	const { setSelectedConversationID } = useSelectedConversationStore();
 	const { socket } = useSocketStore();
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		if (!socket || isLoadingConversations) return;
 		conversations?.forEach((conversation) => {
 			socket.emit("joinConversation", conversation._id, user);
 		});
-	}, [conversations]);
+		socket.on("conversationDeleted", () => {
+			setSelectedConversationID("");
+			navigate("/dashboard/messages");
+			refetchConversations();
+			console.log("conversation deleted via socket (refetch)");
+		});
+	}, [conversations, socket]);
 	return (
 		<Stack mt={10} h={"90vh"} w={"20vw"} ml={10}>
 			<TopMessageBar />
