@@ -13,39 +13,47 @@ import { useEffect } from "react";
 import { useSelectedConversationStore } from "../../../../../Stores/selectedConversationStore";
 import { useNavigate } from "react-router-dom";
 import { notifications } from "@mantine/notifications";
+import { useQueryClient } from "@tanstack/react-query";
+import { ConversationType } from "../../../../../Types/Conversation";
 const LeftMessageContainer = () => {
 	const { user } = useUserStore();
 	const { data: allUsers, isLoading } = useGetAllUsers();
-	const {
-		data: conversations,
-		isLoading: isLoadingConversations,
-		refetch: refetchConversations,
-	} = useGetUserConversations(convertEmailToUsername(user!.email as string));
+	const { data: conversations, isLoading: isLoadingConversations } =
+		useGetUserConversations(convertEmailToUsername(user!.email as string));
 	const { setSelectedConversationID } = useSelectedConversationStore();
 	const { socket } = useSocketStore();
 	const navigate = useNavigate();
-
+	const queryClient = useQueryClient();
 	useEffect(() => {
 		if (!socket || isLoadingConversations) return;
 		conversations?.forEach((conversation) => {
 			socket.emit("joinConversation", conversation._id, user);
 		});
-		socket.on("conversationDeleted", (otherUser) => {
+		socket.on("conversationDeleted", (conversationID, otherUser) => {
 			setSelectedConversationID("");
 			navigate("/dashboard/messages");
-			refetchConversations();
+			queryClient.setQueryData(
+				["conversations", user?.uid as string],
+				(prevConversations: ConversationType[]) => {
+					const updatedData = prevConversations.filter(
+						(conversation) => {
+							return conversation._id !== conversationID;
+						}
+					);
+					return updatedData;
+				}
+			);
 			if (otherUser.email === user?.email) return;
 			notifications.show({
 				title: "Conversation Deleted",
 				message: `${convertEmailToUsername(
 					otherUser.email
-				)} has left the conversation.`,
+				)} has deleted the conversation.`,
 				color: "red",
 				autoClose: false,
 			});
-			console.log("conversation deleted via socket (refetch)");
 		});
-	}, [conversations, socket]);
+	}, [conversations]);
 	return (
 		<Stack mt={10} h={"90vh"} w={"20vw"} ml={10}>
 			<TopMessageBar />
