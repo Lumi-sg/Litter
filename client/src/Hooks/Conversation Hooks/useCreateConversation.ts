@@ -8,12 +8,13 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useUserStore } from "../../Stores/userStore";
 import { useNavigate } from "react-router-dom";
 import { useSelectedConversationStore } from "../../Stores/selectedConversationStore";
-
+import { useSocketStore } from "../../Stores/socketStore";
 export const useCreateConversation = (recipientUsername: string) => {
 	const firebaseToken = Cookies.get("firebaseToken");
 	const queryClient = useQueryClient();
 	const { user } = useUserStore();
 	const navigate = useNavigate();
+	const { socket } = useSocketStore();
 	const { selectedConversationID, setSelectedConversationID } =
 		useSelectedConversationStore();
 	return useMutation({
@@ -33,7 +34,7 @@ export const useCreateConversation = (recipientUsername: string) => {
 
 			return data;
 		},
-		onSuccess: () => {
+		onSuccess: async () => {
 			queryClient.invalidateQueries({
 				queryKey: ["conversations", user?.uid as string],
 			});
@@ -48,6 +49,8 @@ export const useCreateConversation = (recipientUsername: string) => {
 				""
 			);
 			modals.closeAll();
+			await socket?.connect();
+			socket?.emit("createConversation", user, recipientUsername);
 		},
 
 		onError: () => {

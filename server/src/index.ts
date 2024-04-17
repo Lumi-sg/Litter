@@ -9,6 +9,7 @@ import path from "path";
 import mongoose from "mongoose";
 import { verifyFirebaseToken } from "./middleware/firebaseAuth";
 import { Server } from "socket.io";
+import { convertEmailToUsername } from "./helpers/convertEmailToUsername";
 
 //routes
 import userRouter from "./routes/userRouter";
@@ -79,24 +80,39 @@ const io = new Server(server, {
 		credentials: true,
 	},
 });
-
+const userSocketMap = new Map();
 io.on("connection", (socket) => {
 	socket.on("disconnect", () => {
-		console.log("user disconnected");
+		// Remove the user from the map when they disconnect
+		userSocketMap.forEach((value, key) => {
+			if (value === socket.id) {
+				userSocketMap.delete(key);
+			}
+		});
 	});
 
 	socket.on("userConnect", (user) => {
-		console.log(`${user.email} connected to socket`);
+		console.log(`${convertEmailToUsername(user.email)} connected to socket`);
+		userSocketMap.set(convertEmailToUsername(user.email), socket.id);
 	});
 
 	socket.on("joinConversation", (conversationID, user) => {
 		socket.join(conversationID);
-		console.log(`${user.email} joined ${conversationID}`);
 	});
 
 	socket.on("deleteConversation", (conversationID, user) => {
 		io.to(conversationID).emit("conversationDeleted", conversationID, user);
 		socket.leave(conversationID);
 		console.log(`${user.email} left ${conversationID}`);
+	});
+	socket.on("createConversation", (senderUser, receiverUsername) => {
+		console.log("HERE")
+		console.log(userSocketMap)
+		const receiverSocketID = userSocketMap.get(receiverUsername);
+		if (!receiverSocketID) {
+			console.log("receiverSocketID not found");
+			return;
+		}
+		io.to(receiverSocketID).emit("conversationCreated", senderUser);
 	});
 });

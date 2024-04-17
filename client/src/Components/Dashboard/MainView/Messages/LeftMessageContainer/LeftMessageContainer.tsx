@@ -15,11 +15,15 @@ import { useNavigate } from "react-router-dom";
 import { notifications } from "@mantine/notifications";
 import { useQueryClient } from "@tanstack/react-query";
 import { ConversationType } from "../../../../../Types/Conversation";
+import UserType from "../../../../../Types/User";
 const LeftMessageContainer = () => {
 	const { user } = useUserStore();
 	const { data: allUsers, isLoading } = useGetAllUsers();
-	const { data: conversations, isLoading: isLoadingConversations } =
-		useGetUserConversations(convertEmailToUsername(user!.email as string));
+	const {
+		data: conversations,
+		isLoading: isLoadingConversations,
+		refetch,
+	} = useGetUserConversations(convertEmailToUsername(user!.email as string));
 	const { setSelectedConversationID } = useSelectedConversationStore();
 	const { socket } = useSocketStore();
 	const navigate = useNavigate();
@@ -50,6 +54,22 @@ const LeftMessageContainer = () => {
 					otherUser.email
 				)} has deleted the conversation.`,
 				color: "red",
+				autoClose: false,
+			});
+		});
+		socket.on("conversationCreated", (senderUser: UserType) => {
+			if (
+				convertEmailToUsername(senderUser.email) ===
+				convertEmailToUsername(user?.email as string)
+			)
+				return;
+			refetch();
+			notifications.show({
+				title: "Conversation Created",
+				message: `${convertEmailToUsername(
+					senderUser.email
+				)} has created a conversation with you.`,
+				color: "green",
 				autoClose: false,
 			});
 		});
