@@ -128,5 +128,6 @@ io.on("connection", (socket) => {
 		}
 
 		io.to(conversationID).emit("newMessage", newMessage);
+		console.log("New message sent to", conversationID);
 	});
 });
