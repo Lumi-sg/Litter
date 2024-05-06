@@ -7,6 +7,7 @@ import { useCreateNewMessage } from "../../../Hooks/Conversation Hooks/useCreate
 import { getOtherUserInConversation } from "../../../Helpers/getOtherUserInConversation";
 import { useSocketStore } from "../../../Stores/socketStore";
 import { useUserStore } from "../../../Stores/userStore";
+import { convertEmailToUsername } from "../../../Helpers/convertEmailToUsername";
 
 type ConversationInputProps = {
 	conversation: ConversationType;

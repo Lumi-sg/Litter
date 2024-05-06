@@ -33,6 +33,10 @@ const MainConversation = ({ conversation }: MainConversationProps) => {
 
 	useEffect(() => {
 		socket?.on("receiveNewMessage", (newMessage: MessageType) => {
+			if (newMessage.senderFirebaseID === user?.uid) {
+				return;
+			}
+			console.log("new message incoming!")
 			queryClient.setQueryData(
 				["conversation", selectedConversationID],
 				(prevConversation: ConversationType) => {
