@@ -4,6 +4,10 @@ import { useRef, useEffect } from "react";
 import styles from "./MainConversation.module.css";
 import { ConversationType } from "../../../Types/Conversation";
 import { useUserStore } from "../../../Stores/userStore";
+import { useSocketStore } from "../../../Stores/socketStore";
+import { MessageType } from "../../../Types/Message";
+import { useQueryClient } from "@tanstack/react-query";
+import { useSelectedConversationStore } from "../../../Stores/selectedConversationStore";
 
 type MainConversationProps = {
 	conversation: ConversationType;
@@ -12,6 +16,10 @@ type MainConversationProps = {
 const MainConversation = ({ conversation }: MainConversationProps) => {
 	const scrollHere = useRef<HTMLDivElement>(null);
 	const { user } = useUserStore();
+	const { socket } = useSocketStore();
+	const { selectedConversationID } = useSelectedConversationStore();
+
+	const queryClient = useQueryClient();
 
 	const handleScroll = () => {
 		if (scrollHere.current) {
@@ -24,8 +32,24 @@ const MainConversation = ({ conversation }: MainConversationProps) => {
 	}, []);
 
 	useEffect(() => {
+		socket?.on("receiveNewMessage", (newMessage: MessageType) => {
+			queryClient.setQueryData(
+				["conversation", selectedConversationID],
+				(prevConversation: ConversationType) => {
+					// @ts-ignore
+					const updatedConversation: ConversationType = {
+						...prevConversation,
+						messages: [...prevConversation.messages, newMessage],
+					};
+					return updatedConversation;
+				}
+			);
+			handleScroll();
+			return;
+		});
 		handleScroll();
 	}, [conversation]);
+
 	return (
 		<Flex mr={5} gap={20} direction="column-reverse" h={"100%"} c={"white"}>
 			<ScrollArea
@@ -50,13 +74,13 @@ const MainConversation = ({ conversation }: MainConversationProps) => {
 						mr={10}
 					>
 						<MessageCard
-						key={message._id}
+							key={message._id}
 							message={message}
 							isLoggedInUserMessage={
 								message.senderFirebaseID === user?.uid
 							}
 						/>
-					</Stack >
+					</Stack>
 				))}
 
 				<div ref={scrollHere}></div>

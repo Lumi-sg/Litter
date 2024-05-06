@@ -116,18 +116,18 @@ io.on("connection", (socket) => {
 		}
 		io.to(receiverSocketID).emit("conversationCreated", senderUser);
 	});
-	socket.on("newMessage", (messageContent, conversationID, senderUser) => {
+	socket.on("newMessage", (messageContent, conversationID, senderUserFirebaseID) => {
 		const newMessage = {
 			content: messageContent,
-			senderFirebaseID: senderUser.uid,
+			senderFirebaseID: senderUserFirebaseID,
 			timestamp: new Date(),
 		};
-		if (!messageContent || !conversationID || !senderUser) {
+		if (!messageContent || !conversationID || !senderUserFirebaseID) {
 			console.log("Invalid message data");
 			return;
 		}
 
-		io.to(conversationID).emit("newMessage", newMessage);
-		console.log("New message sent to", conversationID);
+		io.to(conversationID).emit("receiveNewMessage", newMessage);
+		console.log("New message sent to", conversationID, messageContent);
 	});
 });

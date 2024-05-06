@@ -1,13 +1,11 @@
 import { ActionIcon, TextInput, rem } from "@mantine/core";
 import { IconArrowRight } from "@tabler/icons-react";
 import styles from "./ConversationInput.module.css";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { ConversationType } from "../../../Types/Conversation";
 import { useCreateNewMessage } from "../../../Hooks/Conversation Hooks/useCreateNewMessage";
 import { getOtherUserInConversation } from "../../../Helpers/getOtherUserInConversation";
 import { useSocketStore } from "../../../Stores/socketStore";
-import { useSelectedConversationStore } from "../../../Stores/selectedConversationStore";
-import { useQueryClient } from "@tanstack/react-query";
 import { useUserStore } from "../../../Stores/userStore";
 
 type ConversationInputProps = {
@@ -18,13 +16,7 @@ const ConversationInput = ({ conversation }: ConversationInputProps) => {
 	const otherUser = getOtherUserInConversation(conversation.participants);
 	const [message, setMessage] = useState("");
 	const { socket } = useSocketStore();
-	const { selectedConversationID } = useSelectedConversationStore();
 	const { user } = useUserStore();
-	const queryClient = useQueryClient();
-
-	useEffect(() => {
-		if (!socket || !selectedConversationID) return;
-	})
 
 	const useCreateNewMessageMutation = useCreateNewMessage(
 		conversation._id,

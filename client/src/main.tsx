@@ -20,7 +20,6 @@ import {
 // import { useUserStore } from "./Stores/userStore.ts";
 // import { onAuthStateChanged } from "firebase/auth";
 // import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import React from "react";
 import { refreshUserToken } from "./Helpers/refreshUserToken.ts";
 
 const theme = createTheme({
@@ -46,27 +45,25 @@ const queryClient = new QueryClient({
 });
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-	<React.StrictMode>
-		<QueryClientProvider client={queryClient}>
-			<MantineProvider theme={theme} forceColorScheme="dark">
-				<ModalsProvider>
-					<Notifications
-						position="bottom-right"
-						zIndex={99999}
-						color="violet"
-						limit={5}
-						autoClose={3000}
-					/>
+	<QueryClientProvider client={queryClient}>
+		<MantineProvider theme={theme} forceColorScheme="dark">
+			<ModalsProvider>
+				<Notifications
+					position="bottom-right"
+					zIndex={99999}
+					color="violet"
+					limit={5}
+					autoClose={3000}
+				/>
 
-					<App />
-					{/* <ReactQueryDevtools
-						initialIsOpen={false}
-						client={queryClient}
-					/> */}
-				</ModalsProvider>
-			</MantineProvider>
-		</QueryClientProvider>
-	</React.StrictMode>
+				<App />
+				{/* <ReactQueryDevtools
+					initialIsOpen={false}
+					client={queryClient}
+				/> */}
+			</ModalsProvider>
+		</MantineProvider>
+	</QueryClientProvider>
 );
 const firebaseConfig = {
 	apiKey: "AIzaSyBt0MlhKtNInXeiV4Ltr1c0NRqqXUjKKvs",
