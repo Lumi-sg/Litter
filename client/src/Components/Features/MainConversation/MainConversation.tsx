@@ -32,11 +32,15 @@ const MainConversation = ({ conversation }: MainConversationProps) => {
 	}, []);
 
 	useEffect(() => {
+
+		handleScroll();
+	}, [conversation]);
+
+	useEffect(() => {
 		socket?.on("receiveNewMessage", (newMessage: MessageType) => {
 			if (newMessage.senderFirebaseID === user?.uid) {
 				return;
 			}
-			console.log("new message incoming!")
 			queryClient.setQueryData(
 				["conversation", selectedConversationID],
 				(prevConversation: ConversationType) => {
@@ -51,8 +55,7 @@ const MainConversation = ({ conversation }: MainConversationProps) => {
 			handleScroll();
 			return;
 		});
-		handleScroll();
-	}, [conversation]);
+	},[])
 
 	return (
 		<Flex mr={5} gap={20} direction="column-reverse" h={"100%"} c={"white"}>

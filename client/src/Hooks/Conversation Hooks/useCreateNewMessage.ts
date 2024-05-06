@@ -29,9 +29,9 @@ export const useCreateNewMessage = (
 			return data;
 		},
 		onSuccess: () => {
-			queryClient.invalidateQueries({
-				queryKey: ["conversation", conversationID],
-			});
+			// queryClient.invalidateQueries({
+			// 	queryKey: ["conversation", conversationID],
+			// });
 		},
 		onError: () => {
 			displayNotification(

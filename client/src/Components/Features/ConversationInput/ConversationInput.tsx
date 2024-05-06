@@ -7,7 +7,8 @@ import { useCreateNewMessage } from "../../../Hooks/Conversation Hooks/useCreate
 import { getOtherUserInConversation } from "../../../Helpers/getOtherUserInConversation";
 import { useSocketStore } from "../../../Stores/socketStore";
 import { useUserStore } from "../../../Stores/userStore";
-import { convertEmailToUsername } from "../../../Helpers/convertEmailToUsername";
+import { useQueryClient } from "@tanstack/react-query";
+import { MessageType } from "../../../Types/Message";
 
 type ConversationInputProps = {
 	conversation: ConversationType;
@@ -18,6 +19,7 @@ const ConversationInput = ({ conversation }: ConversationInputProps) => {
 	const [message, setMessage] = useState("");
 	const { socket } = useSocketStore();
 	const { user } = useUserStore();
+	const queryClient = useQueryClient();
 
 	const useCreateNewMessageMutation = useCreateNewMessage(
 		conversation._id,
@@ -27,6 +29,23 @@ const ConversationInput = ({ conversation }: ConversationInputProps) => {
 
 	const handleSubmit = async () => {
 		socket?.emit("newMessage", message, conversation._id, user?.uid);
+		queryClient.setQueryData(
+			["conversation", conversation._id],
+			(prevConversation: ConversationType) => {
+				// @ts-ignore
+				const newMessage: MessageType = {
+					content: message,
+					senderFirebaseID: user?.uid as string,
+					timestamp: new Date(),
+				};
+				// @ts-ignore
+				const updatedConversation: ConversationType = {
+					...prevConversation,
+					messages: [...prevConversation.messages, newMessage],
+				};
+				return updatedConversation;
+			}
+		);
 		await useCreateNewMessageMutation.mutate();
 		setMessage("");
 	};
