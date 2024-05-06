@@ -92,7 +92,9 @@ io.on("connection", (socket) => {
 	});
 
 	socket.on("userConnect", (user) => {
-		console.log(`${convertEmailToUsername(user.email)} connected to socket`);
+		console.log(
+			`${convertEmailToUsername(user.email)} connected to socket`
+		);
 		userSocketMap.set(convertEmailToUsername(user.email), socket.id);
 	});
 
@@ -106,13 +108,25 @@ io.on("connection", (socket) => {
 		console.log(`${user.email} left ${conversationID}`);
 	});
 	socket.on("createConversation", (senderUser, receiverUsername) => {
-		console.log("HERE")
-		console.log(userSocketMap)
+		console.log(userSocketMap);
 		const receiverSocketID = userSocketMap.get(receiverUsername);
 		if (!receiverSocketID) {
 			console.log("receiverSocketID not found");
 			return;
 		}
 		io.to(receiverSocketID).emit("conversationCreated", senderUser);
+	});
+	socket.on("newMessage", (messageContent, conversationID, senderUser) => {
+		const newMessage = {
+			content: messageContent,
+			senderFirebaseID: senderUser.uid,
+			timestamp: new Date(),
+		};
+		if (!messageContent || !conversationID || !senderUser) {
+			console.log("Invalid message data");
+			return;
+		}
+
+		io.to(conversationID).emit("newMessage", newMessage);
 	});
 });

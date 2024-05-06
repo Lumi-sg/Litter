@@ -5,7 +5,9 @@ import { useState } from "react";
 import { ConversationType } from "../../../Types/Conversation";
 import { useCreateNewMessage } from "../../../Hooks/Conversation Hooks/useCreateNewMessage";
 import { getOtherUserInConversation } from "../../../Helpers/getOtherUserInConversation";
-
+import { useSocketStore } from "../../../Stores/socketStore";
+import { useSelectedConversationStore } from "../../../Stores/selectedConversationStore";
+import { useQueryClient } from "@tanstack/react-query";
 type ConversationInputProps = {
 	conversation: ConversationType;
 };
@@ -13,6 +15,9 @@ type ConversationInputProps = {
 const ConversationInput = ({ conversation }: ConversationInputProps) => {
 	const otherUser = getOtherUserInConversation(conversation.participants);
 	const [message, setMessage] = useState("");
+	const { socket } = useSocketStore();
+	const { selectedConversationID } = useSelectedConversationStore();
+	const queryClient = useQueryClient();
 
 	const useCreateNewMessageMutation = useCreateNewMessage(
 		conversation._id,
@@ -23,7 +28,6 @@ const ConversationInput = ({ conversation }: ConversationInputProps) => {
 	const handleSubmit = async () => {
 		await useCreateNewMessageMutation.mutate();
 		setMessage("");
-		
 	};
 	return (
 		<>
