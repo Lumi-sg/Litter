@@ -18,6 +18,10 @@ import formatTimeStamp from "../../../Helpers/formatTimeStamp";
 import { getOtherUserInConversation } from "../../../Helpers/getOtherUserInConversation";
 import { useDeleteConversation } from "../../../Hooks/Conversation Hooks/useDeleteConversation";
 import { useSelectedConversationStore } from "../../../Stores/selectedConversationStore";
+import { useSocketStore } from "../../../Stores/socketStore";
+import { useEffect, useState } from "react";
+import { MessageType } from "../../../Types/Message";
+import { useUserStore } from "../../../Stores/userStore";
 
 type ConversationPreviewProps = {
 	conversation: ConversationType;
@@ -30,17 +34,35 @@ const ConversationPreview = ({ conversation }: ConversationPreviewProps) => {
 	const { mutate: deleteConversation } = useDeleteConversation(
 		conversation._id
 	);
+	const { socket } = useSocketStore();
+	const { user } = useUserStore();
 	const otherUser = getOtherUserInConversation(conversation.participants);
-	let lastMessage =
-		conversation.messages.length > 0
-			? conversation.messages[conversation.messages.length - 1]
-			: null;
+
+	const [lastMessage, setLastMessage] = useState<MessageType | null>(null);
 
 	const handleMenuClick = (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.stopPropagation();
 		e.preventDefault();
 		deleteConversation();
 	};
+
+	useEffect(() => {
+		const handleNewMessage = (
+			newMessage: MessageType,
+			conversationID: string
+		) => {
+			// Check if the conversation ID matches
+			if (conversationID === conversation._id) {
+				setLastMessage(newMessage);
+			}
+		};
+
+		socket?.on("receiveNewMessage", handleNewMessage);
+
+		return () => {
+			socket?.off("receiveNewMessage", handleNewMessage);
+		};
+	}, [conversation._id]);
 
 	return (
 		<>
@@ -87,9 +109,16 @@ const ConversationPreview = ({ conversation }: ConversationPreviewProps) => {
 									{otherUser?.username}
 								</Text>
 							</Text>
-							<Text c={"white"} size="md">
+							<Text
+								c={
+									lastMessage?.senderFirebaseID === user?.uid
+										? "dimmed"
+										: "white"
+								}
+								size="md"
+							>
 								{lastMessage
-									? lastMessage.content.slice(0, 15) + "..."
+									? lastMessage.content.slice(0, 13) + " ..."
 									: ""}
 							</Text>
 						</Stack>
