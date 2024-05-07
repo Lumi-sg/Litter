@@ -16,8 +16,7 @@ import { notifications } from "@mantine/notifications";
 import { useQueryClient } from "@tanstack/react-query";
 import { ConversationType } from "../../../../../Types/Conversation";
 import UserType from "../../../../../Types/User";
-import { IconDots } from "@tabler/icons-react";
-import { Message, Message2 } from "tabler-icons-react";
+import { Message2 } from "tabler-icons-react";
 const LeftMessageContainer = () => {
 	const { user } = useUserStore();
 	const { data: allUsers, isLoading } = useGetAllUsers();

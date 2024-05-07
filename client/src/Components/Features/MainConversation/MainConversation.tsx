@@ -9,9 +9,8 @@ import { MessageType } from "../../../Types/Message";
 import { useQueryClient } from "@tanstack/react-query";
 import { useSelectedConversationStore } from "../../../Stores/selectedConversationStore";
 import { notifications } from "@mantine/notifications";
-import { IconDots } from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
-import { Message, Message2 } from "tabler-icons-react";
+import { Message2 } from "tabler-icons-react";
 
 type MainConversationProps = {
 	conversation: ConversationType;
@@ -62,7 +61,7 @@ const MainConversation = ({ conversation }: MainConversationProps) => {
 						onClick: () => {
 							navigate(`/dashboard/messages/${conversationID}`);
 							notifications.clean();
-						}
+						},
 					});
 					return;
 				}
