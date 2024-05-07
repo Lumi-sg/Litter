@@ -118,7 +118,13 @@ io.on("connection", (socket) => {
 	});
 	socket.on(
 		"newMessage",
-		(messageContent, conversationID, senderUserFirebaseID) => {
+		(
+			messageContent,
+			conversationID,
+			senderUserFirebaseID,
+			senderUsername,
+			senderAvatar
+		) => {
 			const newMessage = {
 				content: messageContent,
 				senderFirebaseID: senderUserFirebaseID,
@@ -129,7 +135,13 @@ io.on("connection", (socket) => {
 				return;
 			}
 
-			io.to(conversationID).emit("receiveNewMessage", newMessage, conversationID);
+			io.to(conversationID).emit(
+				"receiveNewMessage",
+				newMessage,
+				conversationID,
+				senderUsername,
+				senderAvatar
+			);
 			console.log("New message sent to", conversationID, messageContent);
 		}
 	);

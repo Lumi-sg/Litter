@@ -9,6 +9,7 @@ import { useSocketStore } from "../../../Stores/socketStore";
 import { useUserStore } from "../../../Stores/userStore";
 import { useQueryClient } from "@tanstack/react-query";
 import { MessageType } from "../../../Types/Message";
+import { convertEmailToUsername } from "../../../Helpers/convertEmailToUsername";
 
 type ConversationInputProps = {
 	conversation: ConversationType;
@@ -28,7 +29,14 @@ const ConversationInput = ({ conversation }: ConversationInputProps) => {
 	);
 
 	const handleSubmit = async () => {
-		socket?.emit("newMessage", message, conversation._id, user?.uid);
+		socket?.emit(
+			"newMessage",
+			message,
+			conversation._id,
+			user?.uid,
+			convertEmailToUsername(user?.email as string),
+			user?.photoURL
+		);
 		queryClient.setQueryData(
 			["conversation", conversation._id],
 			(prevConversation: ConversationType) => {

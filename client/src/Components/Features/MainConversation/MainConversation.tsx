@@ -8,6 +8,9 @@ import { useSocketStore } from "../../../Stores/socketStore";
 import { MessageType } from "../../../Types/Message";
 import { useQueryClient } from "@tanstack/react-query";
 import { useSelectedConversationStore } from "../../../Stores/selectedConversationStore";
+import { notifications } from "@mantine/notifications";
+import { IconDots } from "@tabler/icons-react";
+import { useNavigate } from "react-router-dom";
 
 type MainConversationProps = {
 	conversation: ConversationType;
@@ -20,6 +23,8 @@ const MainConversation = ({ conversation }: MainConversationProps) => {
 	const { selectedConversationID } = useSelectedConversationStore();
 
 	const queryClient = useQueryClient();
+
+	const navigate = useNavigate();
 
 	const handleScroll = () => {
 		if (scrollHere.current) {
@@ -38,11 +43,26 @@ const MainConversation = ({ conversation }: MainConversationProps) => {
 	useEffect(() => {
 		socket?.on(
 			"receiveNewMessage",
-			(newMessage: MessageType, conversationID) => {
+			(
+				newMessage: MessageType,
+				conversationID,
+				senderUsername: string
+			) => {
 				if (newMessage.senderFirebaseID === user?.uid) {
 					return;
 				}
 				if (conversationID !== selectedConversationID) {
+					notifications.show({
+						title: "New Message from " + senderUsername,
+						message: newMessage.content,
+						color: "violet",
+						icon: <IconDots color="black" />,
+						autoClose: 5000,
+						onClick: () => {
+							navigate(`/dashboard/messages/${conversationID}`);
+							notifications.clean();
+						}
+					});
 					return;
 				}
 				queryClient.setQueryData(
