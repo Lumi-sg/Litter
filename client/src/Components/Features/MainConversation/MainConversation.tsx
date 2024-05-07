@@ -32,30 +32,38 @@ const MainConversation = ({ conversation }: MainConversationProps) => {
 	}, []);
 
 	useEffect(() => {
-
 		handleScroll();
 	}, [conversation]);
 
 	useEffect(() => {
-		socket?.on("receiveNewMessage", (newMessage: MessageType) => {
-			if (newMessage.senderFirebaseID === user?.uid) {
+		socket?.on(
+			"receiveNewMessage",
+			(newMessage: MessageType, conversationID) => {
+				if (newMessage.senderFirebaseID === user?.uid) {
+					return;
+				}
+				if (conversationID !== selectedConversationID) {
+					return;
+				}
+				queryClient.setQueryData(
+					["conversation", selectedConversationID],
+					(prevConversation: ConversationType) => {
+						// @ts-ignore
+						const updatedConversation: ConversationType = {
+							...prevConversation,
+							messages: [
+								...prevConversation.messages,
+								newMessage,
+							],
+						};
+						return updatedConversation;
+					}
+				);
+				handleScroll();
 				return;
 			}
-			queryClient.setQueryData(
-				["conversation", selectedConversationID],
-				(prevConversation: ConversationType) => {
-					// @ts-ignore
-					const updatedConversation: ConversationType = {
-						...prevConversation,
-						messages: [...prevConversation.messages, newMessage],
-					};
-					return updatedConversation;
-				}
-			);
-			handleScroll();
-			return;
-		});
-	},[])
+		);
+	}, []);
 
 	return (
 		<Flex mr={5} gap={20} direction="column-reverse" h={"100%"} c={"white"}>

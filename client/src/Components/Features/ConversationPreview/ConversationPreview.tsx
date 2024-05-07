@@ -47,6 +47,11 @@ const ConversationPreview = ({ conversation }: ConversationPreviewProps) => {
 	};
 
 	useEffect(() => {
+		conversation.messages.length > 0
+			? setLastMessage(
+					conversation.messages[conversation.messages.length - 1]
+			  )
+			: setLastMessage(null);
 		const handleNewMessage = (
 			newMessage: MessageType,
 			conversationID: string
