@@ -17,6 +17,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { ConversationType } from "../../../../../Types/Conversation";
 import UserType from "../../../../../Types/User";
 import { IconDots } from "@tabler/icons-react";
+import { Message, Message2 } from "tabler-icons-react";
 const LeftMessageContainer = () => {
 	const { user } = useUserStore();
 	const { data: allUsers, isLoading } = useGetAllUsers();
@@ -25,7 +26,8 @@ const LeftMessageContainer = () => {
 		isLoading: isLoadingConversations,
 		refetch,
 	} = useGetUserConversations(convertEmailToUsername(user!.email as string));
-	const { selectedConversationID,setSelectedConversationID } = useSelectedConversationStore();
+	const { selectedConversationID, setSelectedConversationID } =
+		useSelectedConversationStore();
 	const { socket } = useSocketStore();
 	const navigate = useNavigate();
 	const queryClient = useQueryClient();
@@ -74,22 +76,31 @@ const LeftMessageContainer = () => {
 				autoClose: false,
 			});
 		});
-		socket.on("receiveNewMessage", (newMessage, conversationID, senderUsername) => {
-			if (selectedConversationID === conversationID) {
-				return;
+		socket.on(
+			"receiveNewMessage",
+			(newMessage, conversationID, senderUsername) => {
+				if (selectedConversationID === conversationID) {
+					return;
+				}
+				if (
+					senderUsername ===
+					convertEmailToUsername(user?.email as string)
+				) {
+					return;
+				}
+				notifications.show({
+					title: "New Message from " + senderUsername,
+					message: newMessage.content,
+					color: "violet",
+					icon: <Message2 color="black" />,
+					autoClose: 5000,
+					onClick: () => {
+						navigate(`/dashboard/messages/${conversationID}`);
+						notifications.clean();
+					},
+				});
 			}
-			// notifications.show({
-			// 	title: "New Message from " + senderUsername,
-			// 	message: newMessage.content,
-			// 	color: "violet",
-			// 	icon: <IconDots color="black" />,
-			// 	autoClose: 5000,
-			// 	onClick: () => {
-			// 		navigate(`/dashboard/messages/${conversationID}`);
-			// 		notifications.clean();
-			// 	}
-			// });
-		})
+		);
 	}, [conversations]);
 	return (
 		<Stack mt={10} h={"90vh"} w={"20vw"} ml={10}>

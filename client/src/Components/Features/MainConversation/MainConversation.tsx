@@ -11,6 +11,7 @@ import { useSelectedConversationStore } from "../../../Stores/selectedConversati
 import { notifications } from "@mantine/notifications";
 import { IconDots } from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
+import { Message, Message2 } from "tabler-icons-react";
 
 type MainConversationProps = {
 	conversation: ConversationType;
@@ -56,7 +57,7 @@ const MainConversation = ({ conversation }: MainConversationProps) => {
 						title: "New Message from " + senderUsername,
 						message: newMessage.content,
 						color: "violet",
-						icon: <IconDots color="black" />,
+						icon: <Message2 color="black" />,
 						autoClose: 5000,
 						onClick: () => {
 							navigate(`/dashboard/messages/${conversationID}`);
