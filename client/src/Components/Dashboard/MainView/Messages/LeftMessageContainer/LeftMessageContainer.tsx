@@ -78,17 +78,17 @@ const LeftMessageContainer = () => {
 			if (selectedConversationID === conversationID) {
 				return;
 			}
-			notifications.show({
-				title: "New Message from " + senderUsername,
-				message: newMessage.content,
-				color: "violet",
-				icon: <IconDots color="black" />,
-				autoClose: 5000,
-				onClick: () => {
-					navigate(`/dashboard/messages/${conversationID}`);
-					notifications.clean();
-				}
-			});
+			// notifications.show({
+			// 	title: "New Message from " + senderUsername,
+			// 	message: newMessage.content,
+			// 	color: "violet",
+			// 	icon: <IconDots color="black" />,
+			// 	autoClose: 5000,
+			// 	onClick: () => {
+			// 		navigate(`/dashboard/messages/${conversationID}`);
+			// 		notifications.clean();
+			// 	}
+			// });
 		})
 	}, [conversations]);
 	return (
