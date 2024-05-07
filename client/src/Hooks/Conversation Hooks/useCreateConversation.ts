@@ -31,7 +31,7 @@ export const useCreateConversation = (recipientUsername: string) => {
 				}
 			);
 			setSelectedConversationID(data._id);
-
+			await socket?.connect();
 			return data;
 		},
 		onSuccess: async () => {
@@ -49,7 +49,7 @@ export const useCreateConversation = (recipientUsername: string) => {
 				""
 			);
 			modals.closeAll();
-			await socket?.connect();
+
 			socket?.emit("createConversation", user, recipientUsername);
 		},
 
