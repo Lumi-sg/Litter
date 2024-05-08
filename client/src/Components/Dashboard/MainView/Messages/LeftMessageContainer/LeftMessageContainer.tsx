@@ -87,6 +87,20 @@ const LeftMessageContainer = () => {
 				) {
 					return;
 				}
+				//sometimes the socket fires twice I dont know how to fix it in another way
+				const doMessagesMatch = conversations!.map((conversation) => {
+					if (conversation._id === conversationID) {
+						const lastMessage =
+							conversation.messages[
+								conversation.messages.length - 1
+							];
+						if (newMessage.timestamp === lastMessage.timestamp) {
+							return true;
+						}
+						return false;
+					}
+				});
+				if (doMessagesMatch) return;
 				queryClient.setQueryData(
 					["conversations", user?.uid as string],
 					(prevConversations: ConversationType[]) => {
