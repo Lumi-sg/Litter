@@ -20,7 +20,7 @@ const MainConversation = ({ conversation }: MainConversationProps) => {
 	const scrollHere = useRef<HTMLDivElement>(null);
 	const { user } = useUserStore();
 	const { socket } = useSocketStore();
-	const { selectedConversationID } = useSelectedConversationStore();
+	const { selectedConversationID, setSelectedConversationID } = useSelectedConversationStore();
 
 	const queryClient = useQueryClient();
 
@@ -60,6 +60,7 @@ const MainConversation = ({ conversation }: MainConversationProps) => {
 						autoClose: 5000,
 						onClick: () => {
 							navigate(`/dashboard/messages/${conversationID}`);
+							setSelectedConversationID(conversationID);
 							notifications.clean();
 						},
 					});
