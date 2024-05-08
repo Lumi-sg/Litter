@@ -100,7 +100,7 @@ const LeftMessageContainer = () => {
 						return false;
 					}
 				});
-				if (doMessagesMatch) return;
+
 				queryClient.setQueryData(
 					["conversations", user?.uid as string],
 					(prevConversations: ConversationType[]) => {
@@ -135,6 +135,10 @@ const LeftMessageContainer = () => {
 						return updatedConversations;
 					}
 				);
+				if (doMessagesMatch) {
+					console.log("messages match");
+					return;
+				}
 				notifications.show({
 					title: "New Message from " + senderUsername,
 					message: newMessage.content,
