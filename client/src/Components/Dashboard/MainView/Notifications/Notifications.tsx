@@ -4,7 +4,6 @@ import {
 	Group,
 	Text,
 	Avatar,
-	Checkbox,
 	Tooltip,
 	Button,
 	Switch,
