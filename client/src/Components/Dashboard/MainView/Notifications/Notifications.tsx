@@ -8,7 +8,8 @@ import {
 	Tooltip,
 	Button,
 	Switch,
-	Center
+	Center,
+	Loader,
 } from "@mantine/core";
 import LoadingTweet from "../../../Features/LoadingTweet/LoadingTweet";
 import formatTimeStamp from "../../../../Helpers/formatTimeStamp";
@@ -26,9 +27,8 @@ const Notifications = () => {
 		user?.uid as string
 	);
 
-	const { mutate: markNotificationsRead } = useMarkNotificationsRead(
-		notifications as NotificationType[]
-	);
+	const { mutate: markNotificationsRead, isPending } =
+		useMarkNotificationsRead(notifications as NotificationType[]);
 	const handleScroll = () => {
 		if (scrollHere.current) {
 			scrollHere.current.scrollIntoView({ behavior: "smooth" });
@@ -187,7 +187,14 @@ const Notifications = () => {
 										fullWidth
 										onClick={() => markNotificationsRead()}
 									>
-										Mark All Read
+										{isPending ? (
+											<Loader
+												color="violet"
+												size={"xs"}
+											/>
+										) : (
+											"Mark All Read"
+										)}
 									</Button>
 								) : (
 									<Text fw={700}>Status</Text>
