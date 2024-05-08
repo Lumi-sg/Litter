@@ -1,6 +1,6 @@
 import { Center, Flex, ScrollArea, Stack } from "@mantine/core";
 import MessageCard from "../MessageCard/MessageCard";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import styles from "./MainConversation.module.css";
 import { ConversationType } from "../../../Types/Conversation";
 import { useUserStore } from "../../../Stores/userStore";
@@ -26,6 +26,10 @@ const MainConversation = ({ conversation }: MainConversationProps) => {
 	const queryClient = useQueryClient();
 
 	const navigate = useNavigate();
+	const [lastReceivedMessageTimestamp, setLastReceivedMessageTimestamp] =
+		useState(
+			conversation.messages[conversation.messages.length - 1].timestamp
+		);
 
 	const handleScroll = () => {
 		if (scrollHere.current) {
@@ -49,10 +53,15 @@ const MainConversation = ({ conversation }: MainConversationProps) => {
 				conversationID,
 				senderUsername: string
 			) => {
+				console.log("newmessage " + newMessage.timestamp);
+				console.log("last " + lastReceivedMessageTimestamp);
 				if (newMessage.senderFirebaseID === user?.uid) {
 					return;
 				}
 				if (conversationID !== selectedConversationID) {
+					if (lastReceivedMessageTimestamp === newMessage.timestamp) {
+						return;
+					}
 					notifications.show({
 						title: "New Message from " + senderUsername,
 						message: newMessage.content,
@@ -65,6 +74,7 @@ const MainConversation = ({ conversation }: MainConversationProps) => {
 							notifications.clean();
 						},
 					});
+					setLastReceivedMessageTimestamp(newMessage.timestamp);
 					return;
 				}
 				queryClient.setQueryData(

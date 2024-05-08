@@ -10,6 +10,7 @@ import { useUserStore } from "../../../Stores/userStore";
 import { useQueryClient } from "@tanstack/react-query";
 import { MessageType } from "../../../Types/Message";
 import { convertEmailToUsername } from "../../../Helpers/convertEmailToUsername";
+import { useSelectedConversationStore } from "../../../Stores/selectedConversationStore";
 
 type ConversationInputProps = {
 	conversation: ConversationType;
@@ -21,6 +22,9 @@ const ConversationInput = ({ conversation }: ConversationInputProps) => {
 	const { socket } = useSocketStore();
 	const { user } = useUserStore();
 	const queryClient = useQueryClient();
+
+	const { selectedConversationID, setSelectedConversationID } =
+		useSelectedConversationStore();
 
 	const useCreateNewMessageMutation = useCreateNewMessage(
 		conversation._id,
@@ -51,7 +55,42 @@ const ConversationInput = ({ conversation }: ConversationInputProps) => {
 					...prevConversation,
 					messages: [...prevConversation.messages, newMessage],
 				};
+				
 				return updatedConversation;
+			}
+		);
+		queryClient.setQueryData(
+			["conversations", user?.uid as string],
+			(prevConversations: ConversationType[]) => {
+				const updatedConversations = prevConversations.map(
+					(conversation) => {
+						if (conversation._id === selectedConversationID) {
+							return {
+								...conversation,
+								updatedAt: new Date(),
+							};
+						}
+						return conversation;
+					}
+				);
+				//Move updated conversation to the 0th index of the array
+				const conversationToMove = updatedConversations.find(
+					(conversation) =>
+						conversation._id === selectedConversationID
+				);
+				if (conversationToMove) {
+					const index =
+						updatedConversations.indexOf(
+							conversationToMove
+						);
+					if (index !== -1) {
+						updatedConversations.splice(index, 1);
+						updatedConversations.unshift(
+							conversationToMove
+						);
+					}
+				}
+				return updatedConversations;
 			}
 		);
 		await useCreateNewMessageMutation.mutate();
