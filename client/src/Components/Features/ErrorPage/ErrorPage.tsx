@@ -2,26 +2,26 @@ import {
 	Container,
 	Title,
 	Text,
-	Button,
+	// Button,
 	Group,
 	Center,
 	Stack,
 } from "@mantine/core";
 import { Illustration } from "./Illustration";
 import classes from "./ErrorPage.module.css";
-import { Link } from "react-router-dom";
-import { useComponentStore } from "../../../Stores/componentStore";
+// import { Link } from "react-router-dom";
+// import { useComponentStore } from "../../../Stores/componentStore";
 
 type errorProps = {
 	errorMessage?: string;
 };
 
 export function ErrorPage(props: errorProps) {
-	const { setSelectedComponent } = useComponentStore();
+	// const { setSelectedComponent } = useComponentStore();
 
-	const handleHomeClick = () => {
-		setSelectedComponent("Home");
-	};
+	// const handleHomeClick = () => {
+	// 	setSelectedComponent("Home");
+	// };
 	return (
 		<Container className={classes.root}>
 			<div className={classes.inner}>
@@ -37,18 +37,20 @@ export function ErrorPage(props: errorProps) {
 								className={classes.description}
 								m={30}
 							>
-								Page you are trying to open does not exist. You
-								may have mistyped the address, or the page has
-								been moved to another URL. If you think this is
-								an error contact support.
+								The page you are trying to open does not exist.
+								You may have mistyped the address, or the page
+								has been moved to another URL.
 							</Text>
 						</Center>
 						<Center>
-							<Text>Error: {props.errorMessage}</Text>
+							<Text c="white" size="lg">
+								{" "}
+								Error: {props.errorMessage}
+							</Text>
 						</Center>
 					</Stack>
 					<Group justify="center" mt={30}>
-						<Button
+						{/* <Button
 							size="md"
 							variant="outline"
 							color="violet"
@@ -58,7 +60,7 @@ export function ErrorPage(props: errorProps) {
 							onClick={handleHomeClick}
 						>
 							Take me back to home page
-						</Button>
+						</Button> */}
 					</Group>
 				</div>
 			</div>
