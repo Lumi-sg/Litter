@@ -27,9 +27,11 @@ const MainConversation = ({ conversation }: MainConversationProps) => {
 
 	const navigate = useNavigate();
 	const [lastReceivedMessageTimestamp, setLastReceivedMessageTimestamp] =
-		useState(
-			conversation.messages[conversation.messages.length - 1].timestamp
-		);
+		useState<Date | undefined>(() => {
+			const lastMessage =
+				conversation.messages[conversation.messages.length - 1];
+			return lastMessage ? lastMessage.timestamp : undefined;
+		});
 
 	const handleScroll = () => {
 		if (scrollHere.current) {
