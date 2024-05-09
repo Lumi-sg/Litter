@@ -8,8 +8,7 @@ import LoadingTweet from "../../../../Features/LoadingTweet/LoadingTweet";
 import { ConversationType } from "../../../../../Types/Conversation";
 import { ErrorPage } from "../../../../Features/ErrorPage/ErrorPage";
 import { useEffect } from "react";
-import {useSelectedConversationStore} from "../../../../../Stores/selectedConversationStore"
-
+import { useSelectedConversationStore } from "../../../../../Stores/selectedConversationStore";
 
 const RightMessageContainer = () => {
 	const { conversationID } = useParams();
@@ -21,16 +20,14 @@ const RightMessageContainer = () => {
 	} = useGetConversation(conversationID as string);
 	const showConversation = conversationID && !isConversationLoading;
 
+	useEffect(() => {
+		if (conversationID) {
+			setSelectedConversationID(conversationID);
+		}
+	}, []);
 	if (error) {
 		return <ErrorPage errorMessage={error.message} />;
 	}
-
-	useEffect(() => {
-		if (conversationID){
-			setSelectedConversationID(conversationID);
-		}	
-	},[])
-
 	return (
 		<Stack h={"calc(100vh - 5.7rem)"} flex={1}>
 			{" "}

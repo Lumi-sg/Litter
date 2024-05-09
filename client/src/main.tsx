@@ -19,7 +19,7 @@ import {
 } from "@tanstack/react-query";
 // import { useUserStore } from "./Stores/userStore.ts";
 // import { onAuthStateChanged } from "firebase/auth";
-// import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { refreshUserToken } from "./Helpers/refreshUserToken.ts";
 
 const theme = createTheme({
@@ -57,10 +57,10 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
 				/>
 
 				<App />
-				{/* <ReactQueryDevtools
+				<ReactQueryDevtools
 					initialIsOpen={false}
 					client={queryClient}
-				/> */}
+				/>
 			</ModalsProvider>
 		</MantineProvider>
 	</QueryClientProvider>

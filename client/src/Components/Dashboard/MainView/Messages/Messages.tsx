@@ -63,6 +63,7 @@ const Messages = () => {
 							</Center>
 						</Flex>
 					}
+					errorElement={<ErrorPage />}
 				/>
 
 				<Route
