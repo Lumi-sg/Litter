@@ -17,6 +17,8 @@ type userStoreType = {
 	setIsLoggedIn: (isLoggedIn: boolean) => void;
 	login: () => Promise<boolean>;
 	logout: () => Promise<boolean>;
+	isLoading: boolean;
+	setIsLoading: (isLoading: boolean) => void;
 };
 
 export const useUserStore = create<userStoreType>()(
@@ -96,6 +98,9 @@ export const useUserStore = create<userStoreType>()(
 					return false;
 				}
 			},
+
+			isLoading: false,
+			setIsLoading: (isLoading) => set({ isLoading }),
 		})),
 		{ name: "user-store" }
 	)

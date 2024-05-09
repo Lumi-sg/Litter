@@ -11,9 +11,16 @@ import SinglePost from "./MainView/SinglePost/SinglePost";
 import Infopanel from "./Infopanel/Infopanel";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { ErrorPage } from "../Features/ErrorPage/ErrorPage";
+import { useUserStore } from "../../Stores/userStore";
+import { useEffect } from "react";
 
 export function Dashboard() {
 	const { selectedComponent } = useComponentStore();
+	const { setIsLoading } = useUserStore();
+
+	useEffect(() => {
+		setIsLoading(false);
+	}, []);
 
 	return (
 		<AppShell
