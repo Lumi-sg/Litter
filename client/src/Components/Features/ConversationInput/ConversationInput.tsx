@@ -99,7 +99,7 @@ const ConversationInput = ({ conversation }: ConversationInputProps) => {
 	return (
 		<>
 			<TextInput
-				placeholder="Start a new meessage"
+				placeholder="Start a new message"
 				mb={-10}
 				value={message}
 				size="md"
